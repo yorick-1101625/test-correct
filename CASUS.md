@@ -21,14 +21,14 @@ Wat je krijgt is de volgende workflow:
 
 We kunnen deze eisen opdelen in een aantal deelcomponenten:
 ### Inloggen
-Elke redacteur heeft een eigen inlog. Zo kan er worden bijgehouden wie welke vragen heeft beoordeeld. 
-- De inloggegevens zijn niet herkenbaar opgeslagen in de database.
-- Er is een admin die nieuwe redacteuren kan aanmaken, of bestaande redacteuren admin kan maken.
-- Het is mogelijk de gegevens van de redacteur te wijzigen  en op te slaan als admin.
+~~Elke redacteur heeft een eigen inlog. Zo kan er worden bijgehouden wie welke vragen heeft beoordeeld.~~
+- ~~De inloggegevens zijn niet herkenbaar opgeslagen in de database.~~
+- ~~Er is een admin die nieuwe redacteuren kan aanmaken, of bestaande redacteuren admin kan maken.~~
+- ~~Het is mogelijk de gegevens van de redacteur te wijzigen  en op te slaan als admin.~~
 
 ### Het vragenoverzicht
-Dit is de pagina die je als redacteur al eerste te zien krijgt. Deze pagina toont vragen die nog niet beoordeeld (gescoord) zijn. De redacteur kan een vraag kiezen door op de vraag of op een knop te klikken. Het vragenoverzicht kun je vinden in het volgende bestand op de repository: questions_extract.json. ler er op dat je niet alle gegevens nodig hebt uit de jason. 
-- De database is groot. Het aantal vragen wordt beperkt tot een redelijk aantal, maar niet meer dan 20. Je kunt kiezen om naar volgende pagina's te navigeren.
+~~Dit is de pagina die je als redacteur al eerste te zien krijgt. Deze pagina toont vragen die nog niet beoordeeld (gescoord) zijn. De redacteur kan een vraag kiezen door op de vraag of op een knop te klikken. Het vragenoverzicht kun je vinden in het volgende bestand op de repository: questions_extract.json. ler er op dat je niet alle gegevens nodig hebt uit de jason.~~
+- ~~De database is groot. Het aantal vragen wordt beperkt tot een redelijk aantal, maar niet meer dan 20. Je kunt kiezen om naar volgende pagina's te navigeren.~~
 
 ### De workflow
 Op deze pagina kun je de gekozen vraag lezen. Je kunt kiezen uit eerder gebruikte prompts, maar het is ook mogelijk om een nieuwe prompt te schrijven. Naast de prompt kies je de taxonomie die je wilt voorleggen aan CHATGPT. De taxonomie die je terugkrijgt kun je vervolgens aanpassen voordat het wordt opgeslagen.
@@ -38,8 +38,8 @@ Op deze pagina kun je de gekozen vraag lezen. Je kunt kiezen uit eerder gebruikt
 - Het is belangrijk dat er wordt bijgehouden of de taxonomie is aangepast, of dat de taxonomie uit chatgpt is opgeslagen.
 
 ### Export functie
-Bij het exporteren worden alle beoordeelde vragen en de taxonomieën per vraag opgeslagen in json formaat.
-- Er is een pagina die de beoordeelde vragen toont. Op deze pagina kun je kiezen om alles of een deel van de beoordeelde vragen te exporteren.
+~~Bij het exporteren worden alle beoordeelde vragen en de taxonomieën per vraag opgeslagen in json formaat.~~
+- ~~Er is een pagina die de beoordeelde vragen toont. Op deze pagina kun je kiezen om alles of een deel van de beoordeelde vragen te exporteren.~~
 Een voorbeeld van de export ziet er als volgt uit: 
 ```json
 [ 
