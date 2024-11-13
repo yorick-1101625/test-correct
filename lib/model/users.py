@@ -1,8 +1,8 @@
 from lib.model.database import Database
 
-class Task():
+class Users():
     def __init__(self):
-        database = Database('/databases/database.db')
+        database = Database('../../databases/database.db')
         self.cursor = database.connect_db()
 
     def log_in(self):
