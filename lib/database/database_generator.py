@@ -25,6 +25,7 @@ class WP2DatabaseGenerator:
             login TEXT NOT NULL,
             password TEXT NOT NULL,
             display_name TEXT NOT NULL,
+            date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
             is_admin INTEGER NOT NULL DEFAULT 1);
         """
         self.__execute_transaction_statement(create_statement)
@@ -34,8 +35,13 @@ class WP2DatabaseGenerator:
         create_statement = """
         CREATE TABLE IF NOT EXISTS prompts (
             prompts_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
             prompt TEXT NOT NULL,
-            prompt_score INTEGER NOT NULL);
+            questions_count INTEGER NOT NULL,
+            questions_correct INTEGER NOT NULL,
+            date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(user_id)            
+            );
         """
         self.__execute_transaction_statement(create_statement)
         print("✅ Prompts table created")
@@ -44,14 +50,15 @@ class WP2DatabaseGenerator:
         CREATE TABLE IF NOT EXISTS questions (
             questions_id TEXT PRIMARY KEY,
             prompts_id INTEGER NOT NULL,
-            users_id TEXT INTEGER NULL,
+            user_id TEXT INTEGER NULL,
             question TEXT NOT NULL,
             taxonomy_bloom TEXT,
             rtti TEXT,
-            tax_bloom_changed INTEGER NOT NULL DEFAULT 0,
-            rtti_changed INTEGER NOT NULL DEFAULT 0,          
-            FOREIGN KEY (prompts_id) REFERENCES prompts (prompts_id),
-            FOREIGN KEY (users_id) REFERENCES users (users_id));
+            exported BOOLEAN DEFAULT FALSE,
+            date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(user_id),
+            FOREIGN KEY (prompts_id) REFERENCES prompts(prompts_id)            
+            );
         """
         self.__execute_transaction_statement(create_statement)
         print("✅ Questions table created")
@@ -60,8 +67,8 @@ class WP2DatabaseGenerator:
 
     def insert_admin_user(self):
         users = [
-            ( "krugw", "geheim", "Gerard van Kruining", 1),
-            ( "vried", "geheimer", "Diederik de Vries", 0),
+            ( "krugw@hr.nl", "geheim", "Gerard van Kruining", 1),
+            ( "vried@hr.nl", "geheimer", "Diederik de Vries", 0),
         ]
         insert_statement = "INSERT INTO users (login, password, display_name, is_admin) VALUES (?, ?, ?, ?);"
         self.__execute_many_transaction_statement(insert_statement, users)
