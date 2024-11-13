@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form>
+        <img class="logo" src="https://welcome.test-correct.nl/svg/logos/Logo-Test-Correct-2.svg">
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" id="username">
+
+        <label for="password">Password</label>
+        <input type="password" id="password">
+
+        <button>Log In</button>
+    </form>
+</body>
+</html>
+
