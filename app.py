@@ -7,8 +7,8 @@ app = flask.Flask(__name__)
 def home():
     return render_template('log-in.html')
 
-@app.route('/vraag/<question_id>')
-def scoring(question_id):
+@app.route('/vraag/<questions_id>')
+def scoring(questions_id):
     return render_template('single-question.html', questions_id=questions_id)
 
 if __name__ == "__main__":
