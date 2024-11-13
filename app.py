@@ -9,7 +9,7 @@ def home():
 
 @app.route('/vraag/<question_id>')
 def scoring(question_id):
-    return render_template('single-question.html')
+    return render_template('single-question.html', questions_id=questions_id)
 
 if __name__ == "__main__":
     app.run(debug=True)
