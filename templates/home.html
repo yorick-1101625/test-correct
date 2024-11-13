@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="style.css">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
-    <h2>Hallo</h2>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form>
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" id="username">
+
+        <label for="password">Password</label>
+        <input type="password" id="password">
+
+        <button>Log In</button>
+    </form>
 </body>
 </html>
+
