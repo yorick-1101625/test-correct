@@ -7,5 +7,9 @@ app = flask.Flask(__name__)
 def home():
     return render_template('log-in.html')
 
+@app.route('/vraag/<question_id>')
+def scoring(question_id):
+    return render_template('scoring-page.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
