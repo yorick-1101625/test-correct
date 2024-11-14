@@ -14,8 +14,9 @@
 .question-header{
 }
 .question-title{
-    font-size: 50px;
+    font-size: 40px;
     margin: 0;
+    color: #004df5;
 }
 .question-description{
     font-size: 17px;
@@ -30,6 +31,10 @@ form{
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
+}
+form label{
+    color: #004df5;
+    font-size: 17px;
 }
 .prompt-select{
     background-color: #ffffff;
