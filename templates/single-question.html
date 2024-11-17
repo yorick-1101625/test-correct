@@ -24,12 +24,13 @@
             <span>Leerjaar:</span>
             <span>4</span>
         </div>
-        <form>
+        <form method="post" action="">
             <div>
-                <label>Prompt:</label>
-                <select class="prompt-select">
-                    <option>Prompt titel</option>
-                    <option>Prompt titel2</option>
+                <label for="prompt">Prompt:</label>
+                <select id="prompt" name="prompt" class="prompt-select">
+                    <option value="prompt-1">Prompt titel</option>
+                    <option value="prompt-2">Prompt titel2</option>
+                    <option value="prompt-3">Prompt 3</option>
                 </select>
             </div>
             <input class="submit-btn" type="submit" value="Genereer antwoord">

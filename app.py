@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 def home():
     return render_template('log-in.html')
 
-@app.route('/vraag/<questions_id>')
+@app.route('/vraag/<questions_id>', methods=['GET', 'POST'])
 def scoring(questions_id):
     return render_template('single-question.html', questions_id=questions_id)
 
