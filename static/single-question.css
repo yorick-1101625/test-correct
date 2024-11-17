@@ -13,12 +13,12 @@
 }
 .question-header{
 }
-.question-title{
+.page-title{
     font-size: 40px;
     margin: 0;
     color: #004df5;
 }
-.question-description{
+.question{
     font-size: 17px;
 }
 .question-categories-grid{
