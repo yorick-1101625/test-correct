@@ -10,7 +10,7 @@
 <body>
 <button><a href="/">Terug</a></button>
     <section class="question-panel">
-        <div class="question-header">
+        <div>
             <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
             <p class="question">{{ single_question.question }}</p>
         </div>
@@ -27,11 +27,15 @@
         <form method="post" action="">
             <div>
                 <label for="prompt">Prompt:</label>
+                {% if prompts %}
                 <select id="prompt" name="prompt" class="prompt-select">
-                    <option value="prompt-1">Prompt titel</option>
-                    <option value="prompt-2">Prompt titel2</option>
-                    <option value="prompt-3">Prompt 3</option>
+                    {% for prompt in prompts %}
+                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt }}</option>
+                    {% endfor %}
                 </select>
+                {% else %}
+                <span><a href="#">Niew Prompt</a></span>
+                {% endif %}
             </div>
             <input class="submit-btn" type="submit" value="Genereer antwoord">
         </form>
