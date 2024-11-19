@@ -11,15 +11,13 @@
     border-radius: 10px;
     background-color: #ffffff;
 }
-.question-header{
-}
-.question-title{
-    font-size: 40px;
+.page-title{
+    font-size: 35px;
     margin: 0;
     color: #004df5;
 }
-.question-description{
-    font-size: 17px;
+.question{
+    font-size: 20px;
 }
 .question-categories-grid{
     display: grid;
