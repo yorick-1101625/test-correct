@@ -16,13 +16,13 @@
         </div>
         <div class="question-categories-grid">
             <span>Vak:</span>
-            <span>Biologie</span>
+            <span>{{ single_question.subject|title }}</span>
 
             <span>Onderwijs Niveau:</span>
-            <span>Havo</span>
+            <span>{{ single_question.education_level|title }}</span>
 
             <span>Leerjaar:</span>
-            <span>4</span>
+            <span>{{ single_question.grade }}</span>
         </div>
         <form method="post" action="">
             <div>
@@ -30,7 +30,7 @@
                 {% if prompts %}
                 <select id="prompt" name="prompt" class="prompt-select">
                     {% for prompt in prompts %}
-                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt }}</option>
+                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt_name }}</option>
                     {% endfor %}
                 </select>
                 {% else %}
