@@ -36,6 +36,7 @@ class WP2DatabaseGenerator:
         CREATE TABLE IF NOT EXISTS prompts (
             prompts_id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
+            prompt_name TEXT NOT NULL,
             prompt TEXT NOT NULL,
             questions_count INTEGER NOT NULL,
             questions_correct INTEGER NOT NULL,
@@ -52,6 +53,9 @@ class WP2DatabaseGenerator:
             prompts_id INTEGER NOT NULL,
             user_id TEXT INTEGER NULL,
             question TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            education_level TEXT NOT NULL,
+            grade INTEGER NOT NULL,
             taxonomy_bloom TEXT,
             rtti TEXT,
             exported BOOLEAN DEFAULT FALSE,
