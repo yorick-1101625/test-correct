@@ -11,12 +11,19 @@ def home():
     return render_template('log-in.html')
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
-def scoring(questions_id):
+def single_question_page(questions_id):
+    # Show question
     questions_model = Questions()
     single_question = questions_model.show_single_question(questions_id)
+    # Show all prompts
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
-    return render_template('single-question.html', single_question=single_question, prompts=prompts)
+    # Check if question exists
+    if single_question is None:
+        return "404: Question does not exist"
+    else:
+        return render_template('single-question.html', single_question=single_question, prompts=prompts)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
