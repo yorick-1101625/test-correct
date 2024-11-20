@@ -6,6 +6,6 @@ class Questions:
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
-    def read_single_question(self, questions_id):
+    def show_single_question(self, questions_id):
         result = self.cursor.execute('SELECT * FROM questions WHERE questions_id = ?', (str(questions_id),)).fetchone()
         return result

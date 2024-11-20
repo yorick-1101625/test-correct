@@ -13,9 +13,9 @@ def home():
 @app.route('/vraag/<questions_id>', methods=['GET', 'POST'])
 def scoring(questions_id):
     questions_model = Questions()
-    single_question = questions_model.read_single_question(questions_id)
+    single_question = questions_model.show_single_question(questions_id)
     prompts_model = Prompts()
-    prompts = prompts_model.read_prompts()
+    prompts = prompts_model.show_prompts()
     return render_template('single-question.html', single_question=single_question, prompts=prompts)
 
 if __name__ == "__main__":

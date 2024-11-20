@@ -6,6 +6,6 @@ class Prompts:
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
-    def read_prompts(self):
+    def show_prompts(self):
         result = self.cursor.execute('SELECT * FROM prompts').fetchall()
         return result
