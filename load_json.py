@@ -13,10 +13,13 @@ def load_questions(json_data):
         prompts_id = 0
         user_id = ''
         question = questions['question']
+        subject = questions['vak']
+        education_level = questions['onderwijsniveau']
+        grade = questions['leerjaar']
         taxonomy_bloom = ''
         rtti = ''
-        sql = '''INSERT INTO questions (questions_id, prompts_id, user_id, question, taxonomy_bloom, rtti) VALUES (?, ?, ?, ?, ?, ?)'''
-        val = (questions_id, prompts_id, user_id, question, taxonomy_bloom, rtti)
+        sql = '''INSERT INTO questions (questions_id, prompts_id, user_id, question, subject, education_level, grade, taxonomy_bloom, rtti) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+        val = (questions_id, prompts_id, user_id, question, subject, education_level, grade, taxonomy_bloom, rtti)
         cursor.execute(sql, val)
     connection.commit()
 

@@ -10,29 +10,32 @@
 <body>
 <button><a href="/">Terug</a></button>
     <section class="question-panel">
+        <!--Details of the question-->
         <div>
             <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
             <p class="question">{{ single_question.question }}</p>
         </div>
         <div class="question-categories-grid">
             <span>Vak:</span>
-            <span>Biologie</span>
+            <span>{{ single_question.subject|title }}</span>
 
             <span>Onderwijs Niveau:</span>
-            <span>Havo</span>
+            <span>{{ single_question.education_level|title }}</span>
 
             <span>Leerjaar:</span>
-            <span>4</span>
+            <span>{{ single_question.grade }}</span>
         </div>
+        <!--Choose prompt menu-->
         <form method="post" action="">
             <div>
                 <label for="prompt">Prompt:</label>
                 {% if prompts %}
                 <select id="prompt" name="prompt" class="prompt-select">
                     {% for prompt in prompts %}
-                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt }}</option>
+                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt_name }}</option>
                     {% endfor %}
                 </select>
+                <!--If there are no existing prompts:-->
                 {% else %}
                 <span><a href="#">Niew Prompt</a></span>
                 {% endif %}
