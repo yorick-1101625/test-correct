@@ -1,0 +1,37 @@
+.overview-container{
+    border: 1px solid #777777;
+    border-radius: 10px;
+    background-color: #ffffff;
+
+    width: 100%;
+    overflow: hidden;
+}
+.row{
+    width: 100%;
+    display: flex;
+    padding: 5px;
+}
+.row-head{
+    background-color: #f2f6ff;
+    margin: 0;
+}
+
+.row p{
+    margin: 0;
+    padding: 0;
+}
+.question{
+    width: 40%;
+}
+.subject{
+    width: 12%;
+}
+.date{
+    width: 22%;
+}
+.rtti{
+    width: 13%;
+}
+.bloom{
+    width: 13%;
+}

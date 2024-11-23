@@ -1,8 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
 body{
-
     background-color: #f2f6ff;
-
     font-family: 'Nunito',sans-serif;
     color: #041f74;
+}
+section{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 58%;
+
+    margin-top: 50px;
+    padding: 40px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 5px rgba(8,7,16,0.2);
+    border-radius: 10px;
+    background-color: #ffffff;
 }
