@@ -46,3 +46,22 @@
 .bloom{
     width: 13%;
 }
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.index{
+    width: 20%;
+    padding:3px;
+    background-color: #3dbb56;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+.index:hover{
+    background-color: #004df5;
+    transition-duration: 0.2s;
+}

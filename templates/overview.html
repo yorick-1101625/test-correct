@@ -24,16 +24,11 @@
                 <p class="subject">{{ question.subject|title }}</p>
                 <p class="date">{{ question.date_created }}</p>
 
-                {% if question.rtti %}
+                {% if question.rtti and question.bloom %}
                 <p class="rtti">{{ question.rtti }}</p>
-                {% else %}
-                <p class="rtti"><a href="/">Indexeer</a></p>
-                {% endif %}
-
-                {% if question.rtti %}
                 <p class="bloom">{{ question.bloom }}</p>
                 {% else %}
-                <p class="rtti"><a href="/">Indexeer</a></p>
+                <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
                 {% endif %}
             </div>
             {% endfor %}
