@@ -7,7 +7,8 @@ class Questions:
         self.conn, self.cursor = database.connect_db()
 
     def show_ten_questions(self, offset):
-        offset = 1 if offset <= 0 else offset
+        offset = 0 if offset < 0 else offset
+        offset *= 10
 
         result = self.cursor.execute('SELECT * FROM questions LIMIT ? OFFSET ?', (10, offset)).fetchall()
         return result

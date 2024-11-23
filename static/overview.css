@@ -133,3 +133,23 @@ a {
     background-color: #004df5;
     transition-duration: 0.2s;
 }
+
+/* Overview Navigation */
+.overview-navigation{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.overview-navigation button{
+    cursor:pointer;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    background-color: #3dbb56;
+    color: #ffffff
+}
+.next, .previous{
+    margin: 10px;
+}

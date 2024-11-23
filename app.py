@@ -12,9 +12,10 @@ def home():
 
 @app.route('/overview/<offset>')
 def overview(offset):
+    print(offset)
     questions_model = Questions()
     ten_questions = questions_model.show_ten_questions(offset=int(offset))
-    return render_template('overview.html', ten_questions=ten_questions)
+    return render_template('overview.html', ten_questions=ten_questions, offset=int(offset))
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
