@@ -12,7 +12,9 @@ def home():
 
 @app.route('/overview')
 def overview():
-    return render_template('overview.html')
+    questions_model = Questions()
+    all_questions = questions_model.show_all_questions()
+    return render_template('overview.html', all_questions=all_questions)
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):

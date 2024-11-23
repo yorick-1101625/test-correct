@@ -18,13 +18,25 @@
                 <p class="rtti">RTTI</p>
                 <p class="bloom">Bloom</p>
             </div>
+            {% for question in all_questions %}
             <div class="row">
-                <p class="question">Vraag</p>
-                <p class="subject">Vak</p>
-                <p class="date">Invoer Datum</p>
-                <p class="rtti">RTTI</p>
-                <p class="bloom">Bloom</p>
+                <p class="question">{{ question.question }}</p>
+                <p class="subject">{{ question.subject|title }}</p>
+                <p class="date">{{ question.date_created }}</p>
+
+                {% if question.rtti %}
+                <p class="rtti">{{ question.rtti }}</p>
+                {% else %}
+                <p class="rtti"><a href="/">Indexeer</a></p>
+                {% endif %}
+
+                {% if question.rtti %}
+                <p class="bloom">{{ question.bloom }}</p>
+                {% else %}
+                <p class="rtti"><a href="/">Indexeer</a></p>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
     </section>
 </body>
