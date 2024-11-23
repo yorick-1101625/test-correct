@@ -6,8 +6,10 @@ class Questions:
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
-    def show_all_questions(self):
-        result = self.cursor.execute('SELECT * FROM questions').fetchall()
+    def show_ten_questions(self, offset):
+        offset = 1 if offset <= 0 else offset
+
+        result = self.cursor.execute('SELECT * FROM questions LIMIT ? OFFSET ?', (10, offset)).fetchall()
         return result
 
     def show_single_question(self, questions_id):

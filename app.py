@@ -10,11 +10,11 @@ app = flask.Flask(__name__)
 def home():
     return render_template('log-in.html')
 
-@app.route('/overview')
-def overview():
+@app.route('/overview/<offset>')
+def overview(offset):
     questions_model = Questions()
-    all_questions = questions_model.show_all_questions()
-    return render_template('overview.html', all_questions=all_questions)
+    ten_questions = questions_model.show_ten_questions(offset=int(offset))
+    return render_template('overview.html', ten_questions=ten_questions)
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
