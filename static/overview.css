@@ -1,3 +1,68 @@
+/* Search bar Section */
+.search-bar{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
+.search-bar div{
+    flex: 1;
+}
+
+#search-term{
+    width: 60%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    transition-duration: 0.2s;
+    font-size: 14px;
+    background-color: #f2f6ff;
+}
+#search-term:focus, #search-term:hover{
+    transition-duration: 0.2s;
+    width: 70%;
+    border: 1px solid #004df5;
+    outline: none;
+}
+
+#subject{
+    width: 40%;
+    background-color: #f2f6ff;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    font-size: 14px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+#subject:focus, #subject:hover{
+    width: 50%;
+    transition-duration: 0.2s;
+    border: 1px solid #004df5;
+}
+
+#indexed{
+    width: 40px;
+    cursor:pointer;
+}
+
+.search-btn{
+    background-color: #3dbb56;
+    color: #ffffff;
+    border: none;
+
+    font-size: 17px;
+    padding: 10px;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(8,7,16,0.2);
+    cursor: pointer;
+}
+
+/* Question overview section */
 .overview-container{
     border: 1px solid #777777;
     border-radius: 10px;
@@ -17,6 +82,7 @@
     background-color: #f2f6ff;
     margin: 0;
     font-size: 18px;
+    border-bottom: 1px solid #BBBBBB;
 }
 .row:nth-child(even){
     background-color: #ffffff;
@@ -60,6 +126,8 @@ a {
     border: none;
     border-radius: 10px;
     text-align: center;
+    transition-duration: 0.2s;
+    cursor: pointer;
 }
 .index:hover{
     background-color: #004df5;
