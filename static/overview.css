@@ -22,9 +22,8 @@
     background-color: #f2f6ff;
 }
 #search-term:focus, #search-term:hover{
-    transition-duration: 0.2s;
     width: 70%;
-    border: 1px solid #004df5;
+    border-color: #004df5;
     outline: none;
 }
 
@@ -40,8 +39,7 @@
 }
 #subject:focus, #subject:hover{
     width: 50%;
-    transition-duration: 0.2s;
-    border: 1px solid #004df5;
+    border-color: #004df5;
 }
 
 #indexed{
@@ -58,14 +56,46 @@
     padding: 10px;
     width: 100px;
     border-radius: 10px;
-    box-shadow: 0 0 8px rgba(8,7,16,0.2);
     cursor: pointer;
+    transition-duration: 0.2s;
+}
+.search-btn:hover{
+    background-color: #004df5;
+}
+
+/* Export Button */
+.export{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.export button{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    border: 1px solid #777777;
+    border-bottom: none;
+    background-color: #f2f6ff;
+    margin-right: -1.5px;
+    margin-bottom: -1px;
+    color: inherit;
+    padding: 10px;
+    cursor:pointer;
+    transition-duration: 0.2s;
+    font-size: 13px;
+}
+.export button:hover{
+    border-color: #004df5;
+    font-size: 15px;
 }
 
 /* Question overview section */
 .overview-container{
     border: 1px solid #777777;
     border-radius: 10px;
+    border-top-right-radius: 0;
     background-color: #f2f6ff;
 
     width: 100%;
@@ -131,7 +161,6 @@ a {
 }
 .index:hover{
     background-color: #004df5;
-    transition-duration: 0.2s;
 }
 
 /* Overview Navigation */
