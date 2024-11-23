@@ -10,6 +10,10 @@ app = flask.Flask(__name__)
 def home():
     return render_template('log-in.html')
 
+@app.route('/overview')
+def overview():
+    return render_template('overview.html')
+
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
     # Show question
