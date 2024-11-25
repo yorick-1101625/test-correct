@@ -88,6 +88,7 @@
 }
 .export button:hover{
     border-color: #004df5;
+    color: #004df5;
     font-size: 15px;
 }
 

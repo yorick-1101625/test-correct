@@ -1,10 +1,9 @@
-import flask
-from flask import render_template
+from flask import Flask, render_template
 
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -12,7 +11,6 @@ def home():
 
 @app.route('/overview/<offset>')
 def overview(offset):
-    print(offset)
     questions_model = Questions()
     ten_questions = questions_model.show_ten_questions(offset=int(offset))
     return render_template('overview.html', ten_questions=ten_questions, offset=int(offset))
