@@ -13,16 +13,21 @@ def home():
 def overview(offset):
     questions_model = Questions()
     offset = int(offset)
-    if request.method == 'POST':
-        search_term = str(request.form.get('search-term')) if request.form.get('search-term') else ""
-        subject = str(request.form.get('subject'))
-        indexed_filter = request.form.get('indexed')
-        print(indexed_filter)
-        filtered_questions = questions_model.show_filtered_questions(search_term, subject, indexed_filter)
-        return render_template('overview.html', questions=filtered_questions, offset=offset)
+    # Arguments
+    search_term = request.args.get('search-term')
+    subject = request.args.get('subject')
+    indexed_filter = request.args.get('indexed')
+    arguments = (search_term, subject, indexed_filter)
+
+    # Check if there are arguments
+    if list(filter(lambda x: x != None, arguments)):
+        questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
+        arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
     else:
-        ten_questions = questions_model.show_ten_questions(offset=offset)
-        return render_template('overview.html', questions=ten_questions, offset=offset)
+        questions = questions_model.show_ten_questions(offset=offset)
+        arguments_url = ""
+
+    return render_template('overview.html', questions=questions, offset=offset, arguments_url=arguments_url)
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):

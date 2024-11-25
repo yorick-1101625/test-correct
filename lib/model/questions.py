@@ -13,16 +13,16 @@ class Questions:
         result = self.cursor.execute('SELECT * FROM questions LIMIT ? OFFSET ?', (10, offset)).fetchall()
         return result
 
-    def show_filtered_questions(self, search_term, subject, indexed):
+    def show_filtered_questions(self, subject, indexed, offset, search_term = ""):
         if indexed == 'indexed':
-            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL',
-                                         ("%"+search_term+"%", subject)).fetchall()
+            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL LIMIT ? OFFSET ?',
+                                         ("%"+search_term+"%", subject, 10, offset)).fetchall()
         elif indexed == 'not-indexed':
-            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NULL AND rtti IS NULL',
-                ("%" + search_term + "%", subject)).fetchall()
+            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NULL AND rtti IS NULL LIMIT ? OFFSET ?',
+                ("%" + search_term + "%", subject, 10, offset)).fetchall()
         else:
-            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ?',
-                                         ("%" + search_term + "%", subject)).fetchall()
+            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? LIMIT ? OFFSET ?',
+                                         ("%" + search_term + "%", subject, 10, offset)).fetchall()
         return result
 
     def show_single_question(self, questions_id):

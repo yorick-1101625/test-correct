@@ -10,7 +10,7 @@
 </head>
 <body>
     <section>
-        <form class="search-bar-container" method="post">
+        <form class="search-bar-container" action="/overview/0">
             <div class="search-bar">
                 <div>
                     <label for="search-term">Zoekterm</label>
@@ -67,10 +67,10 @@
 
         <div class="overview-navigation">
             {% if offset > 0 %}
-            <a href="/overview/{{ offset - 1 }}"><button class="previous">&lt;</button></a>
+            <a href="/overview/{{ offset - 1 }}{{ arguments_url }}"><button class="previous">&lt;</button></a>
             {% endif %}
             {% if questions|length == 10 %}
-            <a href="/overview/{{ offset + 1 }}"><button class="next">&gt;</button></a>
+            <a href="/overview/{{ offset + 1 }}{{ arguments_url }}"><button class="next">&gt;</button></a>
             {% endif %}
         </div>
     </section>
