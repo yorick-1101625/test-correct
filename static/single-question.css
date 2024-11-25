@@ -1,16 +1,3 @@
-.question-panel{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 58%;
-
-    margin-top: 50px;
-    padding: 40px;
-    border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 5px rgba(8,7,16,0.2);
-    border-radius: 10px;
-    background-color: #ffffff;
-}
 .page-title{
     font-size: 35px;
     margin: 0;
