@@ -1,7 +1,7 @@
 import json
 import sqlite3
 
-connection = sqlite3.connect('databases/database.db')
+connection = sqlite3.connect('../../databases/database.db')
 cursor = connection.cursor()
 cursor.execute('DELETE FROM questions')
 connection.commit()
@@ -25,7 +25,7 @@ def load_questions(json_data):
 
 
 def open_file():
-    file = open('questions_extract.json')
+    file = open('../../questions_extract.json')
     content = json.load(file)
     load_questions(content)
     file.close()
