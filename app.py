@@ -1,6 +1,7 @@
 import flask
 from flask import render_template
 
+from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 
@@ -28,6 +29,13 @@ def single_question_page(questions_id):
     else:
         return render_template('single-question.html', single_question=single_question, prompts=prompts)
 
+
+@app.route('/login')
+def login():
+    users_model = Users()
+    user_info = users_model.log_in()
+    print(user_info)
+    return render_template('log-in.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
