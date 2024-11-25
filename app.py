@@ -13,16 +13,18 @@ def home():
 def overview(offset):
     questions_model = Questions()
     offset = int(offset)
-    # Arguments
+    # Search Arguments
     search_term = request.args.get('search-term')
     subject = request.args.get('subject')
     indexed_filter = request.args.get('indexed')
     arguments = (search_term, subject, indexed_filter)
 
     # Check if there are arguments
+    # & Return the filtered results
     if list(filter(lambda x: x != None, arguments)):
         questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
         arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
+    # Return standard results
     else:
         questions = questions_model.show_ten_questions(offset=offset)
         arguments_url = ""
@@ -39,7 +41,7 @@ def single_question_page(questions_id):
     prompts = prompts_model.show_prompts()
     # Check if question exists
     if single_question is None:
-        return "404: Question does not exist"
+        return "<h1>404: Question does not exist</h1>"
     else:
         return render_template('single-question.html', single_question=single_question, prompts=prompts)
 
