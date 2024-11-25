@@ -14,9 +14,12 @@ class Questions:
         return result
 
     def show_filtered_questions(self, search_term, subject, indexed):
-        if indexed:
+        if indexed == 'indexed':
             result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL',
                                          ("%"+search_term+"%", subject)).fetchall()
+        elif indexed == 'not-indexed':
+            result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NULL AND rtti IS NULL',
+                ("%" + search_term + "%", subject)).fetchall()
         else:
             result = self.cursor.execute('SELECT * FROM questions WHERE question LIKE ? AND subject = ?',
                                          ("%" + search_term + "%", subject)).fetchall()

@@ -10,22 +10,28 @@
 </head>
 <body>
     <section>
-        <form class="search-bar" method="post">
-            <div>
-                <label for="search-term">Zoekterm</label>
-                <input id="search-term" name="search-term" type="text">
-            </div>
+        <form class="search-bar-container" method="post">
+            <div class="search-bar">
+                <div>
+                    <label for="search-term">Zoekterm</label>
+                    <input id="search-term" name="search-term" type="text">
+                </div>
 
-            <div>
-                <label for="subject">Vak</label>
-                <select id="subject" name="subject" class="subject">
-                    <option value="biologie">Biologie</option>
-                </select>
-            </div>
+                <div>
+                    <label for="subject">Vak</label>
+                    <select id="subject" name="subject">
+                        <option value="biologie">Biologie</option>
+                    </select>
+                </div>
 
-            <div>
-                <label for="indexed">Toon beoordeelde vragen</label>
-                <input id="indexed" name="indexed" type="checkbox">
+                <div>
+                    <label for="indexed">Vragen</label>
+                    <select id="indexed" name="indexed">
+                        <option value="all">Alle</option>
+                        <option value="indexed">Beoordeeld</option>
+                        <option value="not-indexed">Onbeoordeeld</option>
+                    </select>
+                </div>
             </div>
 
             <input class="search-btn" type="submit" value="Zoek">

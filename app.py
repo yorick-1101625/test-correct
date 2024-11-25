@@ -16,9 +16,9 @@ def overview(offset):
     if request.method == 'POST':
         search_term = str(request.form.get('search-term')) if request.form.get('search-term') else ""
         subject = str(request.form.get('subject'))
-        indexed = 1 if request.form.get('indexed') else 0
-        print(indexed)
-        filtered_questions = questions_model.show_filtered_questions(search_term, subject, indexed)
+        indexed_filter = request.form.get('indexed')
+        print(indexed_filter)
+        filtered_questions = questions_model.show_filtered_questions(search_term, subject, indexed_filter)
         return render_template('overview.html', questions=filtered_questions, offset=offset)
     else:
         ten_questions = questions_model.show_ten_questions(offset=offset)

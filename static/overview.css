@@ -1,5 +1,5 @@
 /* Search bar Section */
-.search-bar{
+.search-bar-container{
     width: 100%;
     height: 50px;
     display: flex;
@@ -8,12 +8,21 @@
     margin-bottom: 20px;
     white-space: nowrap;
 }
+
+.search-bar{
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+}
+.search-bar div:first-child{
+    flex: 2;
+}
 .search-bar div{
     flex: 1;
 }
 
 #search-term{
-    width: 60%;
+    width: 65%;
     height: 30px;
     border-radius: 5px;
     border: 1px solid #CCCCCC;
@@ -27,8 +36,8 @@
     outline: none;
 }
 
-#subject{
-    width: 40%;
+select{
+    width: 65%;
     background-color: #f2f6ff;
     height: 35px;
     border-radius: 5px;
@@ -37,14 +46,9 @@
     cursor: pointer;
     transition-duration: 0.2s;
 }
-#subject:focus, #subject:hover{
-    width: 50%;
+select:focus, select:hover{
+    width: 75%;
     border-color: #004df5;
-}
-
-#indexed{
-    width: 40px;
-    cursor:pointer;
 }
 
 .search-btn{
