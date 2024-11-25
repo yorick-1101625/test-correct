@@ -5,9 +5,6 @@
     margin: 0;
     box-sizing: border-box;
 }
-body{
-    background-color: #f2f6ff;
-}
 .background{
     width: 430px;
     height: 520px;
@@ -53,8 +50,6 @@ form{
 
 }
 form *{
-    font-family: 'Nunito',sans-serif;
-    color: #004df5;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
