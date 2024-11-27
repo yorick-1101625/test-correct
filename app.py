@@ -4,6 +4,8 @@ from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 
+from lib.gpt.bloom_taxonomy import get_bloom_category
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -49,7 +51,14 @@ def single_question_page(questions_id):
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
 def get_answer(questions_id):
     if request.method == "POST":
-        pass
+        prompts_id = request.form.get('prompt')
+        prompt_model = Prompts()
+        prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
+
+        questions_model = Questions()
+        question = questions_model.show_single_question(questions_id)['question']
+
+        get_bloom_category(question, prompt, 'rac_test')
     else:
         return render_template('')
 
