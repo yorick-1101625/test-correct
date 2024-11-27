@@ -55,11 +55,12 @@ def prompt_answer(questions_id):
     prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
 
     questions_model = Questions()
-    question = questions_model.show_single_question(questions_id)['question']
+    single_question = questions_model.show_single_question(questions_id)
+    question = single_question['question']
 
-    get_bloom_category(question, prompt, 'rac_test')
+    gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
-    return render_template('prompt-answer.html')
+    return render_template('prompt-answer.html', single_question=single_question, gpt_response=gpt_response)
 
 
 @app.route('/login')

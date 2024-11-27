@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Prompt Antwoord</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='single-question.css') }}">
 </head>
 <body>
+    <section>
+        <!--Details of the question-->
+        <div>
+            <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
+            <p class="question">{{ single_question.question }}</p>
+        </div>
+        <div class="question-categories-grid">
+            <span>Vak:</span>
+            <span>{{ single_question.subject|title }}</span>
 
+            <span>Onderwijs Niveau:</span>
+            <span>{{ single_question.education_level|title }}</span>
+
+            <span>Leerjaar:</span>
+            <span>{{ single_question.grade }}</span>
+        </div>
+    </section>
 </body>
 </html>
