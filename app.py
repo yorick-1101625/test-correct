@@ -34,6 +34,13 @@ def overview(offset):
 
     return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
+@app.route('/prompt-overview')
+def prompt_overview():
+    prompt_nr = 0
+    prompts_model = Prompts()
+    prompts = prompts_model.show_prompts()
+    return render_template('prompt-overview.html', prompts=prompts )
+
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
     # Show question
