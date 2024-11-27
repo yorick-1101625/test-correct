@@ -116,7 +116,7 @@ if __name__ == "__main__":
     prompt = """ 
     Gebruik de taxonomie van Bloom om de volgende vraag in één van de niveaus "Onthouden", "Begrijpen", "Toepassen", "Analyseren", "Evalueren" en "Creëren" en leg uit waarom je dat niveau hebt gekozen. Geef het antwoord in een RFC8259 JSON met de volgende opmaak:
     {
-       "niveau": "niveau van Bloom",
+       "categorie": "niveau van Bloom",
        "uitleg": "uitleg waarom dit niveau van toepassing is"
     }
     """

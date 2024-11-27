@@ -24,6 +24,29 @@
             <span>Leerjaar:</span>
             <span>{{ single_question.grade }}</span>
         </div>
+
+        <!-- The response of the gpt -->
+        <p class="explanation">
+            {{ gpt_response.uitleg }}
+        </p>
+
+        <!-- Choose taxonomy form -->
+        <form>
+            <div>
+                <label for="taxonomy">Keuze taxonomie</label>
+                <select id="taxonomy" name="taxonomy">
+                    <option value="onthouden">Onthouden</option>
+                    <option value="begrijpen">Begrijpen</option>
+                    <option value="toepassen">Toepassen</option>
+                    <option value="analyseren">Analyseren</option>
+                    <option value="evalueren">Evalueren</option>
+                    <option value="creëren">Creëren</option>
+                </select>
+            </div>
+
+            <input class="submit-btn" type="submit" value="Taxonomie opslaan">
+        </form>
+
     </section>
 </body>
 </html>
