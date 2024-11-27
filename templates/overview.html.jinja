@@ -1,78 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Overview</title>
-    <!-- General Styling -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
-    <!-- Page Specific Styling -->
+{% extends "base.html.jinja" %}
+{% block title %}Overview{% endblock %}
+{% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='overview.css') }}">
-</head>
-<body>
-    <section>
-        <form class="search-bar-container" action="/overview/0">
-            <div class="search-bar">
-                <div>
-                    <label for="search-term">Zoekterm</label>
-                    <input id="search-term" name="search-term" type="text">
-                </div>
+{% endblock %}
 
-                <div>
-                    <label for="subject">Vak</label>
-                    <select id="subject" name="subject">
-                        <option value="biologie">Biologie</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="indexed">Vragen</label>
-                    <select id="indexed" name="indexed">
-                        <option value="all">Alle</option>
-                        <option value="indexed">Beoordeeld</option>
-                        <option value="not-indexed">Onbeoordeeld</option>
-                    </select>
-                </div>
+{% block content %}
+<section>
+    <form class="search-bar-container" action="/overview/0">
+        <div class="search-bar">
+            <div>
+                <label for="search-term">Zoekterm</label>
+                <input id="search-term" name="search-term" type="text">
             </div>
 
-            <input class="search-btn" type="submit" value="Zoek">
-        </form>
+            <div>
+                <label for="subject">Vak</label>
+                <select id="subject" name="subject">
+                    <option value="biologie">Biologie</option>
+                </select>
+            </div>
 
-        <div class="export">
-            <button>Exporteer Beoordeelde Vragen</button>
+            <div>
+                <label for="indexed">Vragen</label>
+                <select id="indexed" name="indexed">
+                    <option value="all">Alle</option>
+                    <option value="indexed">Beoordeeld</option>
+                    <option value="not-indexed">Onbeoordeeld</option>
+                </select>
+            </div>
         </div>
 
-        <div class="overview-container">
-            <div class="row-head row">
-                <p class="question">Vraag</p>
-                <p class="subject">Vak</p>
-                <p class="date">Invoer Datum</p>
-                <p class="rtti">RTTI</p>
-                <p class="bloom">Bloom</p>
-            </div>
-            {% for question in questions %}
-            <div class="row">
-                <p class="question">{{ question.question }}</p>
-                <p class="subject">{{ question.subject|title }}</p>
-                <p class="date">{{ question.date_created }}</p>
+        <input class="search-btn" type="submit" value="Zoek">
+    </form>
 
-                {% if question.rtti and question.bloom %}
-                <p class="rtti">{{ question.rtti }}</p>
-                <p class="bloom">{{ question.bloom }}</p>
-                {% else %}
-                <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
-                {% endif %}
-            </div>
-            {% endfor %}
+    <div class="export">
+        <button>Exporteer Beoordeelde Vragen</button>
+    </div>
+
+    <div class="overview-container">
+        <div class="row-head row">
+            <p class="question">Vraag</p>
+            <p class="subject">Vak</p>
+            <p class="date">Invoer Datum</p>
+            <p class="rtti">RTTI</p>
+            <p class="bloom">Bloom</p>
         </div>
+        {% for question in questions %}
+        <div class="row">
+            <p class="question">{{ question.question }}</p>
+            <p class="subject">{{ question.subject|title }}</p>
+            <p class="date">{{ question.date_created }}</p>
 
-        <div class="overview-navigation">
-            {% if offset > 0 %}
-            <a href="/overview/{{ offset - 1 }}{{ arguments_url }}"><button class="previous">&lt;</button></a>
-            {% endif %}
-            {% if questions|length == 10 %}
-            <a href="/overview/{{ offset + 1 }}{{ arguments_url }}"><button class="next">&gt;</button></a>
+            {% if question.rtti and question.bloom %}
+            <p class="rtti">{{ question.rtti }}</p>
+            <p class="bloom">{{ question.bloom }}</p>
+            {% else %}
+            <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
             {% endif %}
         </div>
-    </section>
-</body>
-</html>
+        {% endfor %}
+    </div>
+
+    <div class="overview-navigation">
+        {% if offset > 0 %}
+        <a href="/overview/{{ offset - 1 }}{{ arguments_url }}"><button class="previous">&lt;</button></a>
+        {% endif %}
+        {% if questions|length == 10 %}
+        <a href="/overview/{{ offset + 1 }}{{ arguments_url }}"><button class="next">&gt;</button></a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

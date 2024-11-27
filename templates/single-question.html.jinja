@@ -1,47 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Vraag indexeren naar taxonomie</title>
-
+{% extends "base.html.jinja" %}
+{% block title %}Vraag indexeren naar taxonomie{% endblock %}
+{% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='single-question.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
 <button><a href="/">Terug</a></button>
-    <section>
-        <!--Details of the question-->
+<section>
+    <!--Details of the question-->
+    <div>
+        <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
+        <p class="question">{{ single_question.question }}</p>
+    </div>
+    <div class="question-categories-grid">
+        <span>Vak:</span>
+        <span>{{ single_question.subject|title }}</span>
+
+        <span>Onderwijs Niveau:</span>
+        <span>{{ single_question.education_level|title }}</span>
+
+        <span>Leerjaar:</span>
+        <span>{{ single_question.grade }}</span>
+    </div>
+    <!--Choose prompt menu-->
+    <form method="post" action="{{ single_question.questions_id }}/antwoord">
         <div>
-            <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
-            <p class="question">{{ single_question.question }}</p>
+            <label for="prompt">Prompt:</label>
+            {% if prompts %}
+            <select id="prompt" name="prompt" class="prompt-select">
+                {% for prompt in prompts %}
+                <option value="{{ prompt.prompts_id }}">{{ prompt.prompt_name }}</option>
+                {% endfor %}
+            </select>
+            <!--If there are no existing prompts:-->
+            {% else %}
+            <span><a href="#">Niew Prompt</a></span>
+            {% endif %}
         </div>
-        <div class="question-categories-grid">
-            <span>Vak:</span>
-            <span>{{ single_question.subject|title }}</span>
-
-            <span>Onderwijs Niveau:</span>
-            <span>{{ single_question.education_level|title }}</span>
-
-            <span>Leerjaar:</span>
-            <span>{{ single_question.grade }}</span>
-        </div>
-        <!--Choose prompt menu-->
-        <form method="post" action="{{ single_question.questions_id }}/antwoord">
-            <div>
-                <label for="prompt">Prompt:</label>
-                {% if prompts %}
-                <select id="prompt" name="prompt" class="prompt-select">
-                    {% for prompt in prompts %}
-                    <option value="{{ prompt.prompts_id }}">{{ prompt.prompt_name }}</option>
-                    {% endfor %}
-                </select>
-                <!--If there are no existing prompts:-->
-                {% else %}
-                <span><a href="#">Niew Prompt</a></span>
-                {% endif %}
-            </div>
-            <input class="submit-btn" type="submit" value="Genereer antwoord">
-        </form>
-    </section>
-</body>
-</html>
+        <input class="submit-btn" type="submit" value="Genereer antwoord">
+    </form>
+</section>
+{% endblock %}
