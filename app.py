@@ -49,18 +49,17 @@ def single_question_page(questions_id):
         return render_template('single-question.html', single_question=single_question, prompts=prompts)
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
-def get_answer(questions_id):
-    if request.method == "POST":
-        prompts_id = request.form.get('prompt')
-        prompt_model = Prompts()
-        prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
+def prompt_answer(questions_id):
+    prompts_id = request.form.get('prompt')
+    prompt_model = Prompts()
+    prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
 
-        questions_model = Questions()
-        question = questions_model.show_single_question(questions_id)['question']
+    questions_model = Questions()
+    question = questions_model.show_single_question(questions_id)['question']
 
-        get_bloom_category(question, prompt, 'rac_test')
-    else:
-        return render_template('')
+    get_bloom_category(question, prompt, 'rac_test')
+
+    return render_template('prompt-answer.html')
 
 
 @app.route('/login')
