@@ -46,6 +46,13 @@ def single_question_page(questions_id):
     else:
         return render_template('single-question.html', single_question=single_question, prompts=prompts)
 
+@app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
+def get_answer(questions_id):
+    if request.method == "POST":
+        pass
+    else:
+        return render_template('')
+
 
 @app.route('/login')
 def login():
