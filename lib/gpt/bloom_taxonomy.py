@@ -98,7 +98,7 @@ def get_bloom_category(question, prompt, gpt):
             case "dry_run":
                 print("No model given, we are returning a static answer for testing")
                 result = {
-                    "categorie": "Onthouden",
+                    "categorie": "creëren",
                     "uitleg": "De vraag vereist het onthouden van feitelijke informatie over de Grutto, zoals zijn classificatie als vogelsoort."
                 }
             case "rac_test":

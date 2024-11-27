@@ -35,12 +35,12 @@
             <div>
                 <label for="taxonomy">Keuze taxonomie</label>
                 <select id="taxonomy" name="taxonomy">
-                    <option value="onthouden">Onthouden</option>
-                    <option value="begrijpen">Begrijpen</option>
-                    <option value="toepassen">Toepassen</option>
-                    <option value="analyseren">Analyseren</option>
-                    <option value="evalueren">Evalueren</option>
-                    <option value="creëren">Creëren</option>
+                    <option value="onthouden"   {% if gpt_response.categorie|lower == 'onthouden' %}  selected {% endif %}>Onthouden</option>
+                    <option value="begrijpen"   {% if gpt_response.categorie|lower == 'begrijpen' %}  selected {% endif %}>Begrijpen</option>
+                    <option value="toepassen"   {% if gpt_response.categorie|lower == 'toepassen' %}  selected {% endif %}>Toepassen</option>
+                    <option value="analyseren"  {% if gpt_response.categorie|lower == 'analyseren' %} selected {% endif %}>Analyseren</option>
+                    <option value="evalueren"   {% if gpt_response.categorie|lower == 'evalueren' %}  selected {% endif %}>Evalueren</option>
+                    <option value="creëren"     {% if gpt_response.categorie|lower == 'creëren' %}    selected {% endif %}>Creëren</option>
                 </select>
             </div>
 
