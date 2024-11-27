@@ -4,11 +4,13 @@ from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 
+from lib.gpt.bloom_taxonomy import get_bloom_category
+
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('log-in.html')
+    return render_template('log-in.html.jinja')
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
@@ -30,7 +32,7 @@ def overview(offset):
         questions = questions_model.show_ten_questions(offset=offset)
         arguments_url = ""
 
-    return render_template('overview.html', questions=questions, offset=offset, arguments_url=arguments_url)
+    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
@@ -44,7 +46,21 @@ def single_question_page(questions_id):
     if single_question is None:
         return "<h1>404: Question does not exist</h1>"
     else:
-        return render_template('single-question.html', single_question=single_question, prompts=prompts)
+        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
+
+@app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
+def prompt_answer(questions_id):
+    prompts_id = request.form.get('prompt')
+    prompt_model = Prompts()
+    prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
+
+    questions_model = Questions()
+    single_question = questions_model.show_single_question(questions_id)
+    question = single_question['question']
+
+    gpt_response = get_bloom_category(question, prompt, 'dry_run')
+
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
 
 @app.route('/login')
@@ -52,7 +68,7 @@ def login():
     users_model = Users()
     user_info = users_model.log_in()
     print(user_info)
-    return render_template('log-in.html')
+    return render_template('log-in.html.jinja')
 
 if __name__ == "__main__":
     app.run(debug=True)

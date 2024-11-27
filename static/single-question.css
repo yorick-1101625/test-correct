@@ -3,13 +3,13 @@
     margin: 0;
     color: #004df5;
 }
-.question{
+.question, .explanation{
     font-size: 20px;
 }
 .question-categories-grid{
     display: grid;
     grid-template-columns: 160px 160px;
-    margin-top: 50px;
+    margin: 50px 0;
 }
 
 form{
@@ -21,7 +21,7 @@ form label{
     color: #004df5;
     font-size: 17px;
 }
-.prompt-select{
+select{
     background-color: #ffffff;
     border: 1px solid #777777;
     border-radius: 10px;

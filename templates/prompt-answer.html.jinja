@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prompt Antwoord</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='single-question.css') }}">
+</head>
+<body>
+    <section>
+        <!--Details of the question-->
+        <div>
+            <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
+            <p class="question">{{ single_question.question }}</p>
+        </div>
+        <div class="question-categories-grid">
+            <span>Vak:</span>
+            <span>{{ single_question.subject|title }}</span>
+
+            <span>Onderwijs Niveau:</span>
+            <span>{{ single_question.education_level|title }}</span>
+
+            <span>Leerjaar:</span>
+            <span>{{ single_question.grade }}</span>
+        </div>
+
+        <!-- The response of the gpt -->
+        <p class="explanation">
+            {{ gpt_response.uitleg }}
+        </p>
+
+        <!-- Choose taxonomy form -->
+        <form>
+            <div>
+                <label for="taxonomy">Keuze taxonomie</label>
+                <select id="taxonomy" name="taxonomy">
+                    <option value="onthouden"   {% if gpt_response.categorie|lower == 'onthouden' %}  selected {% endif %}>Onthouden</option>
+                    <option value="begrijpen"   {% if gpt_response.categorie|lower == 'begrijpen' %}  selected {% endif %}>Begrijpen</option>
+                    <option value="toepassen"   {% if gpt_response.categorie|lower == 'toepassen' %}  selected {% endif %}>Toepassen</option>
+                    <option value="analyseren"  {% if gpt_response.categorie|lower == 'analyseren' %} selected {% endif %}>Analyseren</option>
+                    <option value="evalueren"   {% if gpt_response.categorie|lower == 'evalueren' %}  selected {% endif %}>Evalueren</option>
+                    <option value="creëren"     {% if gpt_response.categorie|lower == 'creëren' %}    selected {% endif %}>Creëren</option>
+                </select>
+            </div>
+
+            <input class="submit-btn" type="submit" value="Taxonomie opslaan">
+        </form>
+
+    </section>
+</body>
+</html>

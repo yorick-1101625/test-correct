@@ -26,7 +26,7 @@
             <span>{{ single_question.grade }}</span>
         </div>
         <!--Choose prompt menu-->
-        <form method="post" action="">
+        <form method="post" action="{{ single_question.questions_id }}/antwoord">
             <div>
                 <label for="prompt">Prompt:</label>
                 {% if prompts %}
