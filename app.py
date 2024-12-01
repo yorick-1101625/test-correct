@@ -50,7 +50,7 @@ def prompt_create():
         created_prompt = prompts_model.create_prompt(prompt_name, prompt)
 
         if created_prompt:
-            return redirect('/prompt_overview')
+            return redirect('/prompt-overview')
     else:
         return render_template('prompt-create.html')
 
