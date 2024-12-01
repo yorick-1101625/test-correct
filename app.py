@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 from lib.model.users import Users
 from lib.model.questions import Questions
@@ -41,9 +41,18 @@ def prompt_overview():
     prompts = prompts_model.show_prompts()
     return render_template('prompt-overview.html', prompts=prompts )
 
-@app.route('/prompt-create/', methods=['GET'])
+@app.route('/prompt-create/', methods=['GET', 'POST'])
 def prompt_create():
-    return render_template('prompt-create.html')
+    if request.method == 'POST':
+        prompt_name = request.form.get("prompt_name")
+        prompt = request.form.get("prompt")
+        prompts_model = Prompts()
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt)
+
+        if created_prompt:
+            return redirect('/prompt_overview')
+    else:
+        return render_template('prompt-create.html')
 
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
@@ -77,7 +86,7 @@ def prompt_answer(questions_id):
 @app.route('/login')
 def login():
     users_model = Users()
-    user_info = users_model.log_in()
+    user_info = users_model.show_users()
     print(user_info)
     return render_template('log-in.html.jinja')
 

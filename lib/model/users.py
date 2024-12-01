@@ -5,6 +5,6 @@ class Users():
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
-    def log_in(self):
+    def show_users(self):
         result = self.cursor.execute('SELECT * FROM users').fetchall()
         return result
