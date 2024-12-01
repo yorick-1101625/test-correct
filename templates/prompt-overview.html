@@ -21,11 +21,15 @@
     <td>{{prompt.user_id}}</td>
     <td>1</td>
     <td>0%</td>
-    <td><button type="button">Details</button></td>
+    <td>
+      <a href="/prompt/{{prompt.prompts_id}}">
+      <button type="button">Details</button>
+    </a>
+    </td>
   </tr>
     {% endfor %}
 </table>
-<a href="http://127.0.0.1:5000/prompt-create/">
+<a href="/prompt/create/">
     <button>Nieuwe prompt toevoegen</button>
 </a>
 </body>
