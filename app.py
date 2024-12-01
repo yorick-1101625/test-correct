@@ -41,6 +41,10 @@ def prompt_overview():
     prompts = prompts_model.show_prompts()
     return render_template('prompt-overview.html', prompts=prompts )
 
+@app.route('/prompt-create/', methods=['GET'])
+def prompt_create():
+    return render_template('prompt-create.html')
+
 @app.route('/vraag/<questions_id>', methods=['GET'])
 def single_question_page(questions_id):
     # Show question
