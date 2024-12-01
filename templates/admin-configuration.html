@@ -9,6 +9,25 @@
     <header>
         <h1>Hier kan een redacteur alles wijzigen.</h1>
     </header>
-
+    <table>
+      <tr>
+        <th>Redacteur</th>
+        <th>Loginnaam</th>
+        <th>Admin</th>
+        <th>Acties</th>
+      </tr>
+        {% for user in users %}
+      <tr>
+        <td>{{user.display_name}}</td>
+        <td>{{user.login}}</td>
+        <td><input type="checkbox" id="admin" name="admin"></td>
+        <td><button type="button">Wijzig</button></td>
+      </tr>
+        {% endfor %}
+</table>
+<a href="/user/edit-active-user">
+    <button>Wijzig eigen gegevens</button>
+<a href="/user/add-new-user">
+    <button>Nieuwe redacteur</button>
 </body>
 </html>

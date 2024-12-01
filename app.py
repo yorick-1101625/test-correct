@@ -96,6 +96,11 @@ def prompt_answer(questions_id):
 
     return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
+@app.route('/admin-configuration/')
+def admin_config():
+    users_model = Users()
+    users = users_model.show_users()
+    return render_template('admin-configuration.html', users=users)
 
 @app.route('/login')
 def login():
