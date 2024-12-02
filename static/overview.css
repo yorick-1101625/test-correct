@@ -147,10 +147,6 @@ select:focus, select:hover{
 .bloom{
     width: 13%;
 }
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
 
 .index{
     width: 20%;
