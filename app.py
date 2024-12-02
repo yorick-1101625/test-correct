@@ -24,6 +24,7 @@ def overview(offset):
 
     # Check if there are arguments
     # & Return the filtered results
+    # Source used https://www.geeksforgeeks.org/python-check-for-none-tuple/
     if list(filter(lambda x: x != None, arguments)):
         questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
         arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
