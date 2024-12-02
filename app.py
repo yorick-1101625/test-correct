@@ -116,6 +116,11 @@ def create_user():
     else:
         return render_template('create-user.html')
 
+@app.route('/admin/edit-user/<user_id>')
+def edit_user(user_id):
+    return render_template('create-user.html')
+
+
 
 @app.route('/login')
 def login():

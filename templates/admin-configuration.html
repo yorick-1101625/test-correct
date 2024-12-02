@@ -21,7 +21,10 @@
         <td>{{user.display_name}}</td>
         <td>{{user.login}}</td>
         <td><input type="checkbox" id="admin" name="admin"></td>
-        <td><button type="button">Wijzig</button></td>
+        <td>
+            <a href="/admin/edit-user/{{user.user_id}}">
+            <button type="button">Wijzig</button>
+        </td>
       </tr>
         {% endfor %}
 </table>
