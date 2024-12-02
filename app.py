@@ -6,6 +6,7 @@ from lib.model.prompts import Prompts
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
 
+
 app = Flask(__name__)
 
 
@@ -96,11 +97,25 @@ def prompt_answer(questions_id):
 
     return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
-@app.route('/admin-configuration/')
+@app.route('/admin/configuration')
 def admin_config():
     users_model = Users()
     users = users_model.show_users()
     return render_template('admin-configuration.html', users=users)
+
+@app.route('/admin/create-user', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'POST':
+        display_name = request.form.get('display_name')
+        login = request.form.get('login')
+        password = request.form.get('password')
+        user_model = Users()
+        created_user = user_model.create_users(display_name, login, password)
+        if created_user:
+            return redirect('configuration')
+    else:
+        return render_template('create-user.html')
+
 
 @app.route('/login')
 def login():
