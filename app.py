@@ -116,9 +116,25 @@ def create_user():
     else:
         return render_template('create-user.html')
 
-@app.route('/admin/edit-user/<user_id>')
+@app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
-    return render_template('create-user.html')
+    user_model = Users()
+    if request.method == 'POST':
+        if request.form['submit'] == 'Opslaan':
+            display_name = request.form.get('display_name')
+            login = request.form.get('login')
+            password = request.form.get('password')
+            edited_user = user_model.edit_users(
+                display_name=display_name, login=login, password=password, user_id=user_id)
+            if edited_user:
+                return redirect('admin/configuration')
+        if request.form['submit'] == 'Verwijderen':
+            deleted_user = user_model.delete_users(
+                user_id=user_id)
+            if deleted_user:
+                return redirect('/admin/configuration')
+    else:
+        return render_template('edit-user.html')
 
 
 
