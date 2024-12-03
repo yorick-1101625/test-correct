@@ -32,6 +32,7 @@ class Users():
         self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ? WHERE user_id = ?',
                             (login, password, display_name, user_id))
         self.conn.commit()
+        return True
 
     def delete_users(self, user_id):
         self.cursor.execute('DELETE FROM users WHERE user_id = ?',
