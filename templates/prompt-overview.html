@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="shape"><img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg"></div>
+<div class="shape">
+  <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
+</div>
+
 <h1>AI Prompts</h1>
+
 <table>
   <tr>
     <th>Prompt</th>
@@ -15,7 +19,9 @@
     <th>Correct </th>
     <th>Acties</th>
   </tr>
+
     {% for prompt in prompts %}
+
   <tr>
     <td>{{prompt.prompt_name}}</td>
     <td>{{prompt.user_id}}</td>
@@ -27,10 +33,13 @@
     </a>
     </td>
   </tr>
+
     {% endfor %}
 </table>
+
 <a href="/prompt/create">
     <button>Nieuwe prompt toevoegen</button>
 </a>
+
 </body>
 </html>

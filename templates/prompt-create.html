@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Nieuwe prompt</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
 </head>
 <body>
+<div class="shape">
+    <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
+</div>
+
 <form method="POST">
+
     <label for="prompt_name">Titel</label><br>
     <input type="text" id="prompt_name" name="prompt_name"><br>
 
@@ -15,5 +22,6 @@
     <input type="submit" value="Maak prompt">
 
 </form>
+
 </body>
 </html>

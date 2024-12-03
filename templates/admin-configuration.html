@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
-    <link href="style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
 </head>
 <body>
+<div class="shape">
+  <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
+</div>
+
     <header>
         <h1>Hier kan een redacteur alles wijzigen.</h1>
     </header>
+
     <table>
       <tr>
         <th>Redacteur</th>
@@ -16,7 +22,9 @@
         <th>Admin</th>
         <th>Acties</th>
       </tr>
+
         {% for user in users %}
+
       <tr>
         <td>{{user.display_name}}</td>
         <td>{{user.login}}</td>
@@ -24,13 +32,19 @@
         <td>
             <a href="/admin/edit-user/{{user.user_id}}">
             <button type="button">Wijzig</button>
+            </a>
         </td>
       </tr>
+
         {% endfor %}
 </table>
+
 <a href="/admin/edit-active-user">
     <button>Wijzig eigen gegevens</button>
+</a>
+
 <a href="/admin/create-user">
     <button>Nieuwe redacteur</button>
+</a>
 </body>
 </html>
