@@ -119,6 +119,7 @@ def create_user():
 @app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
     user_model = Users()
+    user_info = user_model.show_single_user(user_id)
     if request.method == 'POST':
         if request.form['submit'] == 'Opslaan':
             display_name = request.form.get('display_name')
@@ -134,8 +135,7 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html')
-
+        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
 
 
 @app.route('/login')

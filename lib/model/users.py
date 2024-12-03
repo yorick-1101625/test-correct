@@ -10,6 +10,11 @@ class Users():
         result = self.cursor.execute('SELECT * FROM users').fetchall()
         return result
 
+    def show_single_user(self, user_id):
+        result = self.cursor.execute('SELECT * FROM users WHERE user_id = ?',
+                                     user_id).fetchone()
+        return result
+
     def create_users(self, display_name, login, password):
         result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
         max_user_id = result[0]
@@ -25,7 +30,7 @@ class Users():
 
     def edit_users(self, display_name, login, password, user_id):
         self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ? WHERE user_id = ?',
-                            (display_name, login, password, user_id))
+                            (login, password, display_name, user_id))
         self.conn.commit()
 
     def delete_users(self, user_id):
