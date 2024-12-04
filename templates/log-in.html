@@ -15,17 +15,23 @@
     <div class="shape"><img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg"></div>
     <div class="shape"></div>
 </div>
-<form>
+<form method="POST" action="{{ url_for('login') }}">
     <img class="logo" src="https://welcome.test-correct.nl/svg/logos/Logo-Test-Correct-2.svg">
     <h3>Login Here</h3>
 
     <label for="username">Username</label>
-    <input type="text" id="username">
+    <input type="text" id="username" name="username" required>
 
     <label for="password">Password</label>
-    <input type="password" id="password">
+    <input type="password" id="password" name="password" required>
 
-    <button>Log In</button>
+    <button type="submit">Log In</button>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
 </form>
+
+
 </body>
 </html>
