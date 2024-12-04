@@ -139,12 +139,21 @@ def edit_user(user_id):
         return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
 
 
-# @app.route('/login')
-# def login():
-#     users_model = Users()
-#     user_info = users_model.show_users()
-#     print(user_info)
-#     return render_template('log-in.html')
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    users_model = Users()
+    is_logged_in = users_model.log_in(username, password)
+
+    if is_logged_in:
+        return redirect('/overview/0')  # Redirect to a success page
+    else:
+        error = "Invalid username or password"
+        return render_template('log-in.html', error=error)
+
+
 
 
 if __name__ == "__main__":
