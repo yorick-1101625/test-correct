@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wijzig redacteur</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+</head>
+<body>
+<div class="shape">
+  <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
+</div>
+
+<form method="POST">
+
+    <label for="display_name">Naam</label><br>
+    <input type="text" id="display_name" name="display_name" value="{{display_name}}"><br>
+
+    <label for="login">Email / login</label><br>
+    <input type="text" id="login" name="login" value="{{login}}"><br>
+
+    <label for="password">Wachtwoord</label><br>
+    <input type="text" id="password" name="password" value="{{password}}"><br>
+
+    <label for="is_admin">Is admin?</label>
+    {% if is_admin == 1 %}
+        <input type="checkbox" id="is_admin" name="admin" value="1" checked><br>
+    {% else %}
+        <input type="checkbox" id="is_admin" name="admin" value="1"><br>
+    {% endif %}
+
+    <input type="submit" name="submit" value="Opslaan">
+    <input type="submit" name="submit" value="Verwijderen">
+</form>
+</body>
+</html>
