@@ -39,3 +39,15 @@ class Users():
                             user_id)
         self.conn.commit()
         return True
+
+    def log_in(self, username, password):
+        # Fetch the user record based on the username
+        self.cursor.execute('SELECT login, password FROM users WHERE login = ?', (username,))
+        user = self.cursor.fetchone()
+
+        # Check if user exists and password matches
+        if user and password == user[1]:  # Direct string comparison for passwords
+            return True  # Login successful
+        return False  # Login failed
+
+
