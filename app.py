@@ -36,39 +36,7 @@ def overview(offset):
         questions = questions_model.show_ten_questions(offset=offset)
         arguments_url = ""
 
-    return render_template('overview.html.jinja',
-                           questions=questions, offset=offset, arguments_url=arguments_url)
-
-
-@app.route('/prompt/overview')
-def prompt_overview():
-    prompt_nr = 0
-    prompts_model = Prompts()
-    prompts = prompts_model.show_prompts()
-    return render_template('prompt-overview.html', prompts=prompts)
-
-
-@app.route('/prompt/create', methods=['GET', 'POST'])
-def prompt_create():
-    if request.method == 'POST':
-        prompt_name = request.form.get("prompt_name")
-        prompt = request.form.get("prompt")
-        prompts_model = Prompts()
-        created_prompt = prompts_model.create_prompt(prompt_name, prompt)
-
-        if created_prompt:
-            return redirect('/prompt/overview')
-    else:
-        return render_template('prompt-create.html')
-
-
-@app.route('/prompt/<prompts_id>')
-def prompt_details(prompts_id):
-    prompts_model = Prompts()
-    prompt = prompts_model.show_single_prompt(prompts_id)
-    user = 'Kees'
-    return render_template('prompt-details.html', prompt=prompt, user=user)
-
+    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 
 @app.route('/prompt/overview')
@@ -113,9 +81,7 @@ def single_question_page(questions_id):
     if single_question is None:
         return "<h1>404: Question does not exist</h1>"
     else:
-        return render_template('single-question.html.jinja',
-                               single_question=single_question, prompts=prompts)
-
+        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
 
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
@@ -130,58 +96,7 @@ def prompt_answer(questions_id):
 
     gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
-    return render_template('prompt-answer.html.jinja',
-                           single_question=single_question, gpt_response=gpt_response)
-
-@app.route('/admin/configuration')
-def admin_config():
-    users_model = Users()
-    users = users_model.show_users()
-    return render_template('admin-configuration.html', users=users)
-
-@app.route('/admin/create-user', methods=['GET', 'POST'])
-def create_user():
-    if request.method == 'POST':
-        display_name = request.form.get('display_name')
-        login = request.form.get('login')
-        password = request.form.get('password')
-        user_model = Users()
-        created_user = user_model.create_users(display_name, login, password)
-        if created_user:
-            return redirect('configuration')
-    else:
-        return render_template('create-user.html')
-
-@app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
-def edit_user(user_id):
-    user_model = Users()
-    user_info = user_model.show_single_user(user_id)
-    if request.method == 'POST':
-        if request.form['submit'] == 'Opslaan':
-            display_name = request.form.get('display_name')
-            login = request.form.get('login')
-            password = request.form.get('password')
-            is_admin = request.form.get('admin')
-            try:
-                if is_admin[0] == '1':
-                    is_admin = 1
-                else:
-                    is_admin = 0
-            except:
-                is_admin = 0
-            edited_user = user_model.edit_users(
-                display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
-            if edited_user:
-                return redirect('/admin/configuration')
-        if request.form['submit'] == 'Verwijderen':
-            deleted_user = user_model.delete_users(
-                user_id=user_id)
-            if deleted_user:
-                return redirect('/admin/configuration')
-    else:
-        return render_template(
-            'edit-user.html',
-            display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin = user_info[5])
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
 @app.route('/admin/configuration')
 def admin_config():
@@ -224,13 +139,12 @@ def edit_user(user_id):
         return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
 
 
-@app.route('/login')
-def login():
-    users_model = Users()
-    user_info = users_model.show_users()
-    print(user_info)
-    return render_template('log-in.html')
-
+# @app.route('/login')
+# def login():
+#     users_model = Users()
+#     user_info = users_model.show_users()
+#     print(user_info)
+#     return render_template('log-in.html')
 
 
 if __name__ == "__main__":
