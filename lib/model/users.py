@@ -15,7 +15,7 @@ class Users():
                                      user_id).fetchone()
         return result
 
-    def create_users(self, display_name, login, password):
+    def create_users(self, display_name, login, password, is_admin):
         result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
         max_user_id = result[0]
         if max_user_id is not None:
@@ -23,7 +23,7 @@ class Users():
         else:
             user_id = 0
         self.cursor.execute("INSERT into users (user_id, login, password, display_name, is_admin) VALUES (?,?,?,?,?)",
-                            (user_id, login, password, display_name, 0))
+                            (user_id, login, password, display_name, is_admin))
         self.conn.commit()
 
         return True
