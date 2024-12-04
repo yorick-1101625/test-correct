@@ -12,7 +12,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('log-in.html')
+    # If not logged in:
+    return redirect('/login')
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
@@ -145,7 +146,7 @@ def edit_user(user_id):
         return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
