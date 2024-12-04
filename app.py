@@ -12,7 +12,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('log-in.html.jinja')
+    return render_template('log-in.html')
+
 
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
@@ -27,7 +28,6 @@ def overview(offset):
 
     # Check if there are arguments
     # & Return the filtered results
-    # Source used https://www.geeksforgeeks.org/python-check-for-none-tuple/
     if list(filter(lambda x: x != None, arguments)):
         questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
         arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
@@ -36,8 +36,7 @@ def overview(offset):
         questions = questions_model.show_ten_questions(offset=offset)
         arguments_url = ""
 
-    return render_template('overview.html.jinja',
-                           questions=questions, offset=offset, arguments_url=arguments_url)
+    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 
 @app.route('/prompt/overview')
@@ -82,8 +81,7 @@ def single_question_page(questions_id):
     if single_question is None:
         return "<h1>404: Question does not exist</h1>"
     else:
-        return render_template('single-question.html.jinja',
-                               single_question=single_question, prompts=prompts)
+        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
 
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
@@ -98,8 +96,7 @@ def prompt_answer(questions_id):
 
     gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
-    return render_template('prompt-answer.html.jinja',
-                           single_question=single_question, gpt_response=gpt_response)
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
 @app.route('/admin/configuration')
 def admin_config():
@@ -129,16 +126,8 @@ def edit_user(user_id):
             display_name = request.form.get('display_name')
             login = request.form.get('login')
             password = request.form.get('password')
-            is_admin = request.form.get('admin')
-            try:
-                if is_admin[0] == '1':
-                    is_admin = 1
-                else:
-                    is_admin = 0
-            except:
-                is_admin = 0
             edited_user = user_model.edit_users(
-                display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
+                display_name=display_name, login=login, password=password, user_id=user_id)
             if edited_user:
                 return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':
@@ -147,17 +136,24 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template(
-            'edit-user.html',
-            display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin = user_info[5])
+        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
     users_model = Users()
-    user_info = users_model.show_users()
-    print(user_info)
-    return render_template('log-in.html.jinja')
+    is_logged_in = users_model.log_in(username, password)
+
+    if is_logged_in:
+        return redirect('/overview/0')  # Redirect to a success page
+    else:
+        error = "Invalid username or password"
+        return render_template('log-in.html', error=error)
+
+
 
 
 if __name__ == "__main__":
