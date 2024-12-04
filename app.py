@@ -129,8 +129,16 @@ def edit_user(user_id):
             display_name = request.form.get('display_name')
             login = request.form.get('login')
             password = request.form.get('password')
+            is_admin = request.form.get('admin')
+            try:
+                if is_admin[0] == '1':
+                    is_admin = 1
+                else:
+                    is_admin = 0
+            except:
+                is_admin = 0
             edited_user = user_model.edit_users(
-                display_name=display_name, login=login, password=password, user_id=user_id)
+                display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
                 return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':

@@ -22,11 +22,11 @@
     <label for="password">Wachtwoord</label><br>
     <input type="text" id="password" name="password" value="{{password}}"><br>
 
-    <label for="admin">Is admin?</label>
+    <label for="is_admin">Is admin?</label>
     {% if is_admin == 1 %}
-        <input type="checkbox" id="is_admin" name="admin" checked><br>
+        <input type="checkbox" id="is_admin" name="admin" value="1" checked><br>
     {% else %}
-        <input type="checkbox" id="is_admin" name="admin"><br>
+        <input type="checkbox" id="is_admin" name="admin" value="1"><br>
     {% endif %}
 
     <input type="submit" name="submit" value="Opslaan">

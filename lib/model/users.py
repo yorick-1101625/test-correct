@@ -28,9 +28,9 @@ class Users():
 
         return True
 
-    def edit_users(self, display_name, login, password, user_id):
-        self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ? WHERE user_id = ?',
-                            (login, password, display_name, user_id))
+    def edit_users(self, display_name, login, password, user_id, is_admin):
+        self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
+                            (login, password, display_name, is_admin, user_id))
         self.conn.commit()
         return True
 
