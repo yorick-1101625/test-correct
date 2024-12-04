@@ -14,8 +14,6 @@ app = Flask(__name__)
 def home():
     return render_template('log-in.html')
 
-
-
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
     questions_model = Questions()
@@ -126,8 +124,16 @@ def edit_user(user_id):
             display_name = request.form.get('display_name')
             login = request.form.get('login')
             password = request.form.get('password')
+            is_admin = request.form.get('admin')
+            try:
+                if is_admin[0] == '1':
+                    is_admin = 1
+                else:
+                    is_admin = 0
+            except:
+                is_admin = 0
             edited_user = user_model.edit_users(
-                display_name=display_name, login=login, password=password, user_id=user_id)
+                display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
                 return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':
@@ -136,7 +142,7 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
+        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
 
 
 @app.route('/login', methods=['POST'])
