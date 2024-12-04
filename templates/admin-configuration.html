@@ -24,11 +24,14 @@
       </tr>
 
         {% for user in users %}
-
       <tr>
         <td>{{user.display_name}}</td>
         <td>{{user.login}}</td>
-        <td><input type="checkbox" id="admin" name="admin"></td>
+          {% if user.is_admin == 1 %}
+            <td><input type="checkbox" id="admin" name="admin" disabled checked></td>
+          {% else %}
+            <td><input type="checkbox" id="admin" name="admin" disabled></td>
+          {% endif %}
         <td>
             <a href="/admin/edit-user/{{user.user_id}}">
             <button type="button">Wijzig</button>

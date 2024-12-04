@@ -23,7 +23,11 @@
     <input type="text" id="password" name="password" value="{{password}}"><br>
 
     <label for="admin">Is admin?</label>
-    <input type="checkbox" id="admin" name="admin"><br>
+    {% if is_admin == 1 %}
+        <input type="checkbox" id="is_admin" name="admin" checked><br>
+    {% else %}
+        <input type="checkbox" id="is_admin" name="admin"><br>
+    {% endif %}
 
     <input type="submit" name="submit" value="Opslaan">
     <input type="submit" name="submit" value="Verwijderen">

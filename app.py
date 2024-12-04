@@ -135,7 +135,9 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2])
+        return render_template(
+            'edit-user.html',
+            display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin = user_info[5])
 
 
 @app.route('/login')
