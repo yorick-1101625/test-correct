@@ -35,7 +35,8 @@ def overview(offset):
         questions = questions_model.show_ten_questions(offset=offset)
         arguments_url = ""
 
-    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
+    return render_template('overview.html.jinja',
+                           questions=questions, offset=offset, arguments_url=arguments_url)
 
 
 @app.route('/prompt/overview')
@@ -80,7 +81,8 @@ def single_question_page(questions_id):
     if single_question is None:
         return "<h1>404: Question does not exist</h1>"
     else:
-        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
+        return render_template('single-question.html.jinja',
+                               single_question=single_question, prompts=prompts)
 
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
@@ -95,7 +97,8 @@ def prompt_answer(questions_id):
 
     gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
-    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
+    return render_template('prompt-answer.html.jinja',
+                           single_question=single_question, gpt_response=gpt_response)
 
 @app.route('/admin/configuration')
 def admin_config():
