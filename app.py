@@ -27,12 +27,12 @@ def overview(offset):
 
     # Check if there are arguments
     # & Return the filtered results
-    if list(filter(lambda x: x != None, arguments)):
+    if list(filter(lambda x: x is not None, arguments)):
         questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
         arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
     # Return standard results
     else:
-        questions = questions_model.show_ten_questions(offset=offset)
+        questions = questions_model.show_ten_not_indexed_questions(offset=offset)
         arguments_url = ""
 
     return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
