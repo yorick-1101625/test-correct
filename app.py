@@ -40,7 +40,6 @@ def overview(offset):
 
 @app.route('/prompt/overview')
 def prompt_overview():
-    prompt_nr = 0
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
     return render_template('prompt-overview.html', prompts=prompts)
@@ -64,11 +63,11 @@ def prompt_create():
 def prompt_details(prompts_id):
     prompts_model = Prompts()
     prompt = prompts_model.show_single_prompt(prompts_id)
-    user = 'Kees'
+    user = 'Kees' # Placeholder until we have sessions
     return render_template('prompt-details.html', prompt=prompt, user=user)
 
 
-@app.route('/vraag/<questions_id>', methods=['GET'])
+@app.route('/vraag/<questions_id>')
 def single_question_page(questions_id):
     # Show question
     questions_model = Questions()
@@ -156,11 +155,11 @@ def edit_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    username = request.form.get('username')
+    email = request.form.get('email')
     password = request.form.get('password')
 
     users_model = Users()
-    is_logged_in = users_model.log_in(username, password)
+    is_logged_in = users_model.log_in(email, password)
 
     if is_logged_in:
         return redirect('/overview/0')  # Redirect to a success page
