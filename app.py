@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_file
 
 from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
+
+from lib.database.export_json import convert_to_json
 
 
 app = Flask(__name__)
@@ -36,6 +38,22 @@ def overview(offset):
         arguments_url = ""
 
     return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
+
+
+@app.route('/export', methods=['GET', 'POST'])
+def export():
+    questions_model = Questions()
+    exported_questions = questions_model.get_indexed_questions()
+
+    if request.method == "POST":
+        # Set questions as exported in database
+        for question in exported_questions:
+            questions_model.set_exported(question['questions_id'])
+        return send_file("lib/json/exported-questions.json", as_attachment=True)
+    else:
+        # Export questions to json
+        convert_to_json(exported_questions)
+        return render_template("export.html.jinja")
 
 
 @app.route('/prompt/overview')
