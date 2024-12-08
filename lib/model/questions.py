@@ -17,7 +17,7 @@ class Questions:
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL AND exported = 0 LIMIT ? OFFSET ?',
                                          ("%"+search_term+"%", subject, 10, offset)).fetchall()
         elif indexed == 'not-indexed':
-            result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NULL OR rtti IS NULL AND exported = 0 LIMIT ? OFFSET ?',
+            result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NULL OR rtti IS NULL) AND exported = 0 LIMIT ? OFFSET ?',
                                          ("%" + search_term + "%", subject, 10, offset)).fetchall()
         elif indexed == 'exported':
             result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE question LIKE ? AND subject = ? AND exported = 1 LIMIT ? OFFSET ?',
@@ -32,7 +32,7 @@ class Questions:
         return result
 
     def get_indexed_questions(self):
-        result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL').fetchall()
+        result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL AND exported = 0').fetchall()
         return result
 
     def set_exported(self, questions_id):
