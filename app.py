@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_file
 
 from lib.model.users import Users
 from lib.model.questions import Questions
@@ -40,12 +40,15 @@ def overview(offset):
     return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 
-@app.route('/export')
+@app.route('/export', methods=['GET', 'POST'])
 def export():
-    questions_model = Questions()
-    exported_questions = questions_model.get_indexed_questions()
-    convert_to_json(exported_questions)
-    return render_template("export.html.jinja")
+    if request.method == "POST":
+        return send_file("lib/json/exported-questions.json", as_attachment=True)
+    else:
+        questions_model = Questions()
+        exported_questions = questions_model.get_indexed_questions()
+        convert_to_json(exported_questions)
+        return render_template("export.html.jinja")
 
 
 @app.route('/prompt/overview')
