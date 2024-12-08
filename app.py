@@ -92,7 +92,8 @@ def prompt_answer(questions_id):
     single_question = questions_model.show_single_question(questions_id)
     question = single_question['question']
 
-    gpt_response = get_bloom_category(question, prompt, 'dry_run')
+    gpt_response = get_bloom_category(question, prompt, 'rac_test')
+    print(gpt_response)
 
     return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 

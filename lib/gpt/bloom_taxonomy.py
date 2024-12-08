@@ -3,11 +3,6 @@ import traceback
 
 from openai import OpenAI
 from ollama import Client
-import json
-import traceback
-
-from openai import OpenAI
-from ollama import Client
 
 gpt_model_map = {
     "dry_run": {
@@ -16,7 +11,7 @@ gpt_model_map = {
         "api_key": None
     },
     "rac_test": {
-        "model": "llama3.2",
+        "model": "llama3.3",
         "endpoint": "https://ollama.rac-sd.nl",
         "api_key": None
     },
