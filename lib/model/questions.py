@@ -29,5 +29,5 @@ class Questions:
         return result
 
     def get_indexed_questions(self):
-        result = self.cursor.execute('SELECT DISTINCT * FROM questions ').fetchall() #WHERE taxonomy_bloom IS NULL AND rtti IS NULL
+        result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL').fetchall()
         return result

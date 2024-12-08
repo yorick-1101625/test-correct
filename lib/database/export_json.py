@@ -1,7 +1,9 @@
 import json
 
+
 def convert_to_json(exported_questions):
-    json = []
+    questions_list = []
+    # Format the questions in a dictionary
     for questions in exported_questions:
         question_id = questions['questions_id']
         question = questions['question']
@@ -14,5 +16,15 @@ def convert_to_json(exported_questions):
             "taxonomie": taxonomy_bloom,
             "rtti": rtti
         }
-        json.append(question_dict)
-    print(json)
+        # Adding all the questions in a list
+        questions_list.append(question_dict)
+
+    write_to_json(questions_list)
+
+def write_to_json(questions_list):
+    # Convert the list to a json object
+    json_object = json.dumps(questions_list, indent=4)
+
+    # Write the json object to a json file
+    with open("lib/json/exported-questions.json", "w") as outfile:
+        outfile.write(json_object)
