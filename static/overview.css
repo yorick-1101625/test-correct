@@ -69,7 +69,6 @@ select:focus, select:hover{
 
 /* Export Button */
 .export{
-    width: 100%;
     display: flex;
     justify-content: end;
 }
@@ -86,7 +85,7 @@ select:focus, select:hover{
     margin-bottom: -1px;
     color: inherit;
     padding: 10px;
-    cursor:pointer;
+    cursor: pointer;
     transition-duration: 0.2s;
     font-size: 13px;
 }

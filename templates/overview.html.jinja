@@ -34,9 +34,11 @@
         <input class="search-btn" type="submit" value="Zoek">
     </form>
 
-    <a class="export" href="/export">
-        <button>Exporteer Beoordeelde Vragen</button>
-    </a>
+    <div class="export">
+        <a href="/export">
+            <button>Exporteer Beoordeelde Vragen</button>
+        </a>
+    </div>
 
     <div class="overview-container">
         <div class="row-head row">
@@ -52,9 +54,9 @@
             <p class="subject">{{ question.subject|title }}</p>
             <p class="date">{{ question.date_created }}</p>
 
-            {% if question.rtti and question.bloom %}
+            {% if question.rtti or question.taxonomy_bloom %}
             <p class="rtti">{{ question.rtti }}</p>
-            <p class="bloom">{{ question.bloom }}</p>
+            <p class="bloom">{{ question.taxonomy_bloom }}</p>
             {% else %}
             <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
             {% endif %}
