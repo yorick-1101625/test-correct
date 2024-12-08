@@ -3,10 +3,11 @@ from flask import Flask, render_template, request, redirect
 from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
+from lib.database.load_json import Json
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
 
-
+import json
 app = Flask(__name__)
 
 
@@ -168,7 +169,15 @@ def login():
         return render_template('log-in.html', error=error)
 
 
-
+@app.route('/upload', methods=['GET', 'POST'])
+def json_upload():
+    if request.method == 'POST':
+        file = request.form.get('json_file')
+        data = json.load(file)
+        json_model = Json()
+        json_model.open_file(data)
+    else:
+        return render_template('upload-json.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

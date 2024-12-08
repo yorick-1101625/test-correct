@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload JSON bestand</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
+</head>
+<body>
+<div class="shape">
+  <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
+</div>
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" name="json_file" accept=".json"><br>
+  <input type="submit">
+</form>
+</body>
+</html>
