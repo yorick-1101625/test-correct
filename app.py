@@ -42,11 +42,16 @@ def overview(offset):
 
 @app.route('/export', methods=['GET', 'POST'])
 def export():
+    questions_model = Questions()
+    exported_questions = questions_model.get_indexed_questions()
+
     if request.method == "POST":
+        # Set questions as exported in database
+        for question in exported_questions:
+            questions_model.set_exported(question['questions_id'])
         return send_file("lib/json/exported-questions.json", as_attachment=True)
     else:
-        questions_model = Questions()
-        exported_questions = questions_model.get_indexed_questions()
+        # Export questions to json
         convert_to_json(exported_questions)
         return render_template("export.html.jinja")
 

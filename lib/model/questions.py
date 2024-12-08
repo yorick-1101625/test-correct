@@ -31,3 +31,8 @@ class Questions:
     def get_indexed_questions(self):
         result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL').fetchall()
         return result
+
+    def set_exported(self, questions_id):
+        result = self.cursor.execute('UPDATE questions SET exported = 1 WHERE questions_id = ?', (questions_id,))
+        self.conn.commit()
+        return result
