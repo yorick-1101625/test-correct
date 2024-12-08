@@ -27,3 +27,7 @@ class Questions:
     def show_single_question(self, questions_id):
         result = self.cursor.execute('SELECT * FROM questions WHERE questions_id = ?', (str(questions_id),)).fetchone()
         return result
+
+    def get_indexed_questions(self):
+        result = self.cursor.execute('SELECT DISTINCT * FROM questions ').fetchall() #WHERE taxonomy_bloom IS NULL AND rtti IS NULL
+        return result

@@ -6,6 +6,8 @@ from lib.model.prompts import Prompts
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
 
+from lib.database.export_json import convert_to_json
+
 
 app = Flask(__name__)
 
@@ -40,6 +42,9 @@ def overview(offset):
 
 @app.route('/export')
 def export():
+    questions_model = Questions()
+    exported_questions = questions_model.get_indexed_questions()
+    convert_to_json(exported_questions)
     return render_template("export.html.jinja")
 
 
