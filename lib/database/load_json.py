@@ -28,5 +28,4 @@ class Json:
     def open_file(self, file):
         content = json.load(file)
         self.load_questions(content)
-        file.close()
         self.conn.close()

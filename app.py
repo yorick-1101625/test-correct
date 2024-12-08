@@ -172,10 +172,11 @@ def login():
 @app.route('/upload', methods=['GET', 'POST'])
 def json_upload():
     if request.method == 'POST':
-        file = request.form.get('json_file')
-        data = json.load(file)
+        file = request.files['json_file']
         json_model = Json()
-        json_model.open_file(data)
+        json_uploaded = json_model.open_file(file)
+        if json_uploaded:
+            return redirect('/login')
     else:
         return render_template('upload-json.html')
 
