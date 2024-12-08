@@ -38,6 +38,11 @@ def overview(offset):
     return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 
+@app.route('/export')
+def export():
+    return render_template("export.html.jinja")
+
+
 @app.route('/prompt/overview')
 def prompt_overview():
     prompts_model = Prompts()
