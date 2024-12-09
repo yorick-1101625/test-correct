@@ -11,7 +11,7 @@ gpt_model_map = {
         "api_key": None
     },
     "rac_test": {
-        "model": "llama3.3",
+        "model": "llama3.2",
         "endpoint": "https://ollama.rac-sd.nl",
         "api_key": None
     },
