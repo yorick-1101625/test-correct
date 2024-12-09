@@ -23,9 +23,15 @@
     </div>
 
     <!-- The response of the gpt -->
-    <p class="explanation">
-        {{ gpt_response.uitleg }}
-    </p>
+    {% if gpt_response.uitleg %}
+        <p class="explanation">
+            {{ gpt_response.uitleg }}
+        </p>
+    {% else %}
+        <p class="explanation" style="color: red;">
+            Error: GPT antwoord niet ondersteund
+        </p>
+    {% endif %}
 
     <!-- Choose taxonomy form -->
     <form>

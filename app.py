@@ -95,7 +95,7 @@ def prompt_answer(questions_id):
     # Add JSON structure directions to prompt
     structured_prompt = prompt_model.structure_prompt(prompt)
     gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
-    # print("Prompt:", structured_prompt, "\n\n",gpt_response)
+    print("Prompt:", structured_prompt, "\n\n",gpt_response)
 
     return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
