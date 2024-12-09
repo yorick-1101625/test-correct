@@ -77,12 +77,17 @@ def prompt_create():
         return render_template('prompt-create.html')
 
 
-@app.route('/prompt/<prompts_id>')
+@app.route('/prompt/<prompts_id>', methods=['GET', 'POST'])
 def prompt_details(prompts_id):
     prompts_model = Prompts()
     prompt = prompts_model.show_single_prompt(prompts_id)
-    user = 'Kees' # Placeholder until we have sessions
-    return render_template('prompt-details.html', prompt=prompt, user=user)
+    if request.method == 'POST':
+        is_deleted = prompts_model.delete_prompt(prompts_id)
+        if is_deleted:
+            return redirect('/prompt/overview')
+    else:
+        user = 'Kees' # Placeholder until we have sessions
+        return render_template('prompt-details.html', prompt=prompt, user=user)
 
 
 @app.route('/vraag/<questions_id>')

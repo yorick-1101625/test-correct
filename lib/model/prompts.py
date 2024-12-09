@@ -26,3 +26,8 @@ class Prompts:
         self.conn.commit()
 
         return True
+
+    def delete_prompt(self, prompt_id):
+        self.cursor.execute("DELETE FROM prompts WHERE prompts_id = ?", (prompt_id,))
+        self.conn.commit()
+        return True
