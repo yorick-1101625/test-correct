@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, redirect, send_file, session
+from flask_session import Session
 
 from lib.model.users import Users
 from lib.model.questions import Questions
@@ -9,13 +10,21 @@ from lib.gpt.bloom_taxonomy import get_bloom_category
 from lib.database.export_json import convert_to_json
 
 
+
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
 @app.route('/')
 def home():
     # If not logged in:
-    return redirect('/login')
+    if not session.get("name"):
+        return redirect('/login')
+    else:
+        return redirect('/overview/<offset>')
+
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
@@ -69,7 +78,8 @@ def prompt_create():
         prompt_name = request.form.get("prompt_name")
         prompt = request.form.get("prompt")
         prompts_model = Prompts()
-        created_prompt = prompts_model.create_prompt(prompt_name, prompt)
+        user = session.get('name')
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
 
         if created_prompt:
             return redirect('/prompt/overview')
@@ -180,7 +190,7 @@ def edit_user(user_id):
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
-
+    session['name'] = request.form.get('email')
     users_model = Users()
     is_logged_in = users_model.log_in(email, password)
 
