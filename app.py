@@ -9,8 +9,6 @@ from lib.gpt.bloom_taxonomy import get_bloom_category
 
 from lib.database.export_json import convert_to_json
 
-
-
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -38,7 +36,6 @@ def overview(offset):
             subject = request.args.get('subject')
             indexed_filter = request.args.get('indexed')
             arguments = (search_term, subject, indexed_filter)
-            print(session['name'])
 
             # Check if there are arguments
             # & Return the filtered results
@@ -154,19 +151,20 @@ def prompt_answer(questions_id):
 
 @app.route('/admin/configuration')
 def admin_config():
-    if not session.get("name"):
-        return redirect('/login')
-    else:
-        users_model = Users()
-        users = users_model.show_users()
-        active_user = users_model.get_user_session(session.get('name'))
+    user_model = Users()
+    is_admin = user_model.admin_check(session.get('name'))
+    if is_admin:
+        users = user_model.show_users()
+        active_user = user_model.get_user_session(session.get('name'))
         return render_template('admin-configuration.html', users=users, active_user=active_user)
+    else:
+        return redirect('/')
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
-    if not session.get("name"):
-        return redirect('/login')
-    else:
+    user_model = Users()
+    is_admin = user_model.admin_check(session.get('name'))
+    if is_admin:
         if request.method == 'POST':
             display_name = request.form.get('display_name')
             login = request.form.get('login')
@@ -185,12 +183,15 @@ def create_user():
                 return redirect('configuration')
         else:
             return render_template('create-user.html')
+    else:
+        return redirect('/')
+
 
 @app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
-    if not session.get("name"):
-        return redirect('/login')
-    else:
+    user_model = Users()
+    is_admin = user_model.admin_check(session.get('name'))
+    if is_admin:
         user_model = Users()
         user_info = user_model.show_single_user(user_id)
         if request.method == 'POST':
@@ -217,7 +218,8 @@ def edit_user(user_id):
                     return redirect('/admin/configuration')
         else:
             return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
-
+    else:
+        return redirect('/')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

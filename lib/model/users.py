@@ -19,6 +19,15 @@ class Users():
         result = self.cursor.execute('SELECT * FROM users WHERE login = ?', (user,)).fetchone()
         return result
 
+    def admin_check(self, session):
+        active_user = self.get_user_session(session)
+        if active_user is None:
+            return False
+        elif active_user[5] == 1:
+            return True
+        else:
+            return False
+
     def create_users(self, display_name, login, password, is_admin):
         result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
         max_user_id = result[0]
@@ -53,5 +62,4 @@ class Users():
         if user and password == user[1]:  # Direct string comparison for passwords
             return True  # Login successful
         return False  # Login failed
-
 
