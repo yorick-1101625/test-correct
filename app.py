@@ -134,7 +134,8 @@ def prompt_answer(questions_id):
 def admin_config():
     users_model = Users()
     users = users_model.show_users()
-    return render_template('admin-configuration.html', users=users)
+    active_user = users_model.get_user_session(session.get('name'))
+    return render_template('admin-configuration.html', users=users, active_user=active_user)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
