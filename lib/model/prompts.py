@@ -33,6 +33,6 @@ class Prompts:
         self.conn.commit()
         return True
 
-    def show_prompt_creators(self):
-        result = self.cursor.execute('SELECT users.display_name FROM prompts INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
+    def prompts_info(self):
+        result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
         return result

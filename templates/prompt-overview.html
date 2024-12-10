@@ -20,12 +20,12 @@
     <th>Acties</th>
   </tr>
 
-    {% for prompt in prompts %}
+    {% for prompt in prompts_info %}
 
   <tr>
     <td>{{prompt.prompt_name}}</td>
-    <td>{{prompt.user_id}}</td>
-    <td>1</td>
+    <td>{{prompt.display_name}}</td>
+    <td>0</td>
     <td>0%</td>
     <td>
       <a href="/prompt/{{prompt.prompts_id}}">

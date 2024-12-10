@@ -68,9 +68,8 @@ def export():
 @app.route('/prompt/overview')
 def prompt_overview():
     prompts_model = Prompts()
-    prompts = prompts_model.show_prompts()
-    prompt_creators = prompts_model.show_prompt_creators()
-    return render_template('prompt-overview.html', prompts=prompts, prompt_creators=prompt_creators)
+    prompts_info = prompts_model.prompts_info()
+    return render_template('prompt-overview.html', prompts_info=prompts_info)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
