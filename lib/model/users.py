@@ -15,6 +15,10 @@ class Users():
                                      user_id).fetchone()
         return result
 
+    def get_user_session(self, user):
+        result = self.cursor.execute('SELECT * FROM users WHERE login = ?', (user,)).fetchone()
+        return result
+
     def create_users(self, display_name, login, password, is_admin):
         result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
         max_user_id = result[0]

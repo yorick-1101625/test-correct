@@ -23,7 +23,7 @@ def home():
     if not session.get("name"):
         return redirect('/login')
     else:
-        return redirect('/overview/<offset>')
+        return redirect('/overview/0')
 
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
@@ -69,7 +69,8 @@ def export():
 def prompt_overview():
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
-    return render_template('prompt-overview.html', prompts=prompts)
+    prompt_creators = prompts_model.show_prompt_creators()
+    return render_template('prompt-overview.html', prompts=prompts, prompt_creators=prompt_creators)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
@@ -78,7 +79,8 @@ def prompt_create():
         prompt_name = request.form.get("prompt_name")
         prompt = request.form.get("prompt")
         prompts_model = Prompts()
-        user = session.get('name')
+        user_model = Users()
+        user = user_model.get_user_session(session.get('name'))
         created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
 
         if created_prompt:
