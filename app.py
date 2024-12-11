@@ -60,7 +60,7 @@ def export():
 def prompt_overview():
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
-    return render_template('prompt-overview.html', prompts=prompts)
+    return render_template('prompt-overview.html.jinja', prompts=prompts)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
@@ -74,7 +74,7 @@ def prompt_create():
         if created_prompt:
             return redirect('/prompt/overview')
     else:
-        return render_template('prompt-create.html')
+        return render_template('prompt-create.html.jinja')
 
 
 @app.route('/prompt/<prompts_id>', methods=['GET', 'POST'])
@@ -87,7 +87,7 @@ def prompt_details(prompts_id):
             return redirect('/prompt/overview')
     else:
         user = 'Kees' # Placeholder until we have sessions
-        return render_template('prompt-details.html', prompt=prompt, user=user)
+        return render_template('prompt-details.html.jinja', prompt=prompt, user=user)
 
 
 @app.route('/vraag/<questions_id>')
@@ -123,7 +123,7 @@ def prompt_answer(questions_id):
 def admin_config():
     users_model = Users()
     users = users_model.show_users()
-    return render_template('admin-configuration.html', users=users)
+    return render_template('admin-configuration.html.jinja', users=users)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
@@ -144,7 +144,7 @@ def create_user():
         if created_user:
             return redirect('configuration')
     else:
-        return render_template('create-user.html')
+        return render_template('create-user.html.jinja')
 
 @app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
@@ -173,7 +173,7 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
+        return render_template('edit-user.html.jinja', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -1,0 +1,15 @@
+{% extends "base.html.jinja" %}
+{% block title %}Prompt Details{% endblock %}
+
+{% block content %}
+  <h2>{{prompt.prompt_name}}</h2>
+  <p>{{prompt.prompt}}</p>
+  <p>Redacteur: {{user}}</p>
+  <p>Aangemaakt: {{prompt.date_created}}</p>
+  <p>Toetsvragen gecategoriseerd: PLACEHOLDER</p>
+  <p>Toetsvragen correct: PLACEHOLDER</p>
+  <p>Toetsvragen incorrect: PLACEHOLDER</p>
+  <form method="post">
+    <input type="submit" value="Verwijder">
+  </form>
+{% endblock %}

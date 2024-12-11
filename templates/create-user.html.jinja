@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nieuwe redacteur</title>
+{% extends "base.html.jinja" %}
+{% block title %}Nieuwe redacteur{% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='general.css') }}">
-</head>
-<body>
-<div class="shape">
-  <img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg">
-</div>
-
+{% block content %}
 <form method="POST">
-
     <label for="display_name">Naam</label><br>
     <input type="text" id="display_name" name="display_name"><br>
 
@@ -26,7 +16,5 @@
     <input type="checkbox" id="admin" name="admin" value="1"><br>
 
     <input type="submit" value="Opslaan">
-
 </form>
-</body>
-</html>
+{% endblock %}
