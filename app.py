@@ -183,7 +183,7 @@ def edit_user(user_id):
             password = request.form.get('password')
             is_admin = request.form.get('admin')
             try:
-                if is_admin[0] == '1':
+                if is_admin == '1':
                     is_admin = 1
                 else:
                     is_admin = 0
@@ -199,7 +199,7 @@ def edit_user(user_id):
             if deleted_user:
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html.jinja', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
+        return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], password=user_info['password'], is_admin=user_info['is_admin'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
