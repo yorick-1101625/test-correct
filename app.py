@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, redirect, send_file, session, url_for
+from flask_session import Session
 
 from lib.model.users import Users
 from lib.model.questions import Questions
@@ -10,12 +11,34 @@ from lib.database.export_json import convert_to_json
 
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
+@app.before_request
+def check_login():
+    open_routes = ['login', 'static']
+
+    admin_routes = ['admin_config', 'create_user', 'edit_user']
+    logged_in = session.get('name')
+    user_model = Users()
+    is_admin = user_model.admin_check(logged_in)
+
+    if not logged_in and request.endpoint not in open_routes:
+        return redirect(url_for('login'))
+
+    if logged_in:
+        if request.endpoint in admin_routes and not is_admin:
+            return redirect(url_for('prompt_overview'))
 
 @app.route('/')
 def home():
     # If not logged in:
-    return redirect('/login')
+    if not session.get("name"):
+        return redirect('/login')
+    else:
+        return redirect('/overview/0')
+
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
@@ -59,8 +82,8 @@ def export():
 @app.route('/prompt/overview')
 def prompt_overview():
     prompts_model = Prompts()
-    prompts = prompts_model.show_prompts()
-    return render_template('prompt-overview.html.jinja', prompts=prompts)
+    prompts_info = prompts_model.prompts_info()
+    return render_template('prompt-overview.html.jinja', prompts_info=prompts_info)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
@@ -69,7 +92,9 @@ def prompt_create():
         prompt_name = request.form.get("prompt_name")
         prompt = request.form.get("prompt")
         prompts_model = Prompts()
-        created_prompt = prompts_model.create_prompt(prompt_name, prompt)
+        user_model = Users()
+        user = user_model.get_user_session(session.get('name'))
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
 
         if created_prompt:
             return redirect('/prompt/overview')
@@ -81,13 +106,13 @@ def prompt_create():
 def prompt_details(prompts_id):
     prompts_model = Prompts()
     prompt = prompts_model.show_single_prompt(prompts_id)
+    prompt_info = prompts_model.show_single_prompt_info(prompts_id)
     if request.method == 'POST':
         is_deleted = prompts_model.delete_prompt(prompts_id)
         if is_deleted:
             return redirect('/prompt/overview')
     else:
-        user = 'Kees' # Placeholder until we have sessions
-        return render_template('prompt-details.html.jinja', prompt=prompt, user=user)
+        return render_template('prompt-details.html', prompt=prompt, prompt_info=prompt_info)
 
 
 @app.route('/vraag/<questions_id>')
@@ -123,6 +148,7 @@ def prompt_answer(questions_id):
 def admin_config():
     users_model = Users()
     users = users_model.show_users()
+    active_user = users_model.get_user_session(session.get('name'))
     return render_template('admin-configuration.html.jinja', users=users)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
@@ -180,7 +206,7 @@ def edit_user(user_id):
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
-
+    session['name'] = request.form.get('email')
     users_model = Users()
     is_logged_in = users_model.log_in(email, password)
 
@@ -190,8 +216,10 @@ def login():
         error = "Invalid username or password"
         return render_template('log-in.html', error=error)
 
-
-
+@app.route('/logout', methods=[ 'GET','POST'])
+def logout():
+    session['name'] = None
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)
