@@ -155,7 +155,7 @@ def admin_config():
 def create_user():
     if request.method == 'POST':
         display_name = request.form.get('display_name')
-        login = request.form.get('login')
+        login = request.form.get('login').islower()
         password = request.form.get('password')
         is_admin = request.form.get('admin')
         try:
@@ -179,7 +179,7 @@ def edit_user(user_id):
     if request.method == 'POST':
         if request.form['submit'] == 'Opslaan':
             display_name = request.form.get('display_name')
-            login = request.form.get('login')
+            login = request.form.get('login').islower()
             password = request.form.get('password')
             is_admin = request.form.get('admin')
             try:
@@ -204,17 +204,17 @@ def edit_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    session['name'] = request.form.get('email')
-    users_model = Users()
-    is_logged_in = users_model.log_in(email, password)
+    if request.method == 'POST':
+        email = request.form.get('email').lower()
+        password = request.form.get('password')
+        session['name'] = request.form.get('email')
+        users_model = Users()
+        is_logged_in = users_model.log_in(email, password)
 
-    if is_logged_in:
-        return redirect('/overview/0')  # Redirect to a success page
+        if is_logged_in:
+            return redirect('/overview/0')  # Redirect to a success page
     else:
-        error = "Invalid username or password"
-        return render_template('log-in.html', error=error)
+        return render_template('log-in.html')
 
 @app.route('/logout', methods=[ 'GET','POST'])
 def logout():
