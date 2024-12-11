@@ -29,7 +29,7 @@ def check_login():
 
     if logged_in:
         if request.endpoint in admin_routes and not is_admin:
-            return redirect(url_for('prompt_overview'))
+            return redirect(url_for('home'))
 
 @app.route('/')
 def home():
