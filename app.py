@@ -83,7 +83,7 @@ def export():
 def prompt_overview():
     prompts_model = Prompts()
     prompts_info = prompts_model.prompts_info()
-    return render_template('prompt-overview.html.jinja', prompts=prompts_info)
+    return render_template('prompt-overview.html.jinja', prompts_info=prompts_info)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
