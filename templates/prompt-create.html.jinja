@@ -2,15 +2,17 @@
 {% block title %}Nieuwe prompt{% endblock %}
 
 {% block content %}
-<form method="POST">
+<section>
+    <form method="POST">
 
-    <label for="prompt_name">Titel</label><br>
-    <input type="text" id="prompt_name" name="prompt_name"><br>
+        <label for="prompt_name">Titel</label><br>
+        <input type="text" id="prompt_name" name="prompt_name"><br>
 
-    <label for="prompt">Prompt</label><br>
-    <input type="text" id="prompt" name="prompt"><br>
+        <label for="prompt">Prompt</label><br>
+        <input type="text" id="prompt" name="prompt"><br>
 
-    <input type="submit" value="Maak prompt">
+        <input type="submit" value="Maak prompt">
 
-</form>
+    </form>
+</section>
 {% endblock %}
