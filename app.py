@@ -9,6 +9,8 @@ from lib.gpt.bloom_taxonomy import get_bloom_category
 
 from lib.database.export_json import convert_to_json
 
+
+
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -26,146 +28,142 @@ def home():
 
 @app.route('/overview/<offset>', methods=['GET', 'POST'])
 def overview(offset):
-    if not session.get("name"):
-        return redirect('/login')
+    questions_model = Questions()
+    offset = int(offset)
+    # Search Arguments
+    search_term = request.args.get('search-term')
+    subject = request.args.get('subject')
+    indexed_filter = request.args.get('indexed')
+    arguments = (search_term, subject, indexed_filter)
+
+    # Check if there are arguments
+    # & Return the filtered results
+    if list(filter(lambda x: x is not None, arguments)):
+        questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
+        arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
+    # Return standard results
     else:
-            questions_model = Questions()
-            offset = int(offset)
-            # Search Arguments
-            search_term = request.args.get('search-term')
-            subject = request.args.get('subject')
-            indexed_filter = request.args.get('indexed')
-            arguments = (search_term, subject, indexed_filter)
+        questions = questions_model.show_ten_not_indexed_questions(offset=offset)
+        arguments_url = ""
 
-            # Check if there are arguments
-            # & Return the filtered results
-            if list(filter(lambda x: x is not None, arguments)):
-                questions = questions_model.show_filtered_questions(str(subject), str(indexed_filter), offset, str(search_term))
-                arguments_url = f"?search-term={search_term}&subject={subject}&indexed={indexed_filter}"
-            # Return standard results
-            else:
-                questions = questions_model.show_ten_not_indexed_questions(offset=offset)
-                arguments_url = ""
-
-            return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
+    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
 
 
 @app.route('/export', methods=['GET', 'POST'])
 def export():
-    if not session.get("name"):
-        return redirect('/login')
-    else:
-        questions_model = Questions()
-        exported_questions = questions_model.get_indexed_questions()
+    questions_model = Questions()
+    exported_questions = questions_model.get_indexed_questions()
 
-        if request.method == "POST":
-            # Set questions as exported in database
-            for question in exported_questions:
-                questions_model.set_exported(question['questions_id'])
-            return send_file("lib/json/exported-questions.json", as_attachment=True)
-        else:
-            # Export questions to json
-            convert_to_json(exported_questions)
-            return render_template("export.html.jinja")
+    if request.method == "POST":
+        # Set questions as exported in database
+        for question in exported_questions:
+            questions_model.set_exported(question['questions_id'])
+        return send_file("lib/json/exported-questions.json", as_attachment=True)
+    else:
+        # Export questions to json
+        convert_to_json(exported_questions)
+        return render_template("export.html.jinja")
 
 
 @app.route('/prompt/overview')
 def prompt_overview():
-    if not session.get("name"):
-        return redirect('/login')
-    else:
-        prompts_model = Prompts()
-        prompts_info = prompts_model.prompts_info()
-        return render_template('prompt-overview.html', prompts_info=prompts_info)
+    prompts_model = Prompts()
+    prompts_info = prompts_model.prompts_info()
+    return render_template('prompt-overview.html', prompts_info=prompts_info)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
 def prompt_create():
-    if not session.get("name"):
-        return redirect('/login')
-    else:
-        if request.method == 'POST':
-            prompt_name = request.form.get("prompt_name")
-            prompt = request.form.get("prompt")
-            prompts_model = Prompts()
-            user_model = Users()
-            user = user_model.get_user_session(session.get('name'))
-            created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
+    if request.method == 'POST':
+        prompt_name = request.form.get("prompt_name")
+        prompt = request.form.get("prompt")
+        prompts_model = Prompts()
+        user_model = Users()
+        user = user_model.get_user_session(session.get('name'))
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
 
-            if created_prompt:
-                return redirect('/prompt/overview')
-        else:
-            return render_template('prompt-create.html')
+        if created_prompt:
+            return redirect('/prompt/overview')
+    else:
+        return render_template('prompt-create.html')
 
 
 @app.route('/prompt/<prompts_id>', methods=['GET', 'POST'])
 def prompt_details(prompts_id):
-    if not session.get("name"):
-        return redirect('/login')
+    prompts_model = Prompts()
+    prompt = prompts_model.show_single_prompt(prompts_id)
+    if request.method == 'POST':
+        is_deleted = prompts_model.delete_prompt(prompts_id)
+        if is_deleted:
+            return redirect('/prompt/overview')
     else:
-        prompts_model = Prompts()
-        prompt = prompts_model.show_single_prompt(prompts_id)
-        if request.method == 'POST':
-            is_deleted = prompts_model.delete_prompt(prompts_id)
-            if is_deleted:
-                return redirect('/prompt/overview')
-        else:
-            user = 'Kees' # Placeholder until we have sessions
-            return render_template('prompt-details.html', prompt=prompt, user=user)
+        user = 'Kees' # Placeholder until we have sessions
+        return render_template('prompt-details.html', prompt=prompt, user=user)
 
 
 @app.route('/vraag/<questions_id>')
 def single_question_page(questions_id):
-    if not session.get("name"):
-        return redirect('/login')
+    # Show question
+    questions_model = Questions()
+    single_question = questions_model.show_single_question(questions_id)
+    # Show all prompts
+    prompts_model = Prompts()
+    prompts = prompts_model.show_prompts()
+    # Check if question exists
+    if single_question is None:
+        return "<h1>404: Question does not exist</h1>"
     else:
-        # Show question
-        questions_model = Questions()
-        single_question = questions_model.show_single_question(questions_id)
-        # Show all prompts
-        prompts_model = Prompts()
-        prompts = prompts_model.show_prompts()
-        # Check if question exists
-        if single_question is None:
-            return "<h1>404: Question does not exist</h1>"
-        else:
-            return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
+        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
 
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
 def prompt_answer(questions_id):
-    if not session.get("name"):
-        return redirect('/login')
-    else:
-        prompts_id = request.form.get('prompt')
-        prompt_model = Prompts()
-        prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
+    prompts_id = request.form.get('prompt')
+    prompt_model = Prompts()
+    prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
 
-        questions_model = Questions()
-        single_question = questions_model.show_single_question(questions_id)
-        question = single_question['question']
+    questions_model = Questions()
+    single_question = questions_model.show_single_question(questions_id)
+    question = single_question['question']
 
-        gpt_response = get_bloom_category(question, prompt, 'dry_run')
+    gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
     return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
 
 @app.route('/admin/configuration')
 def admin_config():
-    user_model = Users()
-    is_admin = user_model.admin_check(session.get('name'))
-    if is_admin:
-        users = user_model.show_users()
-        active_user = user_model.get_user_session(session.get('name'))
-        return render_template('admin-configuration.html', users=users, active_user=active_user)
-    else:
-        return redirect('/')
+    users_model = Users()
+    users = users_model.show_users()
+    active_user = users_model.get_user_session(session.get('name'))
+    return render_template('admin-configuration.html', users=users, active_user=active_user)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
+    if request.method == 'POST':
+        display_name = request.form.get('display_name')
+        login = request.form.get('login')
+        password = request.form.get('password')
+        is_admin = request.form.get('admin')
+        try:
+            if is_admin[0] == '1':
+                is_admin = 1
+            else:
+                is_admin = 0
+        except:
+            is_admin = 0
+        user_model = Users()
+        created_user = user_model.create_users(display_name, login, password, is_admin)
+        if created_user:
+            return redirect('configuration')
+    else:
+        return render_template('create-user.html')
+
+@app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
     user_model = Users()
-    is_admin = user_model.admin_check(session.get('name'))
-    if is_admin:
-        if request.method == 'POST':
+    user_info = user_model.show_single_user(user_id)
+    if request.method == 'POST':
+        if request.form['submit'] == 'Opslaan':
             display_name = request.form.get('display_name')
             login = request.form.get('login')
             password = request.form.get('password')
@@ -177,49 +175,18 @@ def create_user():
                     is_admin = 0
             except:
                 is_admin = 0
-            user_model = Users()
-            created_user = user_model.create_users(display_name, login, password, is_admin)
-            if created_user:
-                return redirect('configuration')
-        else:
-            return render_template('create-user.html')
+            edited_user = user_model.edit_users(
+                display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
+            if edited_user:
+                return redirect('/admin/configuration')
+        if request.form['submit'] == 'Verwijderen':
+            deleted_user = user_model.delete_users(
+                user_id=user_id)
+            if deleted_user:
+                return redirect('/admin/configuration')
     else:
-        return redirect('/')
+        return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
 
-
-@app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
-def edit_user(user_id):
-    user_model = Users()
-    is_admin = user_model.admin_check(session.get('name'))
-    if is_admin:
-        user_model = Users()
-        user_info = user_model.show_single_user(user_id)
-        if request.method == 'POST':
-            if request.form['submit'] == 'Opslaan':
-                display_name = request.form.get('display_name')
-                login = request.form.get('login')
-                password = request.form.get('password')
-                is_admin = request.form.get('admin')
-                try:
-                    if is_admin[0] == '1':
-                        is_admin = 1
-                    else:
-                        is_admin = 0
-                except:
-                    is_admin = 0
-                edited_user = user_model.edit_users(
-                    display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
-                if edited_user:
-                    return redirect('/admin/configuration')
-            if request.form['submit'] == 'Verwijderen':
-                deleted_user = user_model.delete_users(
-                    user_id=user_id)
-                if deleted_user:
-                    return redirect('/admin/configuration')
-        else:
-            return render_template('edit-user.html', display_name=user_info[3], login=user_info[1], password=user_info[2], is_admin=user_info[5])
-    else:
-        return redirect('/')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
