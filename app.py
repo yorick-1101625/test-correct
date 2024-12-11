@@ -83,7 +83,7 @@ def export():
 def prompt_overview():
     prompts_model = Prompts()
     prompts_info = prompts_model.prompts_info()
-    return render_template('prompt-overview.html.jinja', prompts_info=prompts_info)
+    return render_template('prompt-overview.html.jinja', prompts=prompts_info)
 
 
 @app.route('/prompt/create', methods=['GET', 'POST'])
@@ -112,7 +112,7 @@ def prompt_details(prompts_id):
         if is_deleted:
             return redirect('/prompt/overview')
     else:
-        return render_template('prompt-details.html', prompt=prompt, prompt_info=prompt_info)
+        return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
 
 
 @app.route('/vraag/<questions_id>')

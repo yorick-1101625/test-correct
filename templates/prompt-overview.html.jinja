@@ -15,17 +15,19 @@
 
     {% for prompt in prompts %}
 
-    <tr>
-        <td>{{prompt.prompt_name}}</td>
-        <td>{{prompt.user_id}}</td>
-        <td>1</td>
-        <td>0%</td>
-        <td>
-            <a href="/prompt/{{prompt.prompts_id}}">
-                <button type="button">Details</button>
-            </a>
-        </td>
-    </tr>
+        <h2>{{prompt.prompt_name}}</h2>
+
+        <p>{{prompt.prompt}}</p>
+
+        <p>Redacteur: {{prompt_info.display_name}}</p>
+
+        <p>Aangemaakt: {{prompt.date_created}}</p>
+
+        <p>Toetsvragen gecategoriseerd: PLACEHOLDER</p>
+
+        <p>Toetsvragen correct: PLACEHOLDER</p>
+
+        <p>Toetsvragen incorrect: PLACEHOLDER</p>
 
     {% endfor %}
 </table>
