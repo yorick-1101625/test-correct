@@ -15,16 +15,10 @@ class Prompts:
         return result
 
     def create_prompt(self, prompt_name, prompt, user):
-        result = self.cursor.execute('SELECT MAX(prompts_id) FROM prompts').fetchone()
-        max_prompts_id = result[0]
-        user_id = user[0]
-        if max_prompts_id is not None:
-            prompts_id = max_prompts_id + 1
-        else:
-            prompts_id = 0
-        self.cursor.execute("INSERT into prompts (prompts_id, user_id, prompt_name, prompt, questions_count, "
-                            "questions_correct) VALUES (?,?,?,?,?,?)",
-                            (prompts_id, user_id, prompt_name, prompt, 0, 0))
+        user_id = user['user_id']
+        self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count, "
+                            "questions_correct) VALUES (?,?,?,?,?)",
+                            (user_id, prompt_name, prompt, 0, 0))
         self.conn.commit()
 
         return True

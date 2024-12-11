@@ -23,20 +23,16 @@ class Users():
         active_user = self.get_user_session(session)
         if active_user is None:
             return False
-        elif active_user[5] == 1:
+
+        user_is_admin = active_user[5]
+        if user_is_admin == 1:
             return True
         else:
             return False
 
     def create_users(self, display_name, login, password, is_admin):
-        result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
-        max_user_id = result[0]
-        if max_user_id is not None:
-            user_id = max_user_id + 1
-        else:
-            user_id = 0
-        self.cursor.execute("INSERT into users (user_id, login, password, display_name, is_admin) VALUES (?,?,?,?,?)",
-                            (user_id, login, password, display_name, is_admin))
+        self.cursor.execute("INSERT into users (login, password, display_name, is_admin) VALUES (?,?,?,?)",
+                            (login, password, display_name, is_admin))
         self.conn.commit()
 
         return True
@@ -59,7 +55,7 @@ class Users():
         user = self.cursor.fetchone()
 
         # Check if user exists and password matches
-        if user and password == user[1]:  # Direct string comparison for passwords
+        if user and password == user['password']:
             return True  # Login successful
         return False  # Login failed
 

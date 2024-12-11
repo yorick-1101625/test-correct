@@ -123,11 +123,7 @@ def single_question_page(questions_id):
     # Show all prompts
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
-    # Check if question exists
-    if single_question is None:
-        return "<h1>404: Question does not exist</h1>"
-    else:
-        return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
+    return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
 
 
 @app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
@@ -216,10 +212,15 @@ def login():
     else:
         return render_template('log-in.html')
 
+
 @app.route('/logout', methods=[ 'GET','POST'])
 def logout():
     session['name'] = None
     return redirect('/')
+
+@app.errorhandler(404)
+def not_found(error):
+    return f"<h2>{error}</h2>"
 
 if __name__ == "__main__":
     app.run(debug=True)
