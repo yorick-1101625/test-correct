@@ -149,7 +149,7 @@ def admin_config():
     users_model = Users()
     users = users_model.show_users()
     active_user = users_model.get_user_session(session.get('name'))
-    return render_template('admin-configuration.html.jinja', active_user=active_user)
+    return render_template('admin-configuration.html.jinja', users=users, active_user=active_user)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
