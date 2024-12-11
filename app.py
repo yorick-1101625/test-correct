@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_file, session
+from flask import Flask, render_template, request, redirect, send_file, session, url_for
 from flask_session import Session
 
 from lib.model.users import Users
@@ -16,6 +16,28 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+@app.before_request
+def check_login():
+    # Dit zijn de namen van functies die geen login nodig hebben
+    # Let op de static route!
+    open_routes = ['login', 'static']
+
+    # Dit zijn de namen van functies die alleen toegankelijk zijn voor admins
+    admin_routes = ['admin_config', 'create_user', 'edit_user']
+    logged_in = session.get('name')
+    user_model = Users()
+    is_admin = user_model.admin_check(logged_in)
+
+    # Niet geauthenticeerde gebruikers mogen stylesheets bekijken en worden
+    # altijd naar de login pagina gestuurd
+    if not logged_in and request.endpoint not in open_routes:
+        return redirect(url_for('login'))
+
+    # Wel ingelogd? Dan stuur ik je alleen weg als je op admin pagina's
+    # uit komt.
+    if logged_in:
+        if request.endpoint in admin_routes and not is_admin:
+            return redirect(url_for('prompt_overview'))
 
 @app.route('/')
 def home():
@@ -92,13 +114,13 @@ def prompt_create():
 def prompt_details(prompts_id):
     prompts_model = Prompts()
     prompt = prompts_model.show_single_prompt(prompts_id)
+    prompt_info = prompts_model.show_single_prompt_info(prompts_id)
     if request.method == 'POST':
         is_deleted = prompts_model.delete_prompt(prompts_id)
         if is_deleted:
             return redirect('/prompt/overview')
     else:
-        user = 'Kees' # Placeholder until we have sessions
-        return render_template('prompt-details.html', prompt=prompt, user=user)
+        return render_template('prompt-details.html', prompt=prompt, prompt_info=prompt_info)
 
 
 @app.route('/vraag/<questions_id>')

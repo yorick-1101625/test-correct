@@ -38,3 +38,9 @@ class Prompts:
         result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts '
                                      'INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
         return result
+
+    def show_single_prompt_info(self, prompt_id):
+        result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts '
+                                     'INNER JOIN users ON prompts.user_id=users.user_id WHERE prompts.prompts_id = ?',
+                                     (prompt_id,)).fetchone()
+        return result
