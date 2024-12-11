@@ -1,4 +1,3 @@
-import sqlite3
 from lib.model.database import Database
 
 class Questions:
@@ -7,24 +6,26 @@ class Questions:
         self.conn, self.cursor = database.connect_db()
 
     def show_ten_not_indexed_questions(self, offset = 0):
+        limit = 10
         result = self.cursor.execute(
             'SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NULL OR rtti IS NULL LIMIT ? OFFSET ?',
-            (10, offset)).fetchall()
+            (limit, offset)).fetchall()
         return result
 
     def show_filtered_questions(self, subject, indexed, offset, search_term = ""):
+        limit = 10
         if indexed == 'indexed':
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL AND exported = 0 LIMIT ? OFFSET ?',
-                                         ("%"+search_term+"%", subject, 10, offset)).fetchall()
+                                         ("%"+search_term+"%", subject, limit, offset)).fetchall()
         elif indexed == 'not-indexed':
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NULL OR rtti IS NULL) AND exported = 0 LIMIT ? OFFSET ?',
-                                         ("%" + search_term + "%", subject, 10, offset)).fetchall()
+                                         ("%" + search_term + "%", subject, limit, offset)).fetchall()
         elif indexed == 'exported':
             result = self.cursor.execute('SELECT DISTINCT * FROM questions WHERE question LIKE ? AND subject = ? AND exported = 1 LIMIT ? OFFSET ?',
-                                         ("%" + search_term + "%", subject, 10, offset)).fetchall()
+                                         ("%" + search_term + "%", subject, limit, offset)).fetchall()
         else:
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? LIMIT ? OFFSET ?',
-                                         ("%" + search_term + "%", subject, 10, offset)).fetchall()
+                                         ("%" + search_term + "%", subject, limit, offset)).fetchall()
         return result
 
     def show_single_question(self, questions_id):
