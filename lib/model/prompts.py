@@ -29,7 +29,7 @@ class Prompts:
         return True
 
     def prompts_info(self):
-        result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts '
+        result = self.cursor.execute('SELECT * FROM prompts '
                                      'INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
         return result
 
