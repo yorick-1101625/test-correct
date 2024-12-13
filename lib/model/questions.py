@@ -41,8 +41,8 @@ class Questions:
         self.conn.commit()
         return result
 
-    def update_question_stats(self, questions_id, prompts_id, taxonomy_bloom):
-        self.cursor.execute('UPDATE questions SET prompts_id = ?, taxonomy_bloom = ? WHERE questions_id = ?',
-                            (prompts_id, taxonomy_bloom, questions_id))
+    def update_question_stats(self, questions_id, prompts_id, taxonomy_bloom, user_id):
+        self.cursor.execute('UPDATE questions SET prompts_id = ?, taxonomy_bloom = ?, user_id = ? WHERE questions_id = ?',
+                            (prompts_id, taxonomy_bloom, user_id, questions_id))
         self.conn.commit()
         return True
