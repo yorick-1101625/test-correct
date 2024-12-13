@@ -40,3 +40,9 @@ class Questions:
         result = self.cursor.execute('UPDATE questions SET exported = 1 WHERE questions_id = ?', (questions_id,))
         self.conn.commit()
         return result
+
+    def update_question_stats(self, questions_id, prompts_id, taxonomy_bloom):
+        self.cursor.execute('UPDATE questions SET prompts_id = ?, taxonomy_bloom = ? WHERE questions_id = ?',
+                            (prompts_id, taxonomy_bloom, questions_id))
+        self.conn.commit()
+        return True

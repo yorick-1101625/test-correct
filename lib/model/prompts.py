@@ -50,6 +50,7 @@ class Prompts:
         if not changed_by_user:
             questions_correct += 1
 
-        self.cursor.execute('UPDATE prompts SET questions_count = ?, questions_correct = ? WHERE prompts_id = ?', (questions_count, questions_correct, prompts_id))
+        self.cursor.execute('UPDATE prompts SET questions_count = ?, questions_correct = ? WHERE prompts_id = ?',
+                            (questions_count, questions_correct, prompts_id))
         self.conn.commit()
         return True

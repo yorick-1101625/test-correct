@@ -142,17 +142,22 @@ def prompt_answer(questions_id):
 
 @app.route('/vraag/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
 def save_answer(questions_id, prompts_id):
-    bloom_taxonomy = request.form.get('taxonomy')
+    taxonomy_bloom = request.form.get('taxonomy')
     prompt_model = Prompts()
+    questions_model = Questions()
 
     # Check if the answer was change by user or not
     changed_by_user = True
-    if bloom_taxonomy[:3] == 'gpt':
+    if taxonomy_bloom[:3] == 'gpt':
         changed_by_user = False
+        taxonomy_bloom = taxonomy_bloom[4:]
 
-    prompt_model.update_prompt_stats(prompts_id, changed_by_user)
+    is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
+    questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom)
+    # Add user to questions
 
-    print(bloom_taxonomy, changed_by_user, prompts_id, questions_id)
+    print(taxonomy_bloom, changed_by_user, prompts_id, questions_id)
+    return "oke"
 
 
 @app.route('/admin/configuration')

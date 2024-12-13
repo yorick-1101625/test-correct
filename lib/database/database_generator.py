@@ -50,7 +50,7 @@ class WP2DatabaseGenerator:
         create_statement = """
         CREATE TABLE IF NOT EXISTS questions (
             questions_id TEXT PRIMARY KEY,
-            prompts_id INTEGER NOT NULL,
+            prompts_id INTEGER,
             user_id TEXT INTEGER NULL,
             question TEXT NOT NULL,
             subject TEXT NOT NULL,
