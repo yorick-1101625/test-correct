@@ -38,3 +38,18 @@ class Prompts:
                                      'INNER JOIN users ON prompts.user_id=users.user_id WHERE prompts.prompts_id = ?',
                                      (prompt_id,)).fetchone()
         return result
+
+    def get_prompt_stats(self, prompt_id):
+        result = self.cursor.execute('SELECT questions_count, questions_correct FROM prompts WHERE prompts_id = ?', (prompt_id,)).fetchone()
+        return result
+
+    def update_prompt_stats(self, prompts_id, changed_by_user):
+        stats = self.get_prompt_stats(prompts_id)
+        questions_count = stats['questions_count'] + 1
+        questions_correct = stats['questions_correct']
+        if not changed_by_user:
+            questions_correct += 1
+
+        self.cursor.execute('UPDATE prompts SET questions_count = ?, questions_correct = ? WHERE prompts_id = ?', (questions_count, questions_correct, prompts_id))
+        self.conn.commit()
+        return True

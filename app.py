@@ -138,7 +138,22 @@ def prompt_answer(questions_id):
 
     gpt_response = get_bloom_category(question, prompt, 'dry_run')
 
-    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response)
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id)
+
+@app.route('/vraag/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
+def save_answer(questions_id, prompts_id):
+    bloom_taxonomy = request.form.get('taxonomy')
+    prompt_model = Prompts()
+
+    # Check if the answer was change by user or not
+    changed_by_user = True
+    if bloom_taxonomy[:3] == 'gpt':
+        changed_by_user = False
+
+    prompt_model.update_prompt_stats(prompts_id, changed_by_user)
+
+    print(bloom_taxonomy, changed_by_user, prompts_id, questions_id)
+
 
 @app.route('/admin/configuration')
 def admin_config():
