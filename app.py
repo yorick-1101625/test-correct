@@ -20,21 +20,21 @@ def check_login():
     open_routes = ['login', 'static']
 
     admin_routes = ['admin_config', 'create_user', 'edit_user']
-    logged_in = session.get('name')
+    logged_in = session.get('user_id')
     user_model = Users()
     is_admin = user_model.admin_check(logged_in)
 
-    if not logged_in and request.endpoint not in open_routes:
+    if logged_in is None and request.endpoint not in open_routes:
         return redirect(url_for('login'))
 
-    if logged_in:
+    if logged_in is not None:
         if request.endpoint in admin_routes and not is_admin:
             return redirect(url_for('home'))
 
 @app.route('/')
 def home():
     # If not logged in:
-    if not session.get("name"):
+    if not session.get("user_id"):
         return redirect('/login')
     else:
         return redirect('/overview/0')
@@ -92,9 +92,8 @@ def prompt_create():
         prompt_name = request.form.get("prompt_name")
         prompt = request.form.get("prompt")
         prompts_model = Prompts()
-        user_model = Users()
-        user = user_model.get_user_session(session.get('name'))
-        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user)
+        user_id = session.get('user_id')
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user_id)
 
         if created_prompt:
             return redirect('/prompt/overview')
@@ -142,9 +141,12 @@ def prompt_answer(questions_id):
 
 @app.route('/vraag/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
 def save_answer(questions_id, prompts_id):
-    taxonomy_bloom = request.form.get('taxonomy')
     prompt_model = Prompts()
     questions_model = Questions()
+
+    taxonomy_bloom = request.form.get('taxonomy')
+    user = session.get('user_id')
+    print(user)
 
     # Check if the answer was change by user or not
     changed_by_user = True
@@ -153,7 +155,7 @@ def save_answer(questions_id, prompts_id):
         taxonomy_bloom = taxonomy_bloom[4:]
 
     is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
-    questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom)
+    is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom)
     # Add user to questions
 
     print(taxonomy_bloom, changed_by_user, prompts_id, questions_id)
@@ -164,7 +166,7 @@ def save_answer(questions_id, prompts_id):
 def admin_config():
     users_model = Users()
     users = users_model.show_users()
-    active_user = users_model.get_user_session(session.get('name'))
+    active_user = users_model.show_single_user(session.get('user_id'))
     return render_template('admin-configuration.html.jinja', users=users, active_user=active_user)
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
@@ -223,11 +225,11 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email').lower()
         password = request.form.get('password')
-        session['name'] = request.form.get('email')
         users_model = Users()
-        is_logged_in = users_model.log_in(email, password)
+        user_id = users_model.log_in(email, password)
+        session['user_id'] = user_id
 
-        if is_logged_in:
+        if user_id:
             return redirect('/overview/0')  # Redirect to a success page
     else:
         return render_template('log-in.html')
@@ -235,7 +237,7 @@ def login():
 
 @app.route('/logout', methods=[ 'GET','POST'])
 def logout():
-    session['name'] = None
+    session['user_id'] = None
     return redirect('/')
 
 @app.errorhandler(404)

@@ -12,19 +12,15 @@ class Users():
 
     def show_single_user(self, user_id):
         result = self.cursor.execute('SELECT * FROM users WHERE user_id = ?',
-                                     user_id).fetchone()
+                                     (user_id,)).fetchone()
         return result
 
-    def get_user_session(self, user):
-        result = self.cursor.execute('SELECT * FROM users WHERE login = ?', (user,)).fetchone()
-        return result
-
-    def admin_check(self, session):
-        active_user = self.get_user_session(session)
+    def admin_check(self, user_id):
+        active_user = self.show_single_user(user_id)
         if active_user is None:
             return False
 
-        user_is_admin = active_user[5]
+        user_is_admin = active_user['is_admin']
         if user_is_admin == 1:
             return True
         else:
@@ -51,11 +47,11 @@ class Users():
 
     def log_in(self, email, password):
         # Fetch the user record based on the username
-        self.cursor.execute('SELECT login, password FROM users WHERE login = ?', (email,))
+        self.cursor.execute('SELECT user_id, login, password FROM users WHERE login = ?', (email,))
         user = self.cursor.fetchone()
 
         # Check if user exists and password matches
         if user and password == user['password']:
-            return True  # Login successful
+            return user['user_id']  # Login successful
         return False  # Login failed
 

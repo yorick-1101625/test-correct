@@ -14,8 +14,7 @@ class Prompts:
         result = self.cursor.execute('SELECT * FROM prompts').fetchall()
         return result
 
-    def create_prompt(self, prompt_name, prompt, user):
-        user_id = user['user_id']
+    def create_prompt(self, prompt_name, prompt, user_id):
         self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count, "
                             "questions_correct) VALUES (?,?,?,?,?)",
                             (user_id, prompt_name, prompt, 0, 0))
