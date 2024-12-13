@@ -155,10 +155,12 @@ def save_answer(questions_id, prompts_id):
 
     is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
     is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom, user_id)
-    # Add user to questions
 
-    print(taxonomy_bloom, changed_by_user, prompts_id, questions_id)
-    return "oke"
+    if is_prompt_updated and is_question_updated:
+        # Should redirect to next question
+        next_question_id = questions_model.show_first_not_indexed_question()['questions_id']
+        next_question_url = f"/vraag/{next_question_id}"
+        return redirect(next_question_url)
 
 
 @app.route('/admin/configuration')
