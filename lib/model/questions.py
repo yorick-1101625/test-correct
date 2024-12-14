@@ -7,6 +7,7 @@ class Questions:
 
     def show_ten_not_indexed_questions(self, offset = 0):
         limit = 10
+        offset *= 10
         result = self.cursor.execute(
             'SELECT DISTINCT * FROM questions WHERE taxonomy_bloom IS NULL OR rtti IS NULL LIMIT ? OFFSET ?',
             (limit, offset)).fetchall()
@@ -14,6 +15,7 @@ class Questions:
 
     def show_filtered_questions(self, subject, indexed, offset, search_term = ""):
         limit = 10
+        offset *= 10
         if indexed == 'indexed':
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NOT NULL OR rtti IS NOT NULL) AND exported = 0 LIMIT ? OFFSET ?',
                                          ("%"+search_term+"%", subject, limit, offset)).fetchall()

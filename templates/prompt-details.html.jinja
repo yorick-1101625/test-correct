@@ -11,7 +11,7 @@
     <p>Toetsvragen correct: {{ prompt.questions_correct }}</p>
     <p>Toetsvragen incorrect: {{ prompt.questions_count - prompt.questions_correct }}</p>
     {% if prompt.questions_count %}
-        <p>Succespercentage: {{ prompt.questions_correct // prompt.questions_count * 100 }}%</p>
+        <p>Succespercentage: {{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</p>
     {% else %}
         <p>Succespercentage: 0%</p>
     {% endif %}
