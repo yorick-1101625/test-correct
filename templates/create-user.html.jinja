@@ -1,0 +1,22 @@
+{% extends "base.html.jinja" %}
+{% block title %}Nieuwe redacteur{% endblock %}
+
+{% block content %}
+<section>
+    <form method="POST">
+        <label for="display_name">Naam</label><br>
+        <input type="text" id="display_name" name="display_name"><br>
+
+        <label for="login">Email / login</label><br>
+        <input type="email" id="login" name="login"><br>
+
+        <label for="password">Wachtwoord</label><br>
+        <input type="text" id="password" name="password"><br>
+
+        <label for="admin">Is admin?</label>
+        <input type="checkbox" id="admin" name="admin" value="1"><br>
+
+        <input type="submit" value="Opslaan">
+    </form>
+</section>
+{% endblock %}

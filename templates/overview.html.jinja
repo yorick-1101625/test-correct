@@ -25,6 +25,7 @@
                 <select id="indexed" name="indexed">
                     <option value="not-indexed">Onbeoordeeld</option>
                     <option value="indexed">Beoordeeld</option>
+                    <option value="exported">Geëxporteerd</option>
                     <option value="all">Alle</option>
                 </select>
             </div>
@@ -34,7 +35,9 @@
     </form>
 
     <div class="export">
-        <button>Exporteer Beoordeelde Vragen</button>
+        <a href="/export">
+            <button>Exporteer Beoordeelde Vragen</button>
+        </a>
     </div>
 
     <div class="overview-container">
@@ -51,9 +54,9 @@
             <p class="subject">{{ question.subject|title }}</p>
             <p class="date">{{ question.date_created }}</p>
 
-            {% if question.rtti and question.bloom %}
-            <p class="rtti">{{ question.rtti }}</p>
-            <p class="bloom">{{ question.bloom }}</p>
+            {% if question.rtti or question.taxonomy_bloom %}
+            <p class="rtti">{{ question.rtti|title }}</p>
+            <p class="bloom">{{ question.taxonomy_bloom|title }}</p>
             {% else %}
             <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
             {% endif %}

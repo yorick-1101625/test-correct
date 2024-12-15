@@ -69,7 +69,6 @@ select:focus, select:hover{
 
 /* Export Button */
 .export{
-    width: 100%;
     display: flex;
     justify-content: end;
 }
@@ -86,7 +85,7 @@ select:focus, select:hover{
     margin-bottom: -1px;
     color: inherit;
     padding: 10px;
-    cursor:pointer;
+    cursor: pointer;
     transition-duration: 0.2s;
     font-size: 13px;
 }
@@ -170,7 +169,8 @@ select:focus, select:hover{
     display: flex;
     justify-content: center;
 }
-.overview-navigation button{
+.next, .previous{
+    margin: 10px;
     cursor:pointer;
     width: 45px;
     height: 45px;
@@ -178,8 +178,9 @@ select:focus, select:hover{
     border: none;
     font-size: 20px;
     background-color: #3dbb56;
-    color: #ffffff
+    color: #ffffff;
+    transition-duration: 0.2s;
 }
-.next, .previous{
-    margin: 10px;
+.next:hover, .previous:hover{
+    background-color: #004df5;
 }

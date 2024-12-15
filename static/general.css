@@ -9,7 +9,11 @@ a {
   color: inherit;
   text-decoration: inherit;
 }
-
+h1{
+    font-size: 35px;
+    margin: 0;
+    color: #004df5;
+}
 section{
     display: block;
     margin-left: auto;
@@ -25,7 +29,9 @@ section{
 }
 /* Header Related */
 header{
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #ffffff;
     padding: 8px;
     box-shadow: 0 3px 5px rgba(0,0,0,0.2);
@@ -34,7 +40,6 @@ header{
     display: flex;
     align-items: center;
     margin-left: 15%;
-
 }
 .navigation span{
     margin-left: 17px;
@@ -44,4 +49,29 @@ header{
 }
 .navigation span:hover{
     color: #004df5;
+}
+.logout-btn {
+    margin-right: 20px;
+    width: 110px;
+    height: 45px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #3dbb56;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+.logout-btn:hover {
+    background-color: #004df5;
+}
+.logout-btn img {
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
 }
