@@ -6,25 +6,31 @@
     <h1>AI Prompts</h1>
 
     <table>
-      <tr>
-        <th>Prompt</th>
-        <th>Redacteur</th>
-        <th>Toetsvragen ingedeeld</th>
-        <th>Correct </th>
-        <th>Acties</th>
-      </tr>
+        <tr>
+            <th>Prompt</th>
+            <th>Redacteur</th>
+            <th>Toetsvragen ingedeeld</th>
+            <th>Correct</th>
+            <th>Succespercentage</th>
+            <th>Acties</th>
+        </tr>
         {% for prompt in prompts_info %}
-      <tr>
-        <td>{{prompt.prompt_name}}</td>
-        <td>{{prompt.display_name}}</td>
-        <td>0</td>
-        <td>0%</td>
-        <td>
-          <a href="/prompt/{{prompt.prompts_id}}">
-          <button type="button">Details</button>
-        </a>
-        </td>
-      </tr>
+        <tr>
+            <td>{{ prompt.prompt_name }}</td>
+            <td>{{ prompt.display_name }}</td>
+            <td>{{ prompt.questions_count }}</td>
+            <td>{{ prompt.questions_correct }}</td>
+            {% if prompt.questions_count %}
+                <td>{{ prompt.questions_correct // prompt.questions_count * 100 }}%</td>
+            {% else %}
+                <td>0%</td>
+            {% endif %}
+            <td>
+                <a href="/prompt/{{prompt.prompts_id}}">
+                    <button type="button">Details</button>
+                </a>
+            </td>
+        </tr>
         {% endfor %}
     </table>
 

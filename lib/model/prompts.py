@@ -14,8 +14,7 @@ class Prompts:
         result = self.cursor.execute('SELECT * FROM prompts').fetchall()
         return result
 
-    def create_prompt(self, prompt_name, prompt, user):
-        user_id = user['user_id']
+    def create_prompt(self, prompt_name, prompt, user_id):
         self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count, "
                             "questions_correct) VALUES (?,?,?,?,?)",
                             (user_id, prompt_name, prompt, 0, 0))
@@ -29,7 +28,7 @@ class Prompts:
         return True
 
     def prompts_info(self):
-        result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts '
+        result = self.cursor.execute('SELECT * FROM prompts '
                                      'INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
         return result
 
@@ -38,3 +37,19 @@ class Prompts:
                                      'INNER JOIN users ON prompts.user_id=users.user_id WHERE prompts.prompts_id = ?',
                                      (prompt_id,)).fetchone()
         return result
+
+    def get_prompt_stats(self, prompt_id):
+        result = self.cursor.execute('SELECT questions_count, questions_correct FROM prompts WHERE prompts_id = ?', (prompt_id,)).fetchone()
+        return result
+
+    def update_prompt_stats(self, prompts_id, changed_by_user):
+        stats = self.get_prompt_stats(prompts_id)
+        questions_count = stats['questions_count'] + 1
+        questions_correct = stats['questions_correct']
+        if not changed_by_user:
+            questions_correct += 1
+
+        self.cursor.execute('UPDATE prompts SET questions_count = ?, questions_correct = ? WHERE prompts_id = ?',
+                            (questions_count, questions_correct, prompts_id))
+        self.conn.commit()
+        return True

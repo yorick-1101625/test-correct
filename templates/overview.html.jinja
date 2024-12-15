@@ -55,8 +55,8 @@
             <p class="date">{{ question.date_created }}</p>
 
             {% if question.rtti or question.taxonomy_bloom %}
-            <p class="rtti">{{ question.rtti }}</p>
-            <p class="bloom">{{ question.taxonomy_bloom }}</p>
+            <p class="rtti">{{ question.rtti|title }}</p>
+            <p class="bloom">{{ question.taxonomy_bloom|title }}</p>
             {% else %}
             <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
             {% endif %}
