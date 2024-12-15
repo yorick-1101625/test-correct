@@ -11,8 +11,8 @@ class Json:
     def load_questions(self, json_data):
         for questions in json_data:
             questions_id = questions['question_id']
-            prompts_id = 0
-            user_id = ''
+            prompts_id = None
+            user_id = None
             question = questions['question']
             subject = questions['vak']
             education_level = questions['onderwijsniveau']
@@ -29,3 +29,4 @@ class Json:
         content = json.load(file)
         self.load_questions(content)
         self.conn.close()
+        return True
