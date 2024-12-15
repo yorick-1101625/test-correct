@@ -198,7 +198,7 @@ def edit_user(user_id):
     if request.method == 'POST':
         if request.form['submit'] == 'Opslaan':
             display_name = request.form.get('display_name')
-            login = request.form.get('login').islower()
+            login = request.form.get('login').lower()
             password = request.form.get('password')
             is_admin = request.form.get('admin')
             try:
