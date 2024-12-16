@@ -1,0 +1,42 @@
+{% extends "base.html.jinja" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+<section>
+    <h1>Hier kan een redacteur alles wijzigen.</h1>
+
+    <table>
+        <tr>
+            <th>Redacteur</th>
+            <th>Loginnaam</th>
+            <th>Admin</th>
+            <th>Acties</th>
+        </tr>
+
+        {% for user in users %}
+        <tr>
+            <td>{{user.display_name}}</td>
+            <td>{{user.login}}</td>
+            {% if user.is_admin == 1 %}
+                <td><input type="checkbox" id="admin" name="admin" disabled checked></td>
+                {% else %}
+                <td><input type="checkbox" id="admin" name="admin" disabled></td>
+            {% endif %}
+            <td>
+                <a href="/admin/edit-user/{{user.user_id}}">
+                <button type="button">Wijzig</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/admin/edit-user/{{active_user[0]}}">
+        <button>Wijzig eigen gegevens</button>
+    </a>
+
+    <a href="/admin/create-user">
+        <button>Nieuwe redacteur</button>
+    </a>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html.jinja" %}
+{% block title %}Prompt Details{% endblock %}
+
+{% block content %}
+<section>
+    <h2>{{prompt.prompt_name}}</h2>
+    <p>{{prompt.prompt}}</p>
+    <p>Redacteur: {{prompt_info.display_name}}</p>
+    <p>Aangemaakt: {{prompt.date_created}}</p>
+    <p>Toetsvragen gecategoriseerd: {{ prompt.questions_count }}</p>
+    <p>Toetsvragen correct: {{ prompt.questions_correct }}</p>
+    <p>Toetsvragen incorrect: {{ prompt.questions_count - prompt.questions_correct }}</p>
+    {% if prompt.questions_count %}
+        <p>Succespercentage: {{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</p>
+    {% else %}
+        <p>Succespercentage: 0%</p>
+    {% endif %}
+    <form method="post">
+        <input type="submit" value="Verwijder">
+    </form>
+</section>
+{% endblock %}

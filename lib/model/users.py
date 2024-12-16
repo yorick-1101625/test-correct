@@ -12,18 +12,23 @@ class Users():
 
     def show_single_user(self, user_id):
         result = self.cursor.execute('SELECT * FROM users WHERE user_id = ?',
-                                     user_id).fetchone()
+                                     (user_id,)).fetchone()
         return result
 
-    def create_users(self, display_name, login, password, is_admin):
-        result = self.cursor.execute('SELECT MAX(user_id) FROM users').fetchone()
-        max_user_id = result[0]
-        if max_user_id is not None:
-            user_id = max_user_id + 1
+    def admin_check(self, user_id):
+        active_user = self.show_single_user(user_id)
+        if active_user is None:
+            return False
+
+        user_is_admin = active_user['is_admin']
+        if user_is_admin == 1:
+            return True
         else:
-            user_id = 0
-        self.cursor.execute("INSERT into users (user_id, login, password, display_name, is_admin) VALUES (?,?,?,?,?)",
-                            (user_id, login, password, display_name, is_admin))
+            return False
+
+    def create_users(self, display_name, login, password, is_admin):
+        self.cursor.execute("INSERT into users (login, password, display_name, is_admin) VALUES (?,?,?,?)",
+                            (login, password, display_name, is_admin))
         self.conn.commit()
 
         return True
@@ -42,12 +47,11 @@ class Users():
 
     def log_in(self, email, password):
         # Fetch the user record based on the username
-        self.cursor.execute('SELECT login, password FROM users WHERE login = ?', (email,))
+        self.cursor.execute('SELECT * FROM users WHERE login = ?', (email,))
         user = self.cursor.fetchone()
 
         # Check if user exists and password matches
-        if user and password == user[1]:  # Direct string comparison for passwords
-            return True  # Login successful
+        if user and password == user['password']:
+            return user  # Login successful
         return False  # Login failed
-
 

@@ -8,7 +8,7 @@
 <section>
     <!--Details of the question-->
     <div>
-        <h2 class="page-title">Vraag indexeren naar taxonomie</h2>
+        <h1 class="page-title">Vraag indexeren naar taxonomie</h1>
         <p class="question">{{ single_question.question }}</p>
     </div>
     <div class="question-categories-grid">
@@ -34,16 +34,17 @@
     {% endif %}
 
     <!-- Choose taxonomy form -->
-    <form>
+    <form method="post" action="/vraag/{{ single_question.questions_id }}/save/prompt={{ prompts_id }}">
         <div>
             <label for="taxonomy">Keuze taxonomie</label>
             <select id="taxonomy" name="taxonomy">
-                <option value="onthouden"   {% if gpt_response.categorie|lower == 'onthouden' %}  selected {% endif %}>Onthouden</option>
-                <option value="begrijpen"   {% if gpt_response.categorie|lower == 'begrijpen' %}  selected {% endif %}>Begrijpen</option>
-                <option value="toepassen"   {% if gpt_response.categorie|lower == 'toepassen' %}  selected {% endif %}>Toepassen</option>
-                <option value="analyseren"  {% if gpt_response.categorie|lower == 'analyseren' %} selected {% endif %}>Analyseren</option>
-                <option value="evalueren"   {% if gpt_response.categorie|lower == 'evalueren' %}  selected {% endif %}>Evalueren</option>
-                <option value="creëren"     {% if gpt_response.categorie|lower == 'creëren' %}    selected {% endif %}>Creëren</option>
+                <option value="gpt-{{ gpt_response.categorie|lower }}">GPT: {{ gpt_response.categorie|title }}</option>
+                <option value="onthouden">Onthouden</option>
+                <option value="begrijpen">Begrijpen</option>
+                <option value="toepassen">Toepassen</option>
+                <option value="analyseren">Analyseren</option>
+                <option value="evalueren">Evalueren</option>
+                <option value="creëren">Creëren</option>
             </select>
         </div>
 
