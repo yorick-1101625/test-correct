@@ -229,6 +229,11 @@ def login():
         users_model = Users()
         user_id = users_model.log_in(email, password)
         session['user_id'] = user_id
+        is_admin = users_model.admin_check(session['user_id'])
+        if is_admin:
+            session['admin'] = True
+        else:
+            session['admin'] = False
 
         if user_id:
             return redirect('/overview/0')  # Redirect to a success page
