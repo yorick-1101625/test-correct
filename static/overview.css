@@ -68,31 +68,29 @@ select:focus, select:hover{
 }
 
 /* Export Button */
-.export{
+.upload-export{
     display: flex;
     justify-content: end;
+    margin-bottom: -1px;
 }
-.export button{
+.upload-export button{
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 
     border: 1px solid #777777;
-    border-bottom: none;
     background-color: #f2f6ff;
     margin-right: -1.5px;
-    margin-bottom: -1px;
     color: inherit;
     padding: 10px;
     cursor: pointer;
-    transition-duration: 0.2s;
     font-size: 13px;
 }
-.export button:hover{
+.upload-export button:hover{
     border-color: #004df5;
     color: #004df5;
-    font-size: 15px;
+    border-bottom: none;
 }
 
 /* Question overview section */
