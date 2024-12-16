@@ -229,10 +229,11 @@ def login():
         email = request.form.get('email').lower()
         password = request.form.get('password')
         users_model = Users()
-        user_id = users_model.log_in(email, password)
-        session['user_id'] = user_id
+        user = users_model.log_in(email, password)
+        session['user_id'] = user['user_id']
+        session['name'] = user['display_name']
 
-        if user_id:
+        if user:
             return redirect('/overview/0')  # Redirect to a success page
     else:
         return render_template('log-in.html')
@@ -241,6 +242,7 @@ def login():
 @app.route('/logout', methods=[ 'GET','POST'])
 def logout():
     session['user_id'] = None
+    session['name'] = None
     return redirect('/')
 
 

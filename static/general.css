@@ -50,8 +50,15 @@ header{
 .navigation span:hover{
     color: #004df5;
 }
-.logout-btn {
+.user-actions {
     margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+.user-actions span {
+    margin-right: 20px;
+}
+.logout-btn {
     width: 110px;
     height: 45px;
     font-family: inherit;
