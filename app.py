@@ -4,9 +4,11 @@ from flask_session import Session
 from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
+from lib.database.load_json import Json
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
 
+import json
 from lib.database.export_json import convert_to_json
 
 
@@ -227,15 +229,16 @@ def login():
         email = request.form.get('email').lower()
         password = request.form.get('password')
         users_model = Users()
-        user_id = users_model.log_in(email, password)
-        session['user_id'] = user_id
+        user = users_model.log_in(email, password)
+        session['user_id'] = user['user_id']
+        session['name'] = user['display_name']
         is_admin = users_model.admin_check(session['user_id'])
         if is_admin:
             session['admin'] = True
         else:
             session['admin'] = False
 
-        if user_id:
+        if user:
             return redirect('/overview/0')  # Redirect to a success page
     else:
         return render_template('log-in.html')
@@ -244,11 +247,27 @@ def login():
 @app.route('/logout', methods=[ 'GET','POST'])
 def logout():
     session['user_id'] = None
+    session['name'] = None
+    session['admin'] = None
     return redirect('/')
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def json_upload():
+    if request.method == 'POST':
+        file = request.files['json_file']
+        json_model = Json()
+        json_uploaded = json_model.open_file(file)
+        if json_uploaded:
+            return redirect('/login')
+    else:
+        return render_template('upload-json.html')
+
 
 @app.errorhandler(404)
 def not_found(error):
     return f"<h2>{error}</h2>"
+
 
 if __name__ == "__main__":
     app.run(debug=True)

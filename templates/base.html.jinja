@@ -21,10 +21,14 @@
                 <a href="/admin/configuration"><span>Gebruikers</span></a>
             {% endif %}
         </nav>
-        <a href="/logout" class="logout-btn">
-            Logout
-            <img src="{{ url_for('static', filename='/images/exit.svg') }}">
-        </a>
+
+        <div class="user-actions">
+            <span>{{ session['name'] }}</span>
+            <a href="/logout" class="logout-btn">
+                Logout
+                <img src="{{ url_for('static', filename='/images/exit.svg') }}">
+            </a>
+        </div>
     </header>
 
 {% block content %}{% endblock %}

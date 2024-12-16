@@ -47,11 +47,11 @@ class Users():
 
     def log_in(self, email, password):
         # Fetch the user record based on the username
-        self.cursor.execute('SELECT user_id, login, password FROM users WHERE login = ?', (email,))
+        self.cursor.execute('SELECT * FROM users WHERE login = ?', (email,))
         user = self.cursor.fetchone()
 
         # Check if user exists and password matches
         if user and password == user['password']:
-            return user['user_id']  # Login successful
+            return user  # Login successful
         return False  # Login failed
 
