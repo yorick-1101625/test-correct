@@ -53,3 +53,14 @@ class Prompts:
                             (questions_count, questions_correct, prompts_id))
         self.conn.commit()
         return True
+
+    def structure_prompt(self, prompt):
+        structured_prompt = prompt + """
+        Geef het antwoord in een RFC8259 JSON met de volgende opmaak, waar je niet van mag afwijken.
+        "niveau van Bloom" MOET een van de volgende categorieën zijn: "Onthouden", "Begrijpen", "Toepassen", "Analyseren", "Evalueren" en "Creëren"
+        {
+           "categorie": "het gekozen niveau van Bloom",
+           "uitleg": "uitleg waarom dit niveau van toepassing is"
+        }
+        """
+        return structured_prompt

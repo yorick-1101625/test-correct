@@ -137,9 +137,26 @@ def prompt_answer(questions_id):
     single_question = questions_model.show_single_question(questions_id)
     question = single_question['question']
 
-    gpt_response = get_bloom_category(question, prompt, 'dry_run')
+    # Add JSON structure directions to prompt
+    structured_prompt = prompt_model.structure_prompt(prompt)
+    gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
 
-    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id)
+    # Try 3 times to get a valid answer
+    is_valid = False
+    for i in range(3):
+        try:
+            valid_answers = ["onthouden", "begrijpen", "toepassen", "analyseren", "evalueren", "creëren"]
+            for ans in valid_answers:
+                if gpt_response['categorie'].lower() == ans:
+                    is_valid = True
+                    break
+        except:
+            pass
+
+        if not is_valid:
+            gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
+
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id, is_valid=is_valid)
 
 @app.route('/vraag/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
 def save_answer(questions_id, prompts_id):
@@ -230,16 +247,15 @@ def login():
         password = request.form.get('password')
         users_model = Users()
         user = users_model.log_in(email, password)
-        session['user_id'] = user['user_id']
-        session['name'] = user['display_name']
-        is_admin = users_model.admin_check(session['user_id'])
-        if is_admin:
-            session['admin'] = True
-        else:
-            session['admin'] = False
-
         if user:
+            session['user_id'] = user['user_id']
+            session['name'] = user['display_name']
+            session['admin'] = user['is_admin']
+
             return redirect('/overview/0')  # Redirect to a success page
+
+        else:
+            return redirect('/login')
     else:
         return render_template('log-in.html')
 
