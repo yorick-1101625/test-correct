@@ -34,6 +34,7 @@
     {% endif %}
 
     <!-- Choose taxonomy form -->
+    {% if is_valid %}
     <form method="post" action="/vraag/{{ single_question.questions_id }}/save/prompt={{ prompts_id }}">
         <div>
             <label for="taxonomy">Keuze taxonomie</label>
@@ -50,5 +51,8 @@
 
         <input class="submit-btn" type="submit" value="Taxonomie opslaan">
     </form>
+    {% else %}
+        <p>Probeer opnieuw</p>
+    {% endif %}
 </section>
 {% endblock %}
