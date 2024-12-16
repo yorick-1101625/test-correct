@@ -17,8 +17,9 @@
             <img src="https://welcome.test-correct.nl/svg/logos/Logo-Test-Correct-2.svg">
             <a href="/overview/0"><span>Vragen</span></a>
             <a href="/prompt/overview"><span>Prompts</span></a>
-            <!-- If Admin: -->
-            <a href="/admin/configuration"><span>Gebruikers</span></a>
+            {% if session['admin'] %}
+                <a href="/admin/configuration"><span>Gebruikers</span></a>
+            {% endif %}
         </nav>
 
         <div class="user-actions">

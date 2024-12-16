@@ -250,7 +250,10 @@ def login():
         if user:
             session['user_id'] = user['user_id']
             session['name'] = user['display_name']
+            session['admin'] = user['is_admin']
+
             return redirect('/overview/0')  # Redirect to a success page
+
         else:
             return redirect('/login')
     else:
@@ -261,6 +264,7 @@ def login():
 def logout():
     session['user_id'] = None
     session['name'] = None
+    session['admin'] = None
     return redirect('/')
 
 
