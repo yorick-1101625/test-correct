@@ -88,9 +88,8 @@ select:focus, select:hover{
     font-size: 13px;
 }
 .upload-export button:hover{
-    border-color: #004df5;
     color: #004df5;
-    border-bottom: none;
+    border-color: #004df5;
 }
 
 /* Question overview section */
