@@ -168,18 +168,21 @@ def save_answer(taxonomy, questions_id, prompts_id):
     prompt_model = Prompts()
     questions_model = Questions()
 
-    taxonomy_bloom = request.form.get('taxonomy')
+    # Get info from webpage
+    taxonomy_input = request.form.get('taxonomy')
     user_id = session.get('user_id')
 
     # Check if the answer was change by user or not
     changed_by_user = True
-    if taxonomy_bloom[:3] == 'gpt':
+    if taxonomy_input[:3] == 'gpt':
         changed_by_user = False
-        taxonomy_bloom = taxonomy_bloom[4:]
+        taxonomy_input = taxonomy_input[4:]
 
+    # Save taxonomy in DB
     is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
-    is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom, user_id)
+    is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_input, user_id, taxonomy)
 
+    # Redirect to next question
     if is_prompt_updated and is_question_updated:
         next_question = None
         print(taxonomy)
