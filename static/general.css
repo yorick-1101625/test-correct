@@ -83,24 +83,38 @@ header{
     margin-left: 10px;
 }
 
-#flash-messages {
+.flash-messages {
     position: fixed;
-    top: 0px;
-    right: 0px;
-    width: 500px;
+    top: 80px;
+    left: 10px;
+    z-index: 1000;
 }
 
-.flash-message {
+.flash-messages .succes {
+    background-color: #F2F6FF;
+    border: 2px solid #3DBB56;
+    border-radius: 10px;
+    padding: 5px;
     margin-bottom: 10px;
-    color: white;
-    font-size: 12px;
-    animation: slide-in 0.5s ease-out;
+    color: black;
+    font-size: 15px;
+    display: flex;
 }
 
-.flash-message.succes {
-    background-color: #3DBB56;
+.flash-messages .error {
+    display: inline;
+    background-color: #F2F6FF;
+    border: 2px solid #FF7972;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    color: black;
+    font-size: 15px;
+    display: flex;
 }
 
-.flash-message.error {
-    background-color: FF7972;
+.icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }

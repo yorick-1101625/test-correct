@@ -31,6 +31,24 @@
         </div>
     </header>
 
+    {% with messages = get_flashed_messages(with_categories = True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="{{category}}">
+                    {% if category == 'succes' %}
+                        <img class = "icon" src="{{ url_for('static', filename='/images/check.svg') }}">
+                    {% elif category == 'error' %}
+                        <img class = "icon" src="{{ url_for('static', filename='/images/xmark.svg') }}">
+                    {% endif %}
+                    <div>{{message}}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
 {% block content %}{% endblock %}
 
 </body>
