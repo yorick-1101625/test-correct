@@ -21,7 +21,7 @@
             <td>{{ prompt.questions_count }}</td>
             <td>{{ prompt.questions_correct }}</td>
             {% if prompt.questions_count %}
-                <td>{{ prompt.questions_correct // prompt.questions_count * 100 }}%</td>
+                <td>{{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</td>
             {% else %}
                 <td>0%</td>
             {% endif %}
