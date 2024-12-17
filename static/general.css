@@ -82,3 +82,25 @@ header{
     height: 15px;
     margin-left: 10px;
 }
+
+#flash-messages {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 500px;
+}
+
+.flash-message {
+    margin-bottom: 10px;
+    color: white;
+    font-size: 12px;
+    animation: slide-in 0.5s ease-out;
+}
+
+.flash-message.succes {
+    background-color: #3DBB56;
+}
+
+.flash-message.error {
+    background-color: FF7972;
+}
