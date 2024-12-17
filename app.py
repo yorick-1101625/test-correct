@@ -247,9 +247,10 @@ def edit_user(user_id):
                 display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
                 if str(user_id) == str(session.get('user_id')):
-                    return redirect('/logout')
-                else:
-                    return redirect('/admin/configuration')
+                    session['name'] = display_name
+                    session['admin'] = is_admin
+
+                return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':
             deleted_user = user_model.delete_users(
                 user_id=user_id)
