@@ -17,7 +17,7 @@ class Questions:
         limit = 10
         offset *= 10
         if indexed == 'indexed':
-            result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NOT NULL OR rtti IS NOT NULL) AND exported = 0 LIMIT ? OFFSET ?',
+            result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NOT NULL AND rtti IS NOT NULL) AND exported = 0 LIMIT ? OFFSET ?',
                                          ("%"+search_term+"%", subject, limit, offset)).fetchall()
         elif indexed == 'not-indexed':
             result = self.cursor.execute('SELECT DISTINCT  * FROM questions WHERE question LIKE ? AND subject = ? AND (taxonomy_bloom IS NULL OR rtti IS NULL) AND exported = 0 LIMIT ? OFFSET ?',
