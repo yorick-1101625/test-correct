@@ -146,18 +146,22 @@ select:focus, select:hover{
 }
 
 .index{
-    width: 20%;
-    padding:3px;
+    width: 13%;
+}
+.index a {
+    width: 80%;
+    padding: 3px;
     background-color: #3dbb56;
     color: #ffffff;
-
     border: none;
     border-radius: 10px;
-    text-align: center;
     transition-duration: 0.2s;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.index:hover{
+.index a:hover{
     background-color: #004df5;
 }
 

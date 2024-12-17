@@ -57,11 +57,20 @@
             <p class="subject">{{ question.subject|title }}</p>
             <p class="date">{{ question.date_created }}</p>
 
-            {% if question.rtti or question.taxonomy_bloom %}
-            <p class="rtti">{{ question.rtti|title }}</p>
-            <p class="bloom">{{ question.taxonomy_bloom|title }}</p>
+            {% if question.rtti %}
+                <p class="rtti">{{ question.rtti|title }}</p>
             {% else %}
-            <a class="index" href="/vraag/{{ question.questions_id }}"><p>Indexeer</p></a>
+                <div class="index" >
+                    <a href="/rtti/{{ question.questions_id }}">Indexeer</a>
+                </div>
+            {% endif %}
+
+            {% if question.taxonomy_bloom %}
+                <p class="bloom">{{ question.taxonomy_bloom|title }}</p>
+            {% else %}
+                <div class="index" >
+                    <a href="/bloom/{{ question.questions_id }}">Indexeer</a>
+                </div>
             {% endif %}
         </div>
         {% endfor %}

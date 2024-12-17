@@ -8,7 +8,7 @@
 <section>
     <!--Details of the question-->
     <div>
-        <h1 class="page-title">Vraag indexeren naar taxonomie</h1>
+        <h1 class="page-title">Vraag indexeren naar {{ taxonomy }}</h1>
         <p class="question">{{ single_question.question }}</p>
     </div>
     <div class="question-categories-grid">
@@ -35,24 +35,33 @@
 
     <!-- Choose taxonomy form -->
     {% if is_valid %}
-    <form method="post" action="/vraag/{{ single_question.questions_id }}/save/prompt={{ prompts_id }}">
+    <form method="post" action="/{{ taxonomy }}/{{ single_question.questions_id }}/save/prompt={{ prompts_id }}">
         <div>
             <label for="taxonomy">Keuze taxonomie</label>
             <select id="taxonomy" name="taxonomy">
                 <option value="gpt-{{ gpt_response.categorie|lower }}">GPT: {{ gpt_response.categorie|title }}</option>
-                <option value="onthouden">Onthouden</option>
-                <option value="begrijpen">Begrijpen</option>
-                <option value="toepassen">Toepassen</option>
-                <option value="analyseren">Analyseren</option>
-                <option value="evalueren">Evalueren</option>
-                <option value="creëren">Creëren</option>
+                {% if taxonomy == 'bloom' %}
+                    <option value="onthouden">Onthouden</option>
+                    <option value="begrijpen">Begrijpen</option>
+                    <option value="toepassen">Toepassen</option>
+                    <option value="analyseren">Analyseren</option>
+                    <option value="evalueren">Evalueren</option>
+                    <option value="creëren">Creëren</option>
+                {% elif taxonomy == 'rtti' %}
+                    <option value="r">R</option>
+                    <option value="t1">T1</option>
+                    <option value="t2">T2</option>
+                    <option value="i">I</option>
+                {% endif %}
             </select>
         </div>
 
         <input class="submit-btn" type="submit" value="Taxonomie opslaan">
     </form>
     {% else %}
-        <p>Probeer opnieuw</p>
+        <p style="color: red;">
+            Error: GPT antwoord niet ondersteund
+        </p>
     {% endif %}
 </section>
 {% endblock %}
