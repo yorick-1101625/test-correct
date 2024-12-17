@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='log-in.css') }}">
 </head>
 <body>
+
+{% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+                <li class="{{category}}">{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
 <div class="background">
     <div class="shape"><img src="https://www.test-correct.nl/hubfs/02%20TC%20assets%20-%20illustrations/TC-on-devices-v4.svg"></div>
     <div class="shape"></div>

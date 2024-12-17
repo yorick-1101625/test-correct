@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_file, session, url_for
+from flask import Flask, render_template, request, redirect, send_file, session, url_for, flash
 from flask_session import Session
 
 from lib.model.users import Users
@@ -98,6 +98,7 @@ def prompt_create():
         created_prompt = prompts_model.create_prompt(prompt_name, prompt, user_id)
 
         if created_prompt:
+            flash('Prompt succesvol aangemaakt!', 'succes')
             return redirect('/prompt/overview')
     else:
         return render_template('prompt-create.html.jinja')
@@ -111,6 +112,7 @@ def prompt_details(prompts_id):
     if request.method == 'POST':
         is_deleted = prompts_model.delete_prompt(prompts_id)
         if is_deleted:
+            flash('Prompt succesvol verwijderd!', 'succes')
             return redirect('/prompt/overview')
     else:
         return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
@@ -181,6 +183,7 @@ def save_answer(taxonomy, questions_id, prompts_id):
     # Save taxonomy in DB
     is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
     is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_input, user_id, taxonomy)
+    flash('Taxonomie succesvol opgeslagen!','succes')
 
     # Redirect to next question
     if is_prompt_updated and is_question_updated:
@@ -222,6 +225,7 @@ def create_user():
         user_model = Users()
         created_user = user_model.create_users(display_name, login, password, is_admin)
         if created_user:
+            flash('Gebruiker succesvol aangemaakt!', 'succes')
             return redirect('configuration')
     else:
         return render_template('create-user.html.jinja')
@@ -247,13 +251,16 @@ def edit_user(user_id):
                 display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
                 if str(user_id) == str(session.get('user_id')):
+                    flash('Gegevens succesvol veranderd, log alstublieft opnieuw in.', 'succes')
                     return redirect('/logout')
                 else:
+                    flash('Gebruiker succesvol aangepast!', 'succes')
                     return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':
             deleted_user = user_model.delete_users(
                 user_id=user_id)
             if deleted_user:
+                flash('Gebruiker succesvol verwijderd!', 'succes')
                 return redirect('/admin/configuration')
     else:
         return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], password=user_info['password'], is_admin=user_info['is_admin'])
@@ -270,10 +277,11 @@ def login():
             session['user_id'] = user['user_id']
             session['name'] = user['display_name']
             session['admin'] = user['is_admin']
-
+            flash('Je bent succesvol ingelogd!', 'succes')
             return redirect('/overview/0')  # Redirect to a success page
 
         else:
+            flash('Verkeerde inlog-gegevens, probeer het opnieuw.', 'error')
             return redirect('/login')
     else:
         return render_template('log-in.html')
@@ -294,6 +302,7 @@ def json_upload():
         json_model = Json()
         json_uploaded = json_model.open_file(file)
         if json_uploaded:
+            flash('JSON bestand is succesvol geüpload!', 'succes')
             return redirect('/')
     else:
         return render_template('upload-json.html')
