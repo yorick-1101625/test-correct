@@ -116,19 +116,19 @@ def prompt_details(prompts_id):
         return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
 
 
-@app.route('/vraag/<questions_id>')
-def single_question_page(questions_id):
+@app.route('/<taxonomy>/<questions_id>')
+def single_question_page(taxonomy, questions_id):
     # Show question
     questions_model = Questions()
     single_question = questions_model.show_single_question(questions_id)
     # Show all prompts
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts()
-    return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts)
+    return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts, taxonomy=taxonomy)
 
 
-@app.route('/vraag/<questions_id>/antwoord', methods=['GET', 'POST'])
-def prompt_answer(questions_id):
+@app.route('/<taxonomy>/<questions_id>/antwoord', methods=['GET', 'POST'])
+def prompt_answer(taxonomy, questions_id):
     prompts_id = request.form.get('prompt')
     prompt_model = Prompts()
     prompt = prompt_model.show_single_prompt(prompts_id)['prompt']
@@ -138,14 +138,19 @@ def prompt_answer(questions_id):
     question = single_question['question']
 
     # Add JSON structure directions to prompt
-    structured_prompt = prompt_model.structure_prompt(prompt)
+    structured_prompt = prompt
+    if taxonomy == 'bloom':
+        structured_prompt = prompt_model.structure_bloom_prompt(prompt)
+    elif taxonomy == 'rtti':
+        structured_prompt = prompt_model.structure_rtti_prompt(prompt)
+
     gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
 
     # Try 3 times to get a valid answer
     is_valid = False
     for i in range(3):
         try:
-            valid_answers = ["onthouden", "begrijpen", "toepassen", "analyseren", "evalueren", "creëren"]
+            valid_answers = ["onthouden", "begrijpen", "toepassen", "analyseren", "evalueren", "creëren", "r", "t1", "t2", "i"]
             for ans in valid_answers:
                 if gpt_response['categorie'].lower() == ans:
                     is_valid = True
@@ -156,10 +161,10 @@ def prompt_answer(questions_id):
         if not is_valid:
             gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
 
-    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id, is_valid=is_valid)
+    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id, is_valid=is_valid, taxonomy=taxonomy)
 
-@app.route('/vraag/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
-def save_answer(questions_id, prompts_id):
+@app.route('/<taxonomy>/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
+def save_answer(taxonomy, questions_id, prompts_id):
     prompt_model = Prompts()
     questions_model = Questions()
 
@@ -176,9 +181,17 @@ def save_answer(questions_id, prompts_id):
     is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_bloom, user_id)
 
     if is_prompt_updated and is_question_updated:
+        next_question = None
+        print(taxonomy)
         # Should redirect to next question
-        next_question_id = questions_model.show_first_not_indexed_question()['questions_id']
-        next_question_url = f"/vraag/{next_question_id}"
+        if taxonomy == 'bloom':
+            next_question = questions_model.show_first_not_indexed_question('bloom')
+        elif taxonomy == 'rtti':
+            next_question = questions_model.show_first_not_indexed_question('rtti')
+
+        print(next_question)
+
+        next_question_url = f"/{taxonomy}/{next_question['questions_id']}"
         return redirect(next_question_url)
 
 

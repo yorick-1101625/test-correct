@@ -34,8 +34,12 @@ class Questions:
         result = self.cursor.execute('SELECT * FROM questions WHERE questions_id = ?', (str(questions_id),)).fetchone()
         return result
 
-    def show_first_not_indexed_question(self):
-        result = self.cursor.execute("SELECT * FROM questions WHERE taxonomy_bloom IS NULL AND rtti IS NULL LIMIT 1").fetchone()
+    def show_first_not_indexed_question(self, taxonomy):
+        result = None
+        if taxonomy == 'bloom':
+            result = self.cursor.execute("SELECT * FROM questions WHERE taxonomy_bloom IS NULL LIMIT 1").fetchone()
+        elif taxonomy == 'rtti':
+            result = self.cursor.execute("SELECT * FROM questions WHERE rtti IS NULL LIMIT 1").fetchone()
         return result
 
     def get_indexed_questions(self):
