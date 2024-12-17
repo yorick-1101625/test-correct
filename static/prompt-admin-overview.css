@@ -6,6 +6,7 @@
     width: 100%;
     overflow: hidden;
     text-align: left;
+    margin: 10px 0;
 }
 .row{
     width: 100%;
@@ -31,25 +32,37 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.col1{
+.p-col1{
     width: 30%;
     padding-right: 10px;
 }
-.col2{
+.p-col2{
     width: 12%;
 }
-.col3{
+.p-col3{
     width: 22%;
 }
-.col4{
+.p-col4{
     width: 23%;
 }
-.col5{
+.p-col5 {
+    width: 13%;
+}
+.a-col1 {
+    width: 32%;
+}
+.a-col2 {
+    width: 35%;
+}
+.a-col3 {
+    width: 20%;
+}
+.a-col4 {
     width: 13%;
 }
 .btn{
     margin-top: 10px;
-    height: 50px;
+    margin-right: 7px;
     background-color: #3dbb56;
     color: #ffffff;
     padding: 5px;
@@ -60,9 +73,10 @@
     transition-duration: 0.2s;
     cursor: pointer;
 }
-.detail-btn {
+.small-btn {
     background-color: #3dbb56;
     color: #ffffff;
+    width: 65px;
     padding: 5px;
     font-size: 14px;
     font-weight: 500;
@@ -71,7 +85,7 @@
     transition-duration: 0.2s;
     cursor: pointer;
 }
-.detail-btn:hover,
+.small-btn:hover,
 .btn:hover {
     background-color: #004df5;
 }
