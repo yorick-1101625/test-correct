@@ -112,7 +112,7 @@ def prompt_details(prompts_id):
     if request.method == 'POST':
         is_deleted = prompts_model.delete_prompt(prompts_id)
         if is_deleted:
-            flash('Prompt succesvol verwijdert!', 'succes')
+            flash('Prompt succesvol verwijderd!', 'succes')
             return redirect('/prompt/overview')
     else:
         return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
@@ -261,7 +261,12 @@ def edit_user(user_id):
             deleted_user = user_model.delete_users(
                 user_id=user_id)
             if deleted_user:
-                flash('Gebruiker succesvol verwijdert!', 'succes')
+                if str(user_id) == str(session.get('user_id')):
+                    session['name'] = None
+                    session['admin'] = None
+                    session['user_id'] = None
+                    print('eee')
+                flash('Gebruiker succesvol verwijderd!', 'succes')
                 return redirect('/admin/configuration')
     else:
         return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], password=user_info['password'], is_admin=user_info['is_admin'])
