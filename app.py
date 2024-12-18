@@ -78,7 +78,7 @@ def export():
     else:
         # Export questions to json
         convert_to_json(exported_questions)
-        return render_template("export.html.jinja")
+        return render_template("export.html.jinja", exported_questions=exported_questions)
 
 
 @app.route('/prompt/overview')
