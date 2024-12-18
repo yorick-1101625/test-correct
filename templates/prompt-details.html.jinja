@@ -1,22 +1,51 @@
 {% extends "base.html.jinja" %}
 {% block title %}Prompt Details{% endblock %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='prompt-details.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='prompt-admin-overview.css') }}">
+{% endblock %}
 {% block content %}
 <section>
     <h1>{{prompt.prompt_name}}</h1>
-    <p>{{prompt.prompt}}</p>
-    <p>Redacteur: {{prompt_info.display_name}}</p>
-    <p>Aangemaakt: {{prompt.date_created}}</p>
-    <p>Toetsvragen gecategoriseerd: {{ prompt.questions_count }}</p>
-    <p>Toetsvragen correct: {{ prompt.questions_correct }}</p>
-    <p>Toetsvragen incorrect: {{ prompt.questions_count - prompt.questions_correct }}</p>
-    {% if prompt.questions_count %}
-        <p>Succespercentage: {{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</p>
-    {% else %}
-        <p>Succespercentage: 0%</p>
-    {% endif %}
+    <p class="prompt">{{prompt.prompt}}</p>
+    <div class="details-container overview-container">
+        <div class="row">
+            <p>Redacteur:</p>
+            <p>{{prompt_info.display_name}}</p>
+        </div>
+
+        <div class="row">
+            <p>Aangemaakt:</p>
+            <p>{{prompt.date_created}}</p>
+        </div>
+
+        <div class="row">
+            <p>Toetsvragen gecategoriseerd:</p>
+            <p>{{ prompt.questions_count }}</p>
+        </div>
+
+        <div class="row">
+            <p>Toetsvragen correct:</p>
+            <p>{{ prompt.questions_correct }}</p>
+        </div>
+
+        <div class="row">
+            <p>Toetsvragen incorrect:</p>
+            <p>{{ prompt.questions_count - prompt.questions_correct }}</p>
+        </div>
+
+        <div class="row">
+        {% if prompt.questions_count %}
+            <p>Succespercentage:</p>
+            <p>{{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</p>
+        {% else %}
+            <p>Succespercentage:</p>
+            <p>0%</p>
+        {% endif %}
+        </div>
+    </div>
     <form method="post">
-        <input type="submit" value="Verwijder">
+        <input class="btn" type="submit" value="Verwijder">
     </form>
 </section>
 {% endblock %}
