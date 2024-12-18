@@ -88,6 +88,12 @@ header{
     top: 80px;
     left: 10px;
     z-index: 1000;
+/*    animation: hide 1s linear 0.5s 1 forwards;*/
+/*}*/
+/*@keyframes hide {*/
+/*    to {*/
+/*        opacity: 0;*/
+/*    }*/
 }
 
 .flash-messages .succes {
@@ -99,10 +105,10 @@ header{
     color: black;
     font-size: 15px;
     display: flex;
+    align-items: center;
 }
 
 .flash-messages .error {
-    display: inline;
     background-color: #F2F6FF;
     border: 2px solid #FF7972;
     border-radius: 10px;
@@ -111,7 +117,9 @@ header{
     color: black;
     font-size: 15px;
     display: flex;
+    align-items: center;
 }
+
 
 .icon {
     width: 15px;

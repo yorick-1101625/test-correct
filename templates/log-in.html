@@ -16,12 +16,12 @@
             <div class="flash-messages">
                 {% for category, message in messages %}
                     <div class="{{category}}">
-                    {% if category == 'succes' %}
-                        <img class = "icon" src="{{ url_for('static', filename='/images/check.svg') }}">
-                    {% elif category == 'error' %}
-                        <img class = "icon" src="{{ url_for('static', filename='/images/xmark.svg') }}">
-                    {% endif %}
-                    <div>{{message}}</div>
+                        {% if category == 'succes' %}
+                            <img alt="V" class = "icon" src="static/images/check.svg">
+                        {% elif category == 'error' %}
+                            <img alt="X" class="icon" src="static/images/xmark.svg">
+                        {% endif %}
+                        <div>{{message}}</div>
                     </div>
                 {% endfor %}
             </div>
