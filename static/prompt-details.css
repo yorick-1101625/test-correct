@@ -1,0 +1,17 @@
+.prompt {
+    font-size: 18px;
+}
+.details-container {
+    font-size: 20px;
+    padding: 5px;
+}
+.details-container p {
+    margin: 5px 0;
+    padding: 0;
+}
+.row {
+    display: flex;
+}
+.row p {
+    flex: 1;
+}

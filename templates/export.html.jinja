@@ -25,8 +25,12 @@
 {% block content %}
 <section>
     <h1>Exporteer Vragen</h1>
+    {% if exported_questions %}
     <form method="post">
         <button>Download</button>
     </form>
+    {% else %}
+    <p style="font-size: 18px;">Er zijn geen vragen om geëxporteerd te worden</p>
+    {% endif %}
 </section>
 {% endblock %}

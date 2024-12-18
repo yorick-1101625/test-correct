@@ -1,0 +1,63 @@
+label{
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.text-input {
+    display: block;
+    height: 20px;
+    width: 500px;
+    background-color: #f2f6ff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 300;
+    border: 1px solid #BBBBBB;
+    transition-duration: 0.1s;
+}
+textarea{
+    display: block;
+    height: 100px;
+    width: 500px;
+    background-color: #f2f6ff;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid #BBBBBB;
+    transition-duration: 0.1s;
+}
+
+textarea:focus,
+.text-input:focus {
+    outline: 3px solid #3dbb56;
+}
+
+/* https://moderncss.dev/pure-css-custom-checkbox-style/ */
+input[type="checkbox"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 2.15em;
+    height: 2.15em;
+    border: 0.15em solid #BBBBBB;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+input[type="checkbox"]::before {
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    transform: scale(0);
+    transition: 0.1s transform ease-in-out;
+    box-shadow: inset 1.5em 1.5em #3dbb56;
+}
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}

@@ -82,18 +82,35 @@ header{
     height: 15px;
     margin-left: 10px;
 }
+.btn{
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 7px;
+    background-color: #3dbb56;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #004df5;
+}
 
 .flash-messages {
     position: fixed;
     top: 80px;
     left: 10px;
     z-index: 1000;
-/*    animation: hide 1s linear 0.5s 1 forwards;*/
-/*}*/
-/*@keyframes hide {*/
-/*    to {*/
-/*        opacity: 0;*/
-/*    }*/
+    animation: hide 1s linear 0.5s 1 forwards;
+}
+@keyframes hide {
+    to {
+        opacity: 0;
+    }
 }
 
 .flash-messages .succes {

@@ -1,27 +1,30 @@
 {% extends "base.html.jinja" %}
 {% block title %}Wijzig redacteur{% endblock %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='create-update.css') }}">
+{% endblock %}
 {% block content %}
 <section>
+    <h1>Bewerk gebruiker</h1>
     <form method="POST">
-        <label for="display_name">Naam</label><br>
-        <input type="text" id="display_name" name="display_name" value="{{display_name}}"><br>
+        <label for="display_name">Naam</label>
+        <input class="text-input" type="text" id="display_name" name="display_name" value="{{display_name}}">
 
-        <label for="login">Email / login</label><br>
-        <input type="email" id="login" name="login" value="{{login}}"><br>
+        <label for="login">Email / login</label>
+        <input class="text-input" type="email" id="login" name="login" value="{{login}}">
 
-        <label for="password">Wachtwoord</label><br>
-        <input type="password" id="password" name="password" value="{{password}}"><br>
+        <label for="password">Wachtwoord</label>
+        <input class="text-input" type="password" id="password" name="password" value="{{password}}">
 
         <label for="is_admin">Is admin?</label>
         {% if is_admin == 1 %}
-            <input type="checkbox" id="is_admin" name="admin" value="1" checked><br>
+            <input class="checkbox" type="checkbox" id="is_admin" name="admin" value="1" checked>
         {% else %}
-            <input type="checkbox" id="is_admin" name="admin" value="1"><br>
+            <input class="checkbox" type="checkbox" id="is_admin" name="admin" value="1">
         {% endif %}
 
-        <input type="submit" name="submit" value="Opslaan">
-        <input type="submit" name="submit" value="Verwijderen">
+        <input class="btn" type="submit" name="submit" value="Opslaan">
+        <input class="btn" type="submit" name="submit" value="Verwijderen">
     </form>
 </section>
 {% endblock %}
