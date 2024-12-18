@@ -105,7 +105,7 @@ header{
     top: 80px;
     left: 10px;
     z-index: 1000;
-    animation: hide 1s linear 0.5s 1 forwards;
+    animation: hide 2s linear 0.5s 1 forwards;
 }
 @keyframes hide {
     to {
