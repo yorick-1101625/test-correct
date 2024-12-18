@@ -1,6 +1,8 @@
 {% extends "base.html.jinja" %}
 {% block title %}Prompts{% endblock %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='prompt-admin-overview.css') }}">
+{% endblock %}
 {% block content %}
 <body>
     {% with messages = get_flashed_messages(with_categories = True) %}
@@ -16,37 +18,35 @@
 <section>
     <h1>AI Prompts</h1>
 
-    <table>
-        <tr>
-            <th>Prompt</th>
-            <th>Redacteur</th>
-            <th>Toetsvragen ingedeeld</th>
-            <th>Correct</th>
-            <th>Succespercentage</th>
-            <th>Acties</th>
+    <table class="overview-container">
+        <tr class="row-head row">
+            <th class="p-col1">Prompt</th>
+            <th class="p-col2">Redacteur</th>
+            <th class="p-col3">Toetsvragen ingedeeld</th>
+            <th class="p-col4">Succespercentage</th>
+            <th class="p-col5">Acties</th>
         </tr>
         {% for prompt in prompts_info %}
-        <tr>
-            <td>{{ prompt.prompt_name }}</td>
-            <td>{{ prompt.display_name }}</td>
-            <td>{{ prompt.questions_count }}</td>
-            <td>{{ prompt.questions_correct }}</td>
+        <tr class="row">
+            <td class="p-col1">{{ prompt.prompt_name }}</td>
+            <td class="p-col2">{{ prompt.display_name }}</td>
+            <td class="p-col3">{{ prompt.questions_count }}</td>
             {% if prompt.questions_count %}
-                <td>{{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</td>
+                <td class="p-col4">{{ (prompt.questions_correct / prompt.questions_count * 100)|int }}%</td>
             {% else %}
-                <td>0%</td>
+                <td class="p-col4">0%</td>
             {% endif %}
-            <td>
+            <td class="p-col5">
                 <a href="/prompt/{{prompt.prompts_id}}">
-                    <button type="button">Details</button>
+                    <button class="small-btn" type="button">Details</button>
                 </a>
             </td>
         </tr>
         {% endfor %}
     </table>
 
-    <a href="/prompt/create">
-        <button>Nieuwe prompt toevoegen</button>
+    <a href="/prompt/create" class="btn">
+        Nieuwe prompt toevoegen
     </a>
 </section>
 {% endblock %}

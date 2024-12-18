@@ -44,10 +44,12 @@
             </select>
             <!--If there are no existing prompts:-->
             {% else %}
-            <span><a href="/prompt/create">Niew Prompt</a></span>
+            <span><a href="/prompt/create" style="text-decoration: underline">Niew Prompt</a></span>
             {% endif %}
         </div>
+        {% if prompts %}
         <input class="submit-btn" type="submit" value="Genereer antwoord">
+        {% endif %}
     </form>
 </section>
 {% endblock %}

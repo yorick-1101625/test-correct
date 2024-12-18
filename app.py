@@ -78,7 +78,7 @@ def export():
     else:
         # Export questions to json
         convert_to_json(exported_questions)
-        return render_template("export.html.jinja")
+        return render_template("export.html.jinja", exported_questions=exported_questions)
 
 
 @app.route('/prompt/overview')
@@ -112,7 +112,7 @@ def prompt_details(prompts_id):
     if request.method == 'POST':
         is_deleted = prompts_model.delete_prompt(prompts_id)
         if is_deleted:
-            flash('Prompt succesvol verwijderd!', 'succes')
+            flash('Prompt succesvol verwijdert!', 'succes')
             return redirect('/prompt/overview')
     else:
         return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
@@ -251,16 +251,17 @@ def edit_user(user_id):
                 display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
                 if str(user_id) == str(session.get('user_id')):
-                    flash('Gegevens succesvol veranderd, log alstublieft opnieuw in.', 'succes')
-                    return redirect('/logout')
+                    session['name'] = display_name
+                    session['admin'] = is_admin
+                    flash('Gegevens succesvol veranderd!', 'succes')
                 else:
                     flash('Gebruiker succesvol aangepast!', 'succes')
-                    return redirect('/admin/configuration')
+                return redirect('/admin/configuration')
         if request.form['submit'] == 'Verwijderen':
             deleted_user = user_model.delete_users(
                 user_id=user_id)
             if deleted_user:
-                flash('Gebruiker succesvol verwijderd!', 'succes')
+                flash('Gebruiker succesvol verwijdert!', 'succes')
                 return redirect('/admin/configuration')
     else:
         return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], password=user_info['password'], is_admin=user_info['is_admin'])
@@ -277,7 +278,7 @@ def login():
             session['user_id'] = user['user_id']
             session['name'] = user['display_name']
             session['admin'] = user['is_admin']
-            flash('Je bent succesvol ingelogd!', 'succes')
+            flash('U bent succesvol ingelogd!', 'succes')
             return redirect('/overview/0')  # Redirect to a success page
 
         else:

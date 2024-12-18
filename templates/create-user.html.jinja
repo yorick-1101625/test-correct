@@ -1,22 +1,26 @@
 {% extends "base.html.jinja" %}
 {% block title %}Nieuwe redacteur{% endblock %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='create-update.css') }}">
+{% endblock %}
 {% block content %}
 <section>
+    <h1>Nieuwe gebruiker</h1>
+
     <form method="POST">
-        <label for="display_name">Naam</label><br>
-        <input type="text" id="display_name" name="display_name"><br>
+        <label for="display_name">Naam</label>
+        <input class="text-input" type="text" id="display_name" name="display_name">
 
-        <label for="login">Email / login</label><br>
-        <input type="email" id="login" name="login"><br>
+        <label for="login">Email / login</label>
+        <input class="text-input" type="email" id="login" name="login">
 
-        <label for="password">Wachtwoord</label><br>
-        <input type="text" id="password" name="password"><br>
+        <label for="password">Wachtwoord</label>
+        <input class="text-input" type="text" id="password" name="password">
 
         <label for="admin">Is admin?</label>
-        <input type="checkbox" id="admin" name="admin" value="1"><br>
+        <input class="checkbox" type="checkbox" id="admin" name="admin" value="1">
 
-        <input type="submit" value="Opslaan">
+        <input class="btn" type="submit" value="Opslaan">
     </form>
 </section>
 {% endblock %}
