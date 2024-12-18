@@ -212,7 +212,7 @@ def admin_config():
 def create_user():
     if request.method == 'POST':
         display_name = request.form.get('display_name')
-        login = request.form.get('login').islower()
+        login = request.form.get('login').lower()
         password = request.form.get('password')
         is_admin = request.form.get('admin')
         try:
@@ -298,6 +298,7 @@ def logout():
     session['user_id'] = None
     session['name'] = None
     session['admin'] = None
+    flash('Je bent uitgelogd.', 'error')
     return redirect('/')
 
 
