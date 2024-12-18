@@ -1,14 +1,19 @@
 {% extends "base.html.jinja" %}
 {% block title %}Upload{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
+{% endblock %}
 {% block content %}
 <section>
+    <h1>Vragen uploaden</h1>
+
     <form method="POST" enctype="multipart/form-data">
-      <input type="file" name="json_file" accept=".json"><br>
-      <input type="submit">
+      <input class="file-btn" type="file" name="json_file" accept=".json"><br>
+      <input class="btn" type="submit" value="Uploaden">
     </form>
 
     <div>
-        <p>Bestand moet volgens het volgende structuur:</p>
+        <p>Het JSON bestand moet volgens het volgende structuur:</p>
         <pre>
             [
                 {

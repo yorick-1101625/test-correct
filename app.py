@@ -298,7 +298,7 @@ def logout():
     session['user_id'] = None
     session['name'] = None
     session['admin'] = None
-    flash('Je bent uitgelogd.', 'error')
+    flash('U bent uitgelogd.', 'succes')
     return redirect('/')
 
 
