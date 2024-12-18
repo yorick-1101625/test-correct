@@ -6,7 +6,7 @@
     width: 100%;
     overflow: hidden;
     text-align: left;
-    margin: 10px 0;
+    margin-top: 10px;
 }
 .row{
     width: 100%;
@@ -60,19 +60,6 @@
 .a-col4 {
     width: 13%;
 }
-.btn{
-    margin-top: 10px;
-    margin-right: 7px;
-    background-color: #3dbb56;
-    color: #ffffff;
-    padding: 5px;
-    font-size: 18px;
-    font-weight: 500;
-    border: none;
-    border-radius: 5px;
-    transition-duration: 0.2s;
-    cursor: pointer;
-}
 .small-btn {
     background-color: #3dbb56;
     color: #ffffff;
@@ -85,7 +72,6 @@
     transition-duration: 0.2s;
     cursor: pointer;
 }
-.small-btn:hover,
-.btn:hover {
+.small-btn:hover {
     background-color: #004df5;
 }

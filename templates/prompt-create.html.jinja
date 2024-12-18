@@ -1,17 +1,20 @@
 {% extends "base.html.jinja" %}
 {% block title %}Nieuwe prompt{% endblock %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='create-update.css') }}">
+{% endblock %}
 {% block content %}
 <section>
+    <h1>Nieuw prompt</h1>
     <form method="POST">
 
-        <label for="prompt_name">Titel</label><br>
-        <input type="text" id="prompt_name" name="prompt_name"><br>
+        <label for="prompt_name">Titel</label>
+        <input class="text-input" type="text" id="prompt_name" name="prompt_name">
 
-        <label for="prompt">Prompt</label><br>
-        <input type="text" id="prompt" name="prompt"><br>
+        <label for="prompt">Prompt</label>
+        <textarea id="prompt" name="prompt"></textarea>
 
-        <input type="submit" value="Maak prompt">
+        <input class="btn" type="submit" value="Maak prompt">
 
     </form>
 </section>
