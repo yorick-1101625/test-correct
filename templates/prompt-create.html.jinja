@@ -9,10 +9,19 @@
     <form method="POST">
 
         <label for="prompt_name">Titel</label>
-        <input class="text-input" type="text" id="prompt_name" name="prompt_name">
+        <input class="text-input" type="text" id="prompt_name" name="prompt_name" required>
 
         <label for="prompt">Prompt</label>
-        <textarea id="prompt" name="prompt"></textarea>
+        <textarea id="prompt" name="prompt" required></textarea>
+
+        <div class="prompt-category">
+            <input id="category-rtti" name="prompt_category" type="radio" value="rtti" required>
+            <label for="category-rtti">RTTI</label>
+        </div>
+        <div class="prompt-category">
+            <input id="category-bloom" name="prompt_category" type="radio" value="bloom" required>
+            <label for="category-bloom">Bloom</label>
+        </div>
 
         <input class="btn" type="submit" value="Maak prompt">
 

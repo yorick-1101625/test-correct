@@ -61,3 +61,14 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
     transform: scale(1);
 }
+
+.prompt-category {
+    display: flex;
+    align-items: center;
+}
+.prompt-category input[type="radio"] {
+    margin-top: 20px;
+    margin-right: 7px;
+    padding: 0;
+    cursor: pointer;
+}
