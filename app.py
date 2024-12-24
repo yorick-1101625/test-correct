@@ -96,7 +96,6 @@ def prompt_create():
         prompts_model = Prompts()
         user_id = session.get('user_id')
         prompt_category = request.form.get("prompt_category")
-        print(prompt_category)
         created_prompt = prompts_model.create_prompt(prompt_name, prompt, user_id, prompt_category)
 
         if created_prompt:

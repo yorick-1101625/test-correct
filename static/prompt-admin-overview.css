@@ -32,8 +32,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.p-col0 {
+    width: 6%;
+}
 .p-col1{
-    width: 30%;
+    width: 24%;
     padding-right: 10px;
 }
 .p-col2{
