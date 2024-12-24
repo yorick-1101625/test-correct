@@ -9,6 +9,7 @@
 
     <table class="overview-container">
         <tr class="row-head row">
+            <th class="p-col0">R / B</th>
             <th class="p-col1">Prompt</th>
             <th class="p-col2">Redacteur</th>
             <th class="p-col3">Toetsvragen ingedeeld</th>
@@ -17,6 +18,7 @@
         </tr>
         {% for prompt in prompts_info %}
         <tr class="row">
+            <td class="p-col0">{{ prompt.prompt_category|title }}</td>
             <td class="p-col1">{{ prompt.prompt_name }}</td>
             <td class="p-col2">{{ prompt.display_name }}</td>
             <td class="p-col3">{{ prompt.questions_count }}</td>

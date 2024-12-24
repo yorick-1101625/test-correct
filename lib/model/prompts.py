@@ -10,14 +10,14 @@ class Prompts:
         result = self.cursor.execute('SELECT * FROM prompts WHERE prompts_id = ?', (prompts_id,)).fetchone()
         return result
 
-    def show_prompts(self):
-        result = self.cursor.execute('SELECT * FROM prompts').fetchall()
+    def show_prompts_per_category(self, category):
+        result = self.cursor.execute('SELECT * FROM prompts WHERE prompt_category = ?', (category,)).fetchall()
         return result
 
-    def create_prompt(self, prompt_name, prompt, user_id):
-        self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count, "
-                            "questions_correct) VALUES (?,?,?,?,?)",
-                            (user_id, prompt_name, prompt, 0, 0))
+    def create_prompt(self, prompt_name, prompt, user_id, prompt_category):
+        self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count,"
+                            "questions_correct, prompt_category) VALUES (?,?,?,?,?,?)",
+                            (user_id, prompt_name, prompt, 0, 0, prompt_category))
         self.conn.commit()
 
         return True

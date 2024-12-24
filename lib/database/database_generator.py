@@ -41,7 +41,8 @@ class WP2DatabaseGenerator:
             questions_count INTEGER NOT NULL,
             questions_correct INTEGER NOT NULL,
             date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users(user_id)            
+            prompt_category TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(user_id)
             );
         """
         self.__execute_transaction_statement(create_statement)
