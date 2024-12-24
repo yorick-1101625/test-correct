@@ -126,7 +126,7 @@ def single_question_page(taxonomy, questions_id):
     single_question = questions_model.show_single_question(questions_id)
     # Show all prompts
     prompts_model = Prompts()
-    prompts = prompts_model.show_prompts()
+    prompts = prompts_model.show_prompts_per_category(taxonomy)
     return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts, taxonomy=taxonomy)
 
 
