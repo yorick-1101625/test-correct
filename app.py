@@ -279,8 +279,10 @@ def edit_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        user_model = Users()
         email = request.form.get('email').lower()
         password = request.form.get('password')
+        password = user_model.hash_password(password)
         users_model = Users()
         user = users_model.log_in(email, password)
         if user:
