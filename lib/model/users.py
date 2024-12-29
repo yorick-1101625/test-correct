@@ -1,5 +1,5 @@
 from lib.model.database import Database
-
+from hashlib import sha256
 
 class Users():
     def __init__(self):
@@ -54,4 +54,7 @@ class Users():
         if user and password == user['password']:
             return user  # Login successful
         return False  # Login failed
+
+    def hash_password(self, password):
+        return sha256(password.encode('utf-8')).hexdigest()
 

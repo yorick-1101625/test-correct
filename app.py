@@ -212,6 +212,7 @@ def admin_config():
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
+        user_model = Users()
         display_name = request.form.get('display_name')
         login = request.form.get('login').lower()
         password = request.form.get('password')
@@ -223,7 +224,9 @@ def create_user():
                 is_admin = 0
         except:
             is_admin = 0
-        user_model = Users()
+
+        password = user_model.hash_password(password)
+
         created_user = user_model.create_users(display_name, login, password, is_admin)
         if created_user:
             flash('Gebruiker succesvol aangemaakt!', 'succes')
