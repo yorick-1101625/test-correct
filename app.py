@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, send_file, session, url_for, flash
 from flask_session import Session
 
-from lib.model.users import Users
+from lib.model.users import Users, hash_password
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 from lib.database.load_json import Json
@@ -275,10 +275,8 @@ def edit_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_model = Users()
         email = request.form.get('email').lower()
         password = request.form.get('password')
-        password = user_model.hash_password(password)
         users_model = Users()
         user = users_model.log_in(email, password)
         if user:

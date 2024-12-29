@@ -27,7 +27,7 @@ class Users():
             return False
 
     def create_users(self, display_name, login, password, is_admin):
-        password = self.hash_password(password)
+        password = hash_password(password)
         self.cursor.execute("INSERT into users (login, password, display_name, is_admin) VALUES (?,?,?,?)",
                             (login, password, display_name, is_admin))
         self.conn.commit()
@@ -36,7 +36,7 @@ class Users():
 
     def edit_users(self, display_name, login, password, user_id, is_admin):
         if password:
-            password = self.hash_password(password)
+            password = hash_password(password)
             self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
                                 (login, password, display_name, is_admin, user_id))
         else:
@@ -52,6 +52,7 @@ class Users():
         return True
 
     def log_in(self, email, password):
+        password = hash_password(password)
         # Fetch the user record based on the username
         self.cursor.execute('SELECT * FROM users WHERE login = ?', (email,))
         user = self.cursor.fetchone()
@@ -61,5 +62,5 @@ class Users():
             return user  # Login successful
         return False  # Login failed
 
-    def hash_password(self, password):
-        return sha256(password.encode('utf-8')).hexdigest()
+def hash_password(password):
+    return sha256(password.encode('utf-8')).hexdigest()
