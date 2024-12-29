@@ -8,13 +8,13 @@
     <h1>Bewerk gebruiker</h1>
     <form method="POST">
         <label for="display_name">Naam</label>
-        <input class="text-input" type="text" id="display_name" name="display_name" value="{{display_name}}">
+        <input class="text-input" type="text" id="display_name" name="display_name" value="{{display_name}}" required>
 
         <label for="login">Email / login</label>
-        <input class="text-input" type="email" id="login" name="login" value="{{login}}">
+        <input class="text-input" type="email" id="login" name="login" value="{{login}}" required>
 
         <label for="password">Wachtwoord</label>
-        <input class="text-input" type="password" id="password" name="password" value="{{password}}">
+        <input class="text-input" type="password" id="password" name="password" placeholder="Nieuw wachtwoord (optioneel)">
 
         <label for="is_admin">Is admin?</label>
         {% if is_admin == 1 %}

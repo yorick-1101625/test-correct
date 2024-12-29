@@ -189,14 +189,11 @@ def save_answer(taxonomy, questions_id, prompts_id):
     # Redirect to next question
     if is_prompt_updated and is_question_updated:
         next_question = None
-        print(taxonomy)
         # Should redirect to next question
         if taxonomy == 'bloom':
             next_question = questions_model.show_first_not_indexed_question('bloom')
         elif taxonomy == 'rtti':
             next_question = questions_model.show_first_not_indexed_question('rtti')
-
-        print(next_question)
 
         next_question_url = f"/{taxonomy}/{next_question['questions_id']}"
         return redirect(next_question_url)
@@ -212,6 +209,7 @@ def admin_config():
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
+        user_model = Users()
         display_name = request.form.get('display_name')
         login = request.form.get('login').lower()
         password = request.form.get('password')
@@ -223,7 +221,7 @@ def create_user():
                 is_admin = 0
         except:
             is_admin = 0
-        user_model = Users()
+
         created_user = user_model.create_users(display_name, login, password, is_admin)
         if created_user:
             flash('Gebruiker succesvol aangemaakt!', 'succes')
@@ -235,6 +233,7 @@ def create_user():
 def edit_user(user_id):
     user_model = Users()
     user_info = user_model.show_single_user(user_id)
+
     if request.method == 'POST':
         if request.form['submit'] == 'Opslaan':
             display_name = request.form.get('display_name')
@@ -248,6 +247,7 @@ def edit_user(user_id):
                     is_admin = 0
             except:
                 is_admin = 0
+
             edited_user = user_model.edit_users(
                 display_name=display_name, login=login, password=password, user_id=user_id, is_admin=is_admin)
             if edited_user:
@@ -266,18 +266,19 @@ def edit_user(user_id):
                     session['name'] = None
                     session['admin'] = None
                     session['user_id'] = None
-                    print('eee')
                 flash('Gebruiker succesvol verwijderd!', 'succes')
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], password=user_info['password'], is_admin=user_info['is_admin'])
+        return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], is_admin=user_info['is_admin'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        user_model = Users()
         email = request.form.get('email').lower()
         password = request.form.get('password')
+        password = user_model.hash_password(password)
         users_model = Users()
         user = users_model.log_in(email, password)
         if user:

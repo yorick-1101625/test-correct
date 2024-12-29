@@ -1,5 +1,5 @@
 from lib.model.database import Database
-
+from hashlib import sha256
 
 class Users():
     def __init__(self):
@@ -27,6 +27,7 @@ class Users():
             return False
 
     def create_users(self, display_name, login, password, is_admin):
+        password = self.hash_password(password)
         self.cursor.execute("INSERT into users (login, password, display_name, is_admin) VALUES (?,?,?,?)",
                             (login, password, display_name, is_admin))
         self.conn.commit()
@@ -34,8 +35,13 @@ class Users():
         return True
 
     def edit_users(self, display_name, login, password, user_id, is_admin):
-        self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
-                            (login, password, display_name, is_admin, user_id))
+        if password:
+            password = self.hash_password(password)
+            self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
+                                (login, password, display_name, is_admin, user_id))
+        else:
+            self.cursor.execute('UPDATE users SET login = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
+                (login, display_name, is_admin, user_id))
         self.conn.commit()
         return True
 
@@ -55,3 +61,5 @@ class Users():
             return user  # Login successful
         return False  # Login failed
 
+    def hash_password(self, password):
+        return sha256(password.encode('utf-8')).hexdigest()
