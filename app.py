@@ -116,7 +116,26 @@ def prompt_details(prompts_id):
             flash('Prompt succesvol verwijderd!', 'succes')
             return redirect('/prompt/overview')
     else:
-        return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
+        return render_template('prompt-details.html.jinja',prompt=prompt, prompt_info=prompt_info,
+                               username=session['name'], admin=session['admin'])
+
+@app.route('/prompt/edit/<prompts_id>', methods=['GET', 'POST'])
+def prompt_edit(prompts_id):
+    prompts_model = Prompts()
+    prompt = prompts_model.show_single_prompt(prompts_id)
+    if request.method == 'POST':
+        prompt_name = request.form.get("prompt_name")
+        prompt = request.form.get("prompt")
+        prompts_model = Prompts()
+        user_id = session.get('user_id')
+        prompt_category = request.form.get("prompt_category")
+        created_prompt = prompts_model.create_prompt(prompt_name, prompt, user_id, prompt_category)
+        if created_prompt:
+            flash('Prompt succesvol aangemaakt!', 'succes')
+            return redirect('/prompt/overview')
+    else:
+        return render_template('prompt-edit.html.jinja', prompt=prompt)
+
 
 
 @app.route('/<taxonomy>/<questions_id>')
