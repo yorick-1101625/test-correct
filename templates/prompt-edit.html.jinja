@@ -15,11 +15,19 @@
         <textarea id="prompt" name="prompt" required>{{prompt.prompt}}</textarea>
 
         <div class="prompt-category">
+            {% if prompt.prompt_category == "rtti" %}
+            <input id="category-rtti" name="prompt_category" type="radio" value="rtti" checked=true required>
+            {% else %}
             <input id="category-rtti" name="prompt_category" type="radio" value="rtti" required>
+            {% endif %}
             <label for="category-rtti">RTTI</label>
         </div>
         <div class="prompt-category">
+            {% if prompt.prompt_category == "bloom" %}
+            <input id="category-bloom" name="prompt_category" type="radio" value="bloom" checked=true required>
+            {% else %}
             <input id="category-bloom" name="prompt_category" type="radio" value="bloom" required>
+            {% endif %}
             <label for="category-bloom">Bloom</label>
         </div>
 
