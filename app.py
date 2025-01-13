@@ -116,7 +116,8 @@ def prompt_details(prompts_id):
             flash('Prompt succesvol verwijderd!', 'succes')
             return redirect('/prompt/overview')
     else:
-        return render_template('prompt-details.html.jinja', prompt=prompt, prompt_info=prompt_info)
+        return render_template('prompt-details.html.jinja',prompt=prompt, prompt_info=prompt_info,
+                               username=session['name'], admin=session['admin'])
 
 
 @app.route('/<taxonomy>/<questions_id>')

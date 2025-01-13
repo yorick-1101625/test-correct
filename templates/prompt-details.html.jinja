@@ -45,7 +45,9 @@
         </div>
     </div>
     <form method="post">
-        <input class="btn" type="submit" value="Verwijder">
+        {% if username == prompt_info.display_name or admin == 1 %}
+            <input class="btn" type="submit" value="Verwijder">
+        {% endif %}
     </form>
 </section>
 {% endblock %}
