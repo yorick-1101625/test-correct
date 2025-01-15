@@ -54,3 +54,9 @@ Deze vraag kan je nu vinden door te sorteren op Geëxporteerd.
 
 
 # Bronnen
+How to iterate through database results, compare each value to that in an array and return the matching id? (n.d.). Stack Overflow. Retrieved November 13, 2024, from https://stackoverflow.com/questions/20527575/how-to-iterate-through-database-results-compare-each-value-to-that-in-an-array \
+Creemers, L. (2023, December 31). Build a To-Do list app using Python Flask, Jinja2, and SQL. Lou’s Blog Exploring Tech. Retrieved November 13, 2024, from https://lovelacecoding.hashnode.dev/build-a-to-do-list-app-using-python-flask-jinja2-and-sql \
+GeeksforGeeks. (2024, June 26). Flask message flashing. Retrieved December 13, 2024, from GeeksforGeeks. https://www.geeksforgeeks.org/flask-message-flashing/ \
+GeeksforGeeks. (2022, June 16). How to use FlaskSession in Python Flask ? Retrieved December 10, 2024, from GeeksforGeeks. https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/ \
+GeeksforGeeks. (2022b, July 19). Reading and writing JSON to a file in Python. Retrieved December 8, 2024, from GeeksforGeeks. https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/ \
+W3Schools. (n.d.). HTML Tables. Retrieved December 10, 2024, from W3Schools.com. (n.d.).  https://www.w3schools.com/html/html_tables.asp 
