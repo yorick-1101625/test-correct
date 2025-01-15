@@ -1,5 +1,4 @@
 import json
-import sqlite3
 
 from lib.model.database import Database
 

@@ -1,7 +1,7 @@
 from lib.model.database import Database
 from hashlib import sha256
 
-class Users():
+class Users:
     def __init__(self):
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
