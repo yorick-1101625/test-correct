@@ -6,6 +6,7 @@ class Database:
         # Locatie van het database bestand
         self.path = db_path
 
+
     def connect_db(self):
         # Maak verbinding met het database bestand
         conn = sqlite3.connect(self.path)

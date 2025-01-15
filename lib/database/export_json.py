@@ -21,6 +21,7 @@ def convert_to_json(exported_questions):
 
     write_to_json(questions_list)
 
+
 def write_to_json(questions_list):
     # Convert the list to a json object
     json_object = json.dumps(questions_list, indent=4)

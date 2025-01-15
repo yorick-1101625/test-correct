@@ -6,13 +6,16 @@ class Prompts:
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
+
     def show_single_prompt(self, prompts_id):
         result = self.cursor.execute('SELECT * FROM prompts WHERE prompts_id = ?', (prompts_id,)).fetchone()
         return result
 
+
     def show_prompts_per_category(self, category):
         result = self.cursor.execute('SELECT * FROM prompts WHERE prompt_category = ?', (category,)).fetchall()
         return result
+
 
     def create_prompt(self, prompt_name, prompt, user_id, prompt_category):
         self.cursor.execute("INSERT into prompts (user_id, prompt_name, prompt, questions_count,"
@@ -22,15 +25,18 @@ class Prompts:
 
         return True
 
+
     def delete_prompt(self, prompt_id):
         self.cursor.execute("DELETE FROM prompts WHERE prompts_id = ?", (prompt_id,))
         self.conn.commit()
         return True
 
+
     def prompts_info(self):
         result = self.cursor.execute('SELECT * FROM prompts '
                                      'INNER JOIN users ON prompts.user_id=users.user_id').fetchall()
         return result
+
 
     def show_single_prompt_info(self, prompt_id):
         result = self.cursor.execute('SELECT users.display_name, prompts.prompts_id, prompts.prompt_name FROM prompts '
@@ -38,9 +44,12 @@ class Prompts:
                                      (prompt_id,)).fetchone()
         return result
 
+
     def get_prompt_stats(self, prompt_id):
-        result = self.cursor.execute('SELECT questions_count, questions_correct FROM prompts WHERE prompts_id = ?', (prompt_id,)).fetchone()
+        result = self.cursor.execute('SELECT questions_count, questions_correct FROM prompts WHERE prompts_id = ?',
+                                     (prompt_id,)).fetchone()
         return result
+
 
     def update_prompt_stats(self, prompts_id, changed_by_user):
         stats = self.get_prompt_stats(prompts_id)
@@ -54,16 +63,19 @@ class Prompts:
         self.conn.commit()
         return True
 
+
     def structure_bloom_prompt(self, prompt):
         structured_prompt = prompt + """
         Geef het antwoord in een RFC8259 JSON met de volgende opmaak, waar je niet van mag afwijken.
-        "categorie" MOET een van de volgende categorieën zijn: "Onthouden", "Begrijpen", "Toepassen", "Analyseren", "Evalueren" en "Creëren"
+        "categorie" MOET een van de volgende categorieën zijn: "Onthouden", "Begrijpen", "Toepassen", "Analyseren", 
+        "Evalueren" en "Creëren"
         {
            "categorie": "het gekozen niveau van Bloom",
            "uitleg": "uitleg waarom dit niveau van toepassing is"
         }
         """
         return structured_prompt
+
 
     def structure_rtti_prompt(self, prompt):
         structured_prompt = prompt + """

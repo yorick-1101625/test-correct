@@ -4,4 +4,5 @@ class Questions:
         self.question = question
 
     def __repr__(self):
-        return "{}({})".format(type(self).__name__, ", ".join([f'{key}={value!r}' for key, value in self.__dict__.items()]))
+        return "{}({})".format(type(self).__name__, ", ".join([f'{key}={value!r}'
+                                                               for key, value in self.__dict__.items()]))
