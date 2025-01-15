@@ -2,7 +2,7 @@
 Python versie: 3.12
 
 Maak een virtual environment:\
-    1) ```python -m venv .venv```\
+    1) ```python -m venv venv```\
     2) ```.\venv\Scripts\activate```
 
 Installeer packages:\
