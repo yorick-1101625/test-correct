@@ -6,14 +6,17 @@ class Users():
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
+
     def show_users(self):
         result = self.cursor.execute('SELECT * FROM users').fetchall()
         return result
+
 
     def show_single_user(self, user_id):
         result = self.cursor.execute('SELECT * FROM users WHERE user_id = ?',
                                      (user_id,)).fetchone()
         return result
+
 
     def admin_check(self, user_id):
         active_user = self.show_single_user(user_id)
@@ -26,6 +29,7 @@ class Users():
         else:
             return False
 
+
     def create_users(self, display_name, login, password, is_admin):
         password = hash_password(password)
         self.cursor.execute("INSERT into users (login, password, display_name, is_admin) VALUES (?,?,?,?)",
@@ -34,10 +38,12 @@ class Users():
 
         return True
 
+
     def edit_users(self, display_name, login, password, user_id, is_admin):
         if password:
             password = hash_password(password)
-            self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
+            self.cursor.execute('UPDATE users SET login = ?, password = ?, display_name = ?, is_admin = ? WHERE '
+                                'user_id = ?',
                                 (login, password, display_name, is_admin, user_id))
         else:
             self.cursor.execute('UPDATE users SET login = ?, display_name = ?, is_admin = ? WHERE user_id = ?',
@@ -45,11 +51,13 @@ class Users():
         self.conn.commit()
         return True
 
+
     def delete_users(self, user_id):
         self.cursor.execute('DELETE FROM users WHERE user_id = ?',
                             user_id)
         self.conn.commit()
         return True
+
 
     def log_in(self, email, password):
         password = hash_password(password)
@@ -61,6 +69,7 @@ class Users():
         if user and password == user['password']:
             return user  # Login successful
         return False  # Login failed
+
 
 def hash_password(password):
     return sha256(password.encode('utf-8')).hexdigest()

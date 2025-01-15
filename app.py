@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request, redirect, send_file, session, url_for, flash
 from flask_session import Session
 
-from lib.model.users import Users, hash_password
+from lib.model.users import Users
 from lib.model.questions import Questions
 from lib.model.prompts import Prompts
 from lib.database.load_json import Json
 
 from lib.gpt.bloom_taxonomy import get_bloom_category
 
-import json
 from lib.database.export_json import convert_to_json
 
 
@@ -20,7 +19,6 @@ Session(app)
 @app.before_request
 def check_login():
     open_routes = ['login', 'static']
-
     admin_routes = ['admin_config', 'create_user', 'edit_user']
     logged_in = session.get('user_id')
     user_model = Users()
@@ -62,7 +60,8 @@ def overview(offset):
         questions = questions_model.show_ten_not_indexed_questions(offset=offset)
         arguments_url = ""
 
-    return render_template('overview.html.jinja', questions=questions, offset=offset, arguments_url=arguments_url)
+    return render_template('overview.html.jinja', questions=questions, offset=offset,
+                           arguments_url=arguments_url)
 
 
 @app.route('/export', methods=['GET', 'POST'])
@@ -119,6 +118,7 @@ def prompt_details(prompts_id):
         return render_template('prompt-details.html.jinja',prompt=prompt, prompt_info=prompt_info,
                                username=session['name'], admin=session['admin'])
 
+
 @app.route('/prompt/edit/<prompts_id>', methods=['GET', 'POST'])
 def prompt_edit(prompts_id):
     prompts_model = Prompts()
@@ -137,7 +137,6 @@ def prompt_edit(prompts_id):
         return render_template('prompt-edit.html.jinja', prompt=prompt)
 
 
-
 @app.route('/<taxonomy>/<questions_id>')
 def single_question_page(taxonomy, questions_id):
     # Show question
@@ -146,7 +145,8 @@ def single_question_page(taxonomy, questions_id):
     # Show all prompts
     prompts_model = Prompts()
     prompts = prompts_model.show_prompts_per_category(taxonomy)
-    return render_template('single-question.html.jinja', single_question=single_question, prompts=prompts, taxonomy=taxonomy)
+    return render_template('single-question.html.jinja', single_question=single_question,
+                           prompts=prompts, taxonomy=taxonomy)
 
 
 @app.route('/<taxonomy>/<questions_id>/antwoord', methods=['GET', 'POST'])
@@ -172,7 +172,8 @@ def prompt_answer(taxonomy, questions_id):
     is_valid = False
     for i in range(3):
         try:
-            valid_answers = ["onthouden", "begrijpen", "toepassen", "analyseren", "evalueren", "creëren", "r", "t1", "t2", "i"]
+            valid_answers = ["onthouden", "begrijpen", "toepassen", "analyseren", "evalueren", "creëren", "r", "t1",
+                             "t2", "i"]
             for ans in valid_answers:
                 if gpt_response['categorie'].lower() == ans:
                     is_valid = True
@@ -183,7 +184,9 @@ def prompt_answer(taxonomy, questions_id):
         if not is_valid:
             gpt_response = get_bloom_category(question, structured_prompt, 'rac_test')
 
-    return render_template('prompt-answer.html.jinja', single_question=single_question, gpt_response=gpt_response, prompts_id=prompts_id, is_valid=is_valid, taxonomy=taxonomy)
+    return render_template('prompt-answer.html.jinja', single_question=single_question,
+                           gpt_response=gpt_response, prompts_id=prompts_id, is_valid=is_valid, taxonomy=taxonomy)
+
 
 @app.route('/<taxonomy>/<questions_id>/save/prompt=<prompts_id>', methods=['POST'])
 def save_answer(taxonomy, questions_id, prompts_id):
@@ -202,7 +205,8 @@ def save_answer(taxonomy, questions_id, prompts_id):
 
     # Save taxonomy in DB
     is_prompt_updated = prompt_model.update_prompt_stats(prompts_id, changed_by_user)
-    is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_input, user_id, taxonomy)
+    is_question_updated = questions_model.update_question_stats(questions_id, prompts_id, taxonomy_input, user_id,
+                                                                taxonomy)
     flash('Taxonomie succesvol opgeslagen!','succes')
 
     # Redirect to next question
@@ -224,6 +228,7 @@ def admin_config():
     users = users_model.show_users()
     active_user = users_model.show_single_user(session.get('user_id'))
     return render_template('admin-configuration.html.jinja', users=users, active_user=active_user)
+
 
 @app.route('/admin/create-user', methods=['GET', 'POST'])
 def create_user():
@@ -247,6 +252,7 @@ def create_user():
             return redirect('configuration')
     else:
         return render_template('create-user.html.jinja')
+
 
 @app.route('/admin/edit-user/<user_id>', methods=['GET', 'POST'])
 def edit_user(user_id):
@@ -288,7 +294,8 @@ def edit_user(user_id):
                 flash('Gebruiker succesvol verwijderd!', 'succes')
                 return redirect('/admin/configuration')
     else:
-        return render_template('edit-user.html.jinja', display_name=user_info['display_name'], login=user_info['login'], is_admin=user_info['is_admin'])
+        return render_template('edit-user.html.jinja', display_name=user_info['display_name'],
+                               login=user_info['login'], is_admin=user_info['is_admin'])
 
 
 @app.route('/login', methods=['GET', 'POST'])

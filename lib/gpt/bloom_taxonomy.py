@@ -99,7 +99,8 @@ def get_bloom_category(question, prompt, gpt):
                 print("No model given, we are returning a static answer for testing")
                 result = {
                     "categorie": "creëren",
-                    "uitleg": "De vraag vereist het onthouden van feitelijke informatie over de Grutto, zoals zijn classificatie als vogelsoort."
+                    "uitleg": "De vraag vereist het onthouden van feitelijke informatie over de Grutto, "
+                              "zoals zijn classificatie als vogelsoort."
                 }
             case "rac_test":
                 result = get_ollama_chat(question, prompt, settings)
@@ -114,7 +115,9 @@ def get_bloom_category(question, prompt, gpt):
 
 if __name__ == "__main__":
     prompt = """ 
-    Gebruik de taxonomie van Bloom om de volgende vraag in één van de niveaus "Onthouden", "Begrijpen", "Toepassen", "Analyseren", "Evalueren" en "Creëren" en leg uit waarom je dat niveau hebt gekozen. Geef het antwoord in een RFC8259 JSON met de volgende opmaak:
+    Gebruik de taxonomie van Bloom om de volgende vraag in één van de niveaus "Onthouden", "Begrijpen", "Toepassen", 
+    "Analyseren", "Evalueren" en "Creëren" en leg uit waarom je dat niveau hebt gekozen. 
+    Geef het antwoord in een RFC8259 JSON met de volgende opmaak:
     {
        "categorie": "niveau van Bloom",
        "uitleg": "uitleg waarom dit niveau van toepassing is"

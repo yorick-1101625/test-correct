@@ -8,6 +8,7 @@ class Json:
         database = Database('./databases/database.db')
         self.conn, self.cursor = database.connect_db()
 
+
     def load_questions(self, json_data):
         for questions in json_data:
             questions_id = questions['question_id']
@@ -19,7 +20,8 @@ class Json:
             grade = questions['leerjaar']
             taxonomy_bloom = None
             rtti = None
-            sql = '''INSERT INTO questions (questions_id, prompts_id, user_id, question, subject, education_level, grade, taxonomy_bloom, rtti) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+            sql = '''INSERT INTO questions (questions_id, prompts_id, user_id, question, subject, education_level,
+             grade, taxonomy_bloom, rtti) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             val = (questions_id, prompts_id, user_id, question, subject, education_level, grade, taxonomy_bloom, rtti)
             self.cursor.execute(sql, val)
         self.conn.commit()
